@@ -1,22 +1,29 @@
 import { Search, ShoppingBag } from "lucide-react";
-import { useState } from "react";
-import SearchOverlay from "./SearchOverlay";
 
-export default function NavActions() {
-    const [isSearchOpen, setIsSearchOpen] = useState(false);
+type NavActionsProps = {
+  onOpenSearch: () => void;
+};
+
+export default function NavActions({
+  onOpenSearch,
+}: NavActionsProps) {
   return (
     <div className="flex items-center gap-6">
 
-      <button   onClick={() => setIsSearchOpen(true)}
-        className="cursor-pointer rounded-full p-2 text-text-primary transition-all duration-300 hover:bg-stone-200 hover:text-primary"
+      {/* Search */}
+      <button
+        onClick={onOpenSearch}
+        className="hidden md:block cursor-pointer rounded-full p-2 text-text-primary transition-all duration-300 hover:bg-stone-200 hover:text-primary"
       >
         <Search size={20} strokeWidth={1.75} />
       </button>
 
-      <button className="cursor-pointer text-sm font-medium text-text-primary transition-colors duration-300 hover:text-primary">
+      {/* Login */}
+      <button className="hidden cursor-pointer text-sm font-medium text-text-primary transition-colors duration-300 hover:text-primary md:block">
         ورود | ثبت نام
       </button>
 
+      {/* Cart */}
       <button className="relative cursor-pointer rounded-full p-2 text-text-primary transition-all duration-300 hover:bg-stone-200 hover:text-primary">
         <ShoppingBag size={22} strokeWidth={1.75} />
 
@@ -24,10 +31,7 @@ export default function NavActions() {
           0
         </span>
       </button>
-   <SearchOverlay
-  isOpen={isSearchOpen}
-  onClose={() => setIsSearchOpen(false)}
-/>
+
     </div>
   );
 }

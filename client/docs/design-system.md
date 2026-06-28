@@ -43,3 +43,19 @@ Estedad
 - Added Lucide icons.
 - Designed expandable Search Overlay under the Navbar.
 - Added project theme colors using Tailwind CSS v4.
+
+### 6/28/2026
+### Session Progress
+
+- Built the responsive navbar.
+- Added custom fonts.
+- Created reusable navigation components.
+- Implemented the mobile drawer.
+- Added the search overlay.
+- Improved the project structure.
+
+### Next Session
+
+- Complete the mobile menu.
+- Finalize the navbar.
+- Start the Hero section.

@@ -8,7 +8,7 @@ const links = [
 
 export default function NavLinks() {
     return(
-        <ul className="hidden items-center gap-12 lg:flex">
+        <ul className="hidden items-center gap-12 md:flex">
             {links.map((link) => (
                 <li key={link.href}>
 <NavLink

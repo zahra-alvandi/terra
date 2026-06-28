@@ -4,10 +4,20 @@ export default function Logo() {
   return (
     <NavLink
       to="/"
-      className="select-none text-[42px] font-semibold tracking-[0.08em] text-primary transition-colors duration-300 hover:text-primary-hover"
-      style={{ fontFamily: "Cormorant Garamond" }}
+      className="flex items-center gap-3 select-none"
     >
-      Terra
+      {/* Logo Image */}
+
+      <div className="h-8 w-8 rounded-full border border-border"></div>
+
+      {/* Brand */}
+
+      <span
+        style={{ fontFamily: "Cormorant Garamond" }}
+        className="text-[40px] font-semibold tracking-[0.08em] text-primary transition-colors duration-300 hover:text-primary-hover"
+      >
+        Terra
+      </span>
     </NavLink>
   );
 }
