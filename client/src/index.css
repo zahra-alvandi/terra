@@ -1,1 +1,70 @@
-@import "tailwindcss"
+@font-face {
+  font-family: "Estedad";
+  src: url("./app/assets/fonts/Estedad/Estedad-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Estedad";
+  src: url("./app/assets/fonts/Estedad/Estedad-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Estedad";
+  src: url("./app/assets/fonts/Estedad/Estedad-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Estedad";
+  src: url("./app/assets/fonts/Estedad/Estedad-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("./app/assets/fonts/Cormorant/CormorantGaramond-Regular.woff2")
+    format("woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("./app/assets/fonts/Cormorant/CormorantGaramond-SemiBold.woff2")
+    format("woff2");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("./app/assets/fonts/Cormorant/CormorantGaramond-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+}
+
+html {
+  font-family: "Estedad", sans-serif;
+}
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #8c5e3c;
+  --color-primary-hover: #744b2d;
+
+  --color-background: #f8f5f1;
+  --color-surface: #ffffff;
+
+  --color-text-primary: #2f2a26;
+  --color-text-secondary: #6b625a;
+
+  --color-border: #ddd3c7;
+
+  --color-success: #4f7d5c;
+  --color-error: #b85450;
+}

@@ -28,38 +28,18 @@
 
 Estedad
 
-Status:
+## Navbar
 
-- [ ] Installed
-- [ ] Configured
-- [ ] Applied
+### Completed
 
----
-
-## Color Palette
-
-(To be defined)
-
----
-
-## Spacing System
-
-(To be defined)
-
----
-
-## Border Radius
-
-(To be defined)
-
----
-
-## Shadows
-
-(To be defined)
-
----
-
-## Animations
-
-(To be defined)
+- Created modular Navbar architecture.
+- Separated Navbar into reusable components:
+  - Logo
+  - NavLinks
+  - NavActions
+  - SearchOverlay
+- Added Persian (Estedad) and English (Cormorant Garamond) fonts.
+- Implemented responsive desktop navigation structure.
+- Added Lucide icons.
+- Designed expandable Search Overlay under the Navbar.
+- Added project theme colors using Tailwind CSS v4.
