@@ -69,3 +69,12 @@ Estedad
 - Added reusable SearchSuggestion component.
 - Improved mobile navigation behavior.
 - Prepared Search Overlay structure for real-time search integration.
+
+### Hero Section Improvements
+
+- Improved Hero content layout for better responsiveness.
+- Added a premium badge section above the main heading.
+- Applied the display font to Hero typography.
+- Fixed text alignment on mobile and tablet screens.
+- Refined spacing for Hero content to improve readability.
+- Continued preparing the Hero section for future animations and backend integration.

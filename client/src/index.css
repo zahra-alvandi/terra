@@ -47,6 +47,10 @@
   font-weight: 700;
 }
 
+:root {
+  --font-display: "Cormorant Garamond", serif;
+}
+
 html {
   font-family: "Estedad", sans-serif;
 }
@@ -67,4 +71,33 @@ html {
 
   --color-success: #4f7d5c;
   --color-error: #b85450;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.animation-delay-150 {
+  animation-delay: 0.15s;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
 }

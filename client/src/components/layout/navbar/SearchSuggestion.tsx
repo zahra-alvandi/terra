@@ -6,10 +6,7 @@ type Props = {
   onClick: () => void;
 };
 
-export default function SearchSuggestion({
-  item,
-  onClick,
-}: Props) {
+export default function SearchSuggestion({ item, onClick }: Props) {
   return (
     <NavLink
       to={item.href}
