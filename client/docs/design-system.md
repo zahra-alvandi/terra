@@ -59,3 +59,13 @@ Estedad
 - Complete the mobile menu.
 - Finalize the navbar.
 - Start the Hero section.
+
+### 6/29/2026
+## Navbar & Search Overlay Improvements
+
+- Refactored Search Overlay using Portal.
+- Added global backdrop and body scroll lock.
+- Moved popular searches into a dedicated data source.
+- Added reusable SearchSuggestion component.
+- Improved mobile navigation behavior.
+- Prepared Search Overlay structure for real-time search integration.

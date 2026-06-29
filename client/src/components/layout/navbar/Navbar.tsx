@@ -13,7 +13,8 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <header className="relative sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
+    <>
+    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
       <Container>
 
         {/* Desktop */}
@@ -48,18 +49,15 @@ export default function Navbar() {
 
         </div>
 
+      </Container>
+    </header>
         <MobileMenu
   isOpen={isMobileMenuOpen}
   onClose={() => setIsMobileMenuOpen(false)}
   onOpenSearch={() => setIsSearchOpen(true)}
 />
 
-        <SearchOverlay
-          isOpen={isSearchOpen}
-          onClose={() => setIsSearchOpen(false)}
-        />
-
-      </Container>
-    </header>
+<SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+</>
   );
 }

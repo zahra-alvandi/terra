@@ -48,14 +48,12 @@ export default function MobileMenu({
   return (
     <>
       {/* Backdrop */}
-      <div
-        onClick={onClose}
-        className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 lg:hidden ${
-          isOpen
-            ? "opacity-100"
-            : "pointer-events-none opacity-0"
-        }`}
-      />
+  {isOpen && (
+  <div
+    onClick={onClose}
+    className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+  />
+)}
 
       {/* Drawer */}
       <aside
@@ -117,7 +115,10 @@ export default function MobileMenu({
   <button
     onClick={() => {
   onClose();
-  onOpenSearch();
+
+  setTimeout(() => {
+    onOpenSearch();
+  }, 250);
 }}
     className="flex w-full items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-stone-100"
   >

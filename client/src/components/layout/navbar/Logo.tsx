@@ -14,7 +14,7 @@ export default function Logo() {
 
       <span
         style={{ fontFamily: "Cormorant Garamond" }}
-        className="text-[40px] font-semibold tracking-[0.08em] text-primary transition-colors duration-300 hover:text-primary-hover"
+        className="hidden md:block text-[40px] font-semibold tracking-[0.08em] text-primary transition-colors duration-300 hover:text-primary-hover"
       >
         Terra
       </span>

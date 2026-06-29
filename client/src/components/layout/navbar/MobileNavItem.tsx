@@ -21,8 +21,8 @@ export default function MobileNavItem({
       className={({ isActive }) =>
         `group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 ${
           isActive
-            ? "bg-primary/10 text-primary font-medium shadow-sm"
-            : "text-text-primary hover:bg-stone-100"
+            ? "bg-primary/10 text-primary font-semibold shadow-sm ring-1 ring-primary/15"
+            : "text-text-primary hover:bg-stone-100 hover:translate-x-1"
         }`
       }
     >
