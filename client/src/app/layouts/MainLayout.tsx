@@ -1,5 +1,4 @@
 // import type { ReactNode } from "react";
-import Navbar from "@/components/layout/navbar/Navbar";
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -8,7 +7,6 @@ type MainLayoutProps = {
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <>
-      <Navbar />
       <main>{children}</main>
     </>
   );

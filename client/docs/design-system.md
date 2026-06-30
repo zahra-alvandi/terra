@@ -94,3 +94,15 @@ Estedad
 - Added hover interactions
 - Mobile action buttons are always visible
 - Redesigned product card layout
+
+## Featured Products
+
+- Created Featured Products section
+- Created reusable ProductCard component
+- Added products data
+- Added responsive product grid
+- Added hover interactions
+- Mobile action buttons always visible
+- Added View All Products buttons
+- Improved product card UI
+- Added reusable Divider component
