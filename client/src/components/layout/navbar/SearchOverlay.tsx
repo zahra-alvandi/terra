@@ -5,7 +5,7 @@ import { useState, useMemo } from "react";
 import Portal from "@/components/ui/Portal";
 import SearchBackdrop from "./SearchBackdrop";
 import { popularSearches } from "@/data/search";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import SearchSuggestion from "./SearchSuggestion";
 
 type SearchOverlayProps = {

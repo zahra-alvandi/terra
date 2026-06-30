@@ -45,6 +45,7 @@ Estedad
 - Added project theme colors using Tailwind CSS v4.
 
 ### 6/28/2026
+
 ### Session Progress
 
 - Built the responsive navbar.
@@ -61,6 +62,7 @@ Estedad
 - Start the Hero section.
 
 ### 6/29/2026
+
 ## Navbar & Search Overlay Improvements
 
 - Refactored Search Overlay using Portal.
@@ -78,3 +80,17 @@ Estedad
 - Fixed text alignment on mobile and tablet screens.
 - Refined spacing for Hero content to improve readability.
 - Continued preparing the Hero section for future animations and backend integration.
+
+### 6/30/2026
+
+## Featured Products
+
+- Added Product type
+- Added products data
+- Created ProductCard component
+- Added FeaturedProducts section
+- Added price formatter utility
+- Improved responsive behavior
+- Added hover interactions
+- Mobile action buttons are always visible
+- Redesigned product card layout
