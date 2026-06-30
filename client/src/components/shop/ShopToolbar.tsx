@@ -1,31 +1,78 @@
 import Container from "@/components/layout/Container";
-import { Search, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { Search } from "lucide-react";
+import { categories } from "@/constants/categories";
+import FilterPopover from "./FilterPopover";
+import { sortOptions } from "@/constants/sortOptions";
 
-export default function ShopToolbar(  ) {
+type Props = {
+  search: string;
+  onSearchChange: (value: string) => void;
+
+  category: string;
+  onCategoryChange: (value: string) => void;
+
+  sort: string;
+  onSortChange: (value: string) => void;
+};
+
+export default function ShopToolbar({
+  search,
+  onSearchChange,
+
+  category,
+  onCategoryChange,
+
+  sort,
+  onSortChange,
+}: Props) {
   return (
     <section className="border-b border-border bg-background py-5">
       <Container>
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-5">
           {/* Search */}
 
-          <button className="flex items-center gap-3 rounded-full border border-border px-5 py-3 transition hover:border-primary">
-            <Search size={18} />
+          <div className="relative w-full md:max-w-xl">
+            <Search
+              size={18}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary"
+            />
 
-            <span className="text-text-secondary">جستجوی محصولات</span>
-          </button>
+            <input
+              value={search}
+              onChange={(e) => onSearchChange(e.target.value)}
+              placeholder="جستجوی محصولات..."
+              className="
+        w-full
+        rounded-full
+        border
+        border-border
+        bg-background
+        py-3
+        pr-12
+        pl-5
+        outline-none
+        transition
+        focus:border-primary
+      "
+            />
+          </div>
 
-          {/* Right */}
+          {/* Filters */}
 
-          <div className="flex gap-3">
-            <button className="flex items-center gap-2 rounded-full border border-border px-5 py-3 transition hover:border-primary">
-              دسته‌بندی
-              <ChevronDown size={16} />
-            </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <FilterPopover
+              label="دسته‌بندی"
+              value={category}
+              options={categories}
+              onChange={onCategoryChange}
+            />
 
-            <button className="flex items-center gap-2 rounded-full border border-border px-5 py-3 transition hover:border-primary">
-              مرتب‌سازی
-              <SlidersHorizontal size={16} />
-            </button>
+            <FilterPopover
+              label="مرتب‌سازی"
+              value={sort}
+              options={sortOptions}
+              onChange={onSortChange}
+            />
           </div>
         </div>
       </Container>

@@ -1,7 +1,7 @@
 import Container from "@/components/layout/Container";
 import { categories } from "@/data/categories";
 
-import CategoryCard from "./CategoryCard";
+import CategoryCard from "../ui/CategoryCard";
 
 export default function FeaturedCategories() {
   return (

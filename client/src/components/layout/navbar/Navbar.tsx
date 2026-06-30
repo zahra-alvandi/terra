@@ -18,7 +18,7 @@ export default function Navbar() {
       <Container>
 
         {/* Desktop */}
-        <div className="hidden h-20 items-center justify-between md:flex">
+        <div className="hidden h-20 items-center justify-between lg:flex">
 
           <div className="flex items-center gap-16">
             <Logo />
@@ -32,7 +32,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile */}
-        <div className="flex h-20 items-center justify-between md:hidden">
+        <div className="flex h-20 items-center justify-between lg:hidden">
 
           <button
             onClick={() => setIsMobileMenuOpen(true)}

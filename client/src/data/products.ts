@@ -10,9 +10,21 @@ export const products: Product[] = [
     id: 1,
     title: "ماگ سرامیکی",
     englishTitle: "Ceramic Mug",
+
     image: mugImage,
+
     price: 890000,
+
+    category: "mug",
+
+    featured: true,
+
+    createdAt: "2026-06-10",
+
+    keywords: ["ماگ", "لیوان", "فنجان", "سرامیک", "mug", "cup", "ceramic"],
+
     href: "/shop/ceramic-mug",
+
     badge: "NEW",
   },
   {
@@ -21,8 +33,13 @@ export const products: Product[] = [
     englishTitle: "Handmade Vase",
     image: vaseImage,
     price: 1250000,
-    href: "/shop/handmade-vase",
-    badge: "BEST SELLER",
+    category: "mug",
+    featured: true,
+    createdAt: "2026-06-10",
+    keywords: ["گلدان", "گلدون", "دکوری", "گل", "vase", "flower"],
+
+    href: "/shop/ceramic-mug",
+    badge: "NEW",
   },
   {
     id: 3,
@@ -30,7 +47,13 @@ export const products: Product[] = [
     englishTitle: "Dinner Plate",
     image: plateImage,
     price: 760000,
-    href: "/shop/dinner-plate",
+    category: "mug",
+    featured: true,
+    createdAt: "2026-06-10",
+    keywords: ["بشقاب", "سینی", "plate", "dinner"],
+
+    href: "/shop/ceramic-mug",
+    badge: "NEW",
   },
   {
     id: 4,
@@ -38,7 +61,12 @@ export const products: Product[] = [
     englishTitle: "Ceramic Bowl",
     image: bowlImage,
     price: 540000,
-    href: "/shop/ceramic-bowl",
-    badge: "LIMITED",
+    category: "mug",
+    featured: true,
+    createdAt: "2026-06-10",
+    keywords: ["کاسه", "ظرف", "bowl", "ceramic"],
+
+    href: "/shop/ceramic-mug",
+    badge: "NEW",
   },
 ];

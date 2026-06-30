@@ -1,4 +1,4 @@
-import { Heart, ShoppingBag } from "lucide-react";
+import { Heart, ShoppingBag, ArrowRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 import type { Product } from "@/types/product";
@@ -92,27 +92,56 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Content */}
 
-      <div className="p-6">
+      <div className="flex flex-col gap-3 p-4 md:p-6">
         {/* English */}
-        <p className="[font-family:var(--font-display)] text-2xl font-normal text-text-primary">
+
+        <p className="[font-family:var(--font-display)] text-lg md:text-2xl leading-none text-text-primary">
           {product.englishTitle}
         </p>
 
         {/* Persian */}
-        <h3 className="mt-1 text-base font-normal text-text-secondary">
+
+        <h3 className="text-sm md:text-base text-text-secondary">
           {product.title}
         </h3>
 
-        {/* Divider */}
-        <div className="my-5 h-px w-f bg-border" />
+        {/* Bottom */}
 
-        {/* Price */}
-        <div className="flex items- justify-end gap-2">
-          <span className="text-xl font-semibold text-text-primary group-hover:text-primary transition-colors duration-300">
-            {formatPrice(product.price)}
-          </span>
+        <div className="mt-2 flex items-end justify-between">
+          <div className="flex items-end gap-1">
+            <span className="text-base font-semibold text-text-primary md:text-xl">
+              {formatPrice(product.price)}
+            </span>
 
-          <span className="text-sm text-text-secondary">تومان</span>
+            <span className="text-xs text-text-secondary md:text-sm">
+              تومان
+            </span>
+          </div>
+
+          <NavLink dir="ltr"
+            to={product.href}
+            className="
+      hidden
+      md:flex
+
+      items-center
+      gap-2
+
+      text-xs
+      uppercase
+      tracking-[0.2em]
+
+      text-primary
+
+      transition-all
+      duration-300
+
+      group-hover:gap-3
+    "
+          >
+            View
+            <ArrowRight size={14} />
+          </NavLink>
         </div>
       </div>
     </article>
