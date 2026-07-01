@@ -7,6 +7,8 @@ import ProductGallery from "@/components/product/ProductGallery";
 import ProductInfo from "@/components/product/ProductInfo";
 import ProductBreadcrumb from "@/components/product/ProductBreadcrumb";
 import { useState } from "react";
+import { getRelatedProducts } from "@/utils/getRelatedProducts";
+import RelatedProducts from "@/components/product/RelatedProducts";
 
 export default function ProductPage() {
   const { slug } = useParams();
@@ -19,6 +21,7 @@ export default function ProductPage() {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   };
   const product = slug ? getProductBySlug(slug) : undefined;
+  const relatedProducts = product ? getRelatedProducts(product) : [];
 
   if (!product) {
     return (
@@ -45,6 +48,7 @@ export default function ProductPage() {
           />
         </div>
       </Container>
+      <RelatedProducts products={relatedProducts} />
     </section>
   );
 }

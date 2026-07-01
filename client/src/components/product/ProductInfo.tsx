@@ -3,6 +3,10 @@ import type { Product } from "@/types/product";
 import { formatPrice } from "@/utils/formatPrice";
 import { Star } from "lucide-react";
 import QuantitySelector from "./QuantitySelector";
+import { ShoppingBag } from "lucide-react";
+import { useCart } from "@/context/CartContext";
+import toast from "react-hot-toast";
+import { showAddToCartToast } from "@/lib/terraToast";
 
 type Props = {
   product: Product;
@@ -20,6 +24,8 @@ export default function ProductInfo({
   onIncrease,
   onDecrease,
 }: Props) {
+  const { addToCart } = useCart();
+
   return (
     <div className="flex flex-col justify-center">
       {/* English */}
@@ -74,6 +80,34 @@ export default function ProductInfo({
           onIncrease={onIncrease}
           onDecrease={onDecrease}
         />
+        <button
+          onClick={() => {
+            addToCart(product, quantity);
+
+            showAddToCartToast(product.title);
+          }}
+          className="
+    mt-6
+    flex
+    w-full
+    items-center
+    justify-center
+    gap-3
+    rounded-2xl
+    bg-primary
+    px-6
+    py-4
+    text-lg
+    font-medium
+    text-white
+    transition
+    hover:opacity-90
+    active:scale-[0.98]
+  "
+        >
+          <ShoppingBag size={20} />
+          افزودن به سبد خرید
+        </button>
       </div>
     </div>
   );

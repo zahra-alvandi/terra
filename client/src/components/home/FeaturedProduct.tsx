@@ -64,7 +64,7 @@ export default function FeaturedProducts() {
 
         {/* Products */}
 
-        <div className="grid grid-cols-2 gap-5 lg:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4">
           {products
             .filter((product) => product.featured)
             .map((product) => (

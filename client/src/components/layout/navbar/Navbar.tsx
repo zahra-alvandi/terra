@@ -7,57 +7,58 @@ import NavLinks from "./NavLinks";
 import NavActions from "./NavActions";
 import MobileMenu from "./MobileMenu";
 import SearchOverlay from "./SearchOverlay";
+import CartDrawer from "./CartDrawer";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
+  const [isCartOpen, setIsCartOpen] = useState(false);
   return (
     <>
-    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
-      <Container>
+      <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
+        <Container>
+          {/* Desktop */}
+          <div className="hidden h-20 items-center justify-between lg:flex">
+            <div className="flex items-center gap-16">
+              <Logo />
+              <NavLinks />
+            </div>
 
-        {/* Desktop */}
-        <div className="hidden h-20 items-center justify-between lg:flex">
-
-          <div className="flex items-center gap-16">
-            <Logo />
-            <NavLinks />
+            <NavActions
+              onOpenSearch={() => setIsSearchOpen(true)}
+              onOpenCart={() => setIsCartOpen(true)}
+            />
           </div>
 
-          <NavActions
-            onOpenSearch={() => setIsSearchOpen(true)}
-          />
+          {/* Mobile */}
+          <div className="flex h-20 items-center justify-between lg:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="rounded-lg p-2 hover:bg-stone-100"
+            >
+              <Menu size={24} />
+            </button>
 
-        </div>
+            <Logo />
 
-        {/* Mobile */}
-        <div className="flex h-20 items-center justify-between lg:hidden">
+            <NavActions
+              onOpenSearch={() => setIsSearchOpen(true)}
+              onOpenCart={() => setIsCartOpen(true)}
+            />
+          </div>
+        </Container>
+      </header>
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        onOpenSearch={() => setIsSearchOpen(true)}
+      />
 
-          <button
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="rounded-lg p-2 hover:bg-stone-100"
-          >
-            <Menu size={24} />
-          </button>
-
-          <Logo />
-
-          <NavActions
-            onOpenSearch={() => setIsSearchOpen(true)}
-          />
-
-        </div>
-
-      </Container>
-    </header>
-        <MobileMenu
-  isOpen={isMobileMenuOpen}
-  onClose={() => setIsMobileMenuOpen(false)}
-  onOpenSearch={() => setIsSearchOpen(true)}
-/>
-
-<SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-</>
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+    </>
   );
 }

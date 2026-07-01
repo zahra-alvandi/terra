@@ -75,7 +75,7 @@ export const products: Product[] = [
 
     category: "plate",
 
-    featured: false,
+    featured: true,
 
     createdAt: "2026-05-19",
 
