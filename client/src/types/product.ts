@@ -1,13 +1,17 @@
-import type { ProductCategory } from "./product-category";
+export type ProductCategory = "mug" | "vase" | "plate" | "bowl";
 
 export interface Product {
   id: number;
 
+  slug: string;
+
   title: string;
   englishTitle: string;
-  keywords: string[];
+
+  description: string;
 
   image: string;
+  gallery: string[];
 
   price: number;
 
@@ -17,7 +21,7 @@ export interface Product {
 
   createdAt: string;
 
-  badge?: "NEW" | "BEST SELLER" | "LIMITED";
+  keywords: string[];
 
-  href: string;
+  badge?: "NEW" | "BEST SELLER" | "LIMITED";
 }

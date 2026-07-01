@@ -14,7 +14,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Image */}
 
       <NavLink
-        to={product.href}
+        to={`/shop/${product.slug}`}
         className="group/image relative block overflow-hidden"
       >
         <img
@@ -118,8 +118,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           </div>
 
-          <NavLink dir="ltr"
-            to={product.href}
+          <NavLink
+            dir="ltr"
+            to={`/shop/${product.slug}`}
             className="
       hidden
       md:flex

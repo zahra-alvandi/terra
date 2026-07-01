@@ -8,10 +8,16 @@ import bowlImage from "@/app/assets/images/products/bowl.jpg";
 export const products: Product[] = [
   {
     id: 1,
+    slug: "ceramic-mug",
+
     title: "ماگ سرامیکی",
     englishTitle: "Ceramic Mug",
 
+    description:
+      "ماگ سرامیکی دست‌ساز با لعاب مات، مناسب برای نوشیدنی‌های گرم و سرد.",
+
     image: mugImage,
+    gallery: [mugImage, mugImage, mugImage],
 
     price: 890000,
 
@@ -19,54 +25,85 @@ export const products: Product[] = [
 
     featured: true,
 
-    createdAt: "2026-06-10",
+    createdAt: "2026-07-01",
 
-    keywords: ["ماگ", "لیوان", "فنجان", "سرامیک", "mug", "cup", "ceramic"],
-
-    href: "/shop/ceramic-mug",
+    keywords: ["ماگ", "لیوان", "سرامیکی", "ceramic", "mug"],
 
     badge: "NEW",
   },
+
   {
     id: 2,
+    slug: "handmade-vase",
+
     title: "گلدان دست‌ساز",
     englishTitle: "Handmade Vase",
+
+    description:
+      "گلدان سرامیکی دست‌ساز با طراحی مینیمال، مناسب برای دکوراسیون مدرن.",
+
     image: vaseImage,
+    gallery: [vaseImage, vaseImage, vaseImage],
+
     price: 1250000,
-    category: "mug",
+
+    category: "vase",
+
     featured: true,
-    createdAt: "2026-06-10",
+
+    createdAt: "2026-06-24",
+
     keywords: ["گلدان", "گلدون", "دکوری", "گل", "vase", "flower"],
 
-    href: "/shop/ceramic-mug",
-    badge: "NEW",
+    badge: "BEST SELLER",
   },
+
   {
     id: 3,
+    slug: "dinner-plate",
+
     title: "بشقاب سفالی",
     englishTitle: "Dinner Plate",
-    image: plateImage,
-    price: 760000,
-    category: "mug",
-    featured: true,
-    createdAt: "2026-06-10",
-    keywords: ["بشقاب", "سینی", "plate", "dinner"],
 
-    href: "/shop/ceramic-mug",
-    badge: "NEW",
+    description:
+      "بشقاب سفالی دست‌ساز با لعاب طبیعی، مناسب سرو غذا و استفاده روزمره.",
+
+    image: plateImage,
+    gallery: [plateImage, plateImage, plateImage],
+
+    price: 760000,
+
+    category: "plate",
+
+    featured: false,
+
+    createdAt: "2026-05-19",
+
+    keywords: ["بشقاب", "plate", "سرو", "dinner"],
   },
+
   {
     id: 4,
+    slug: "ceramic-bowl",
+
     title: "کاسه سرامیکی",
     englishTitle: "Ceramic Bowl",
-    image: bowlImage,
-    price: 540000,
-    category: "mug",
-    featured: true,
-    createdAt: "2026-06-10",
-    keywords: ["کاسه", "ظرف", "bowl", "ceramic"],
 
-    href: "/shop/ceramic-mug",
-    badge: "NEW",
+    description: "کاسه سرامیکی مینیمال مناسب صبحانه، سالاد و سرو انواع خوراک.",
+
+    image: bowlImage,
+    gallery: [bowlImage, bowlImage, bowlImage],
+
+    price: 540000,
+
+    category: "bowl",
+
+    featured: true,
+
+    createdAt: "2026-04-11",
+
+    keywords: ["کاسه", "bowl", "ceramic", "ظرف", "سالاد"],
+
+    badge: "LIMITED",
   },
 ];

@@ -65,9 +65,11 @@ export default function FeaturedProducts() {
         {/* Products */}
 
         <div className="grid grid-cols-2 gap-5 lg:grid-cols-2 xl:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {products
+            .filter((product) => product.featured)
+            .map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
         </div>
 
         {/* Mobile CTA */}

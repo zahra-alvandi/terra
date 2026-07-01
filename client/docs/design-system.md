@@ -106,3 +106,87 @@ Estedad
 - Added View All Products buttons
 - Improved product card UI
 - Added reusable Divider component
+
+# Session 13 – Shop Logic
+
+## Completed
+
+### Shop Toolbar
+
+- Replaced the static search button with a functional search input.
+- Designed the toolbar to support future scalability.
+- Added reusable FilterPopover component.
+
+### Search
+
+- Implemented real-time search.
+- Search now supports:
+  - Persian title
+  - English title
+  - Product category
+  - Product badge
+  - Product keywords
+
+### Product Keywords
+
+- Added `keywords` field to Product model.
+- Improved search accuracy using custom keywords.
+
+### Category Filter
+
+- Added product categories.
+- Connected category filter to shop state.
+- Products now filter dynamically based on selected category.
+
+### Sorting
+
+Implemented product sorting:
+
+- Newest
+- Oldest
+- Lowest Price
+- Highest Price
+
+### Empty State
+
+Added empty state when no products match search/filter.
+
+---
+
+## Refactoring
+
+- Created reusable `FilterPopover` component.
+- Separated categories and sorting options into constants.
+- Improved ShopPage filtering logic.
+
+---
+
+## Current Progress
+
+Home Page
+
+- ✅ Completed
+
+Shop Page
+
+- ✅ Search
+- ✅ Category Filter
+- ✅ Sorting
+- ✅ Empty State
+
+Next Step
+
+- Product Details Page
+
+### 7/1/2026
+
+### Product Details
+
+- Added dynamic product page using slug
+- Created ProductGallery component
+- Created ProductInfo component
+- Added breadcrumb navigation
+- Added product rating section
+- Built reusable QuantitySelector component
+- Implemented product lookup with getProductBySlug utility
+- Improved project structure for future product features
