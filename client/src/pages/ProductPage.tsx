@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 import { getProductBySlug } from "@/utils/getProductBySlug";
 import Container from "@/components/layout/Container";
@@ -12,6 +13,12 @@ import RelatedProducts from "@/components/product/RelatedProducts";
 
 export default function ProductPage() {
   const { slug } = useParams();
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [slug]);
   const [quantity, setQuantity] = useState(1);
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);

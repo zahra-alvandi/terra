@@ -1,24 +1,30 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
-
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import type { Product } from "@/types/product";
 import type { CartItem } from "@/types/cart";
+import { CART_STORAGE_KEY } from "@/constants/storage";
 
 type CartContextType = {
   cartItems: CartItem[];
 
-  cartCount: number;
-
-  cartTotal: number;
-
   addToCart: (product: Product, quantity: number) => void;
-
-  removeFromCart: (productId: number) => void;
 
   increaseQuantity: (productId: number) => void;
 
   decreaseQuantity: (productId: number) => void;
 
+  removeFromCart: (productId: number) => void;
+
   clearCart: () => void;
+
+  cartCount: number;
+
+  cartTotal: number;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -28,7 +34,17 @@ type Props = {
 };
 
 export function CartProvider({ children }: Props) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+
+    if (!savedCart) return [];
+
+    try {
+      return JSON.parse(savedCart);
+    } catch {
+      return [];
+    }
+  });
 
   const addToCart = (product: Product, quantity: number) => {
     setCartItems((prev) => {
@@ -53,12 +69,6 @@ export function CartProvider({ children }: Props) {
         },
       ];
     });
-  };
-
-  const removeFromCart = (productId: number) => {
-    setCartItems((prev) =>
-      prev.filter((item) => item.product.id !== productId),
-    );
   };
 
   const increaseQuantity = (productId: number) => {
@@ -89,6 +99,12 @@ export function CartProvider({ children }: Props) {
     );
   };
 
+  const removeFromCart = (productId: number) => {
+    setCartItems((prev) =>
+      prev.filter((item) => item.product.id !== productId),
+    );
+  };
+
   const clearCart = () => {
     setCartItems([]);
   };
@@ -99,18 +115,28 @@ export function CartProvider({ children }: Props) {
     (total, item) => total + item.product.price * item.quantity,
     0,
   );
+  useEffect(() => {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return (
     <CartContext.Provider
       value={{
         cartItems,
-        cartCount,
-        cartTotal,
+
         addToCart,
-        removeFromCart,
+
         increaseQuantity,
+
         decreaseQuantity,
+
+        removeFromCart,
+
         clearCart,
+
+        cartCount,
+
+        cartTotal,
       }}
     >
       {children}
