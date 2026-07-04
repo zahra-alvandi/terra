@@ -6,9 +6,11 @@ export default function Logo() {
       to="/"
       className="flex items-center gap-3 select-none"
     >
-      {/* Logo Image */}
+      {/* <img src="/logo.png" className="w-8 h-8" alt="" /> */}
 
-      <div className="h-8 w-8 rounded-full border border-border"></div>
+      <div className="h-15 w-15 rounded-full border border-border overflow-hidden">
+        <img src="/logo.png" alt="" />
+      </div>
 
       {/* Brand */}
 

@@ -4,6 +4,7 @@ import ProductPage from "@/pages/ProductPage";
 
 import HomePage from "@/pages/HomePage";
 import ShopPage from "@/pages/ShopPage";
+import CartPage from "@/pages/CartPage";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "/shop/:slug",
         element: <ProductPage />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
       },
     ],
   },

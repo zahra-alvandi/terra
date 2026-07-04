@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
 import { formatPrice } from "@/utils/formatPrice";
 import { useCart } from "@/context/CartContext";
 
@@ -13,6 +13,7 @@ type Props = {
 
 export default function CartDrawer({ isOpen, onClose }: Props) {
   const { cartItems, cartTotal } = useCart();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -78,15 +79,19 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
 
             <div className="flex flex-col gap-3">
               <button
+                onClick={() => {
+                  onClose();
+                  navigate("/cart");
+                }}
                 className="
-          w-full
-          rounded-2xl
-          bg-primary
-          py-4
-          text-white
-          transition
-          hover:opacity-90
-        "
+    w-full
+    rounded-2xl
+    bg-primary
+    py-4
+    text-white
+    transition
+    hover:opacity-90
+  "
               >
                 مشاهده سبد خرید
               </button>
