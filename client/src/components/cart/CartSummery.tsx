@@ -1,8 +1,10 @@
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/utils/formatPrice";
+import { useNavigate } from "react-router-dom";
 
 export default function CartSummary() {
   const { cartTotal, cartCount } = useCart();
+  const navigate = useNavigate();
 
   return (
     <div className="sticky top-28 rounded-3xl border border-border bg-white p-8 shadow-sm">
@@ -27,6 +29,7 @@ export default function CartSummary() {
       </div>
 
       <button
+        onClick={() => navigate("/checkout")}
         className="
           w-full
           rounded-2xl
@@ -41,8 +44,6 @@ export default function CartSummary() {
       >
         ادامه فرایند خرید
       </button>
-
-     
     </div>
   );
 }
