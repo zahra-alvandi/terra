@@ -8,41 +8,27 @@ import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/utils/formatPrice";
 import { Loader2 } from "lucide-react";
 import { CheckCircle2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
-export default function CheckoutPayment() {
-  const { cartTotal, clearCart } = useCart();
-  const navigate = useNavigate();
-  const [receipt, setReceipt] = useState<File | null>(null);
+type Props = {
+  receipt: File | null;
+  setReceipt: React.Dispatch<React.SetStateAction<File | null>>;
+  isSubmitting: boolean;
+};
+
+export default function CheckoutPayment({
+  receipt,
+  setReceipt,
+  isSubmitting,
+}: Props) {
+  const { cartTotal } = useCart();
+
   const [preview, setPreview] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const copyCardNumber = async () => {
     await navigator.clipboard.writeText(PAYMENT_CONFIG.cardNumber);
 
     toast.success("شماره کارت کپی شد");
   };
-  const submitOrder = async () => {
-    if (!receipt) {
-      toast.error("لطفاً رسید پرداخت را بارگذاری کنید.");
-      return;
-    }
 
-    setIsSubmitting(true);
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    toast.success("سفارش شما با موفقیت ثبت شد.");
-
-    clearCart();
-
-    setReceipt(null);
-    setPreview("");
-
-    setIsSubmitting(false);
-
-    navigate("/order-success");
-  };
   useEffect(() => {
     return () => {
       if (preview) {
@@ -50,6 +36,11 @@ export default function CheckoutPayment() {
       }
     };
   }, [preview]);
+  useEffect(() => {
+    if (!receipt) {
+      setPreview("");
+    }
+  }, [receipt]);
 
   return (
     <div className="mt-8 rounded-3xl border border-border bg-white p-8">
@@ -78,7 +69,7 @@ export default function CheckoutPayment() {
         </button>
 
         {/* online payment */}
-        {/* <button
+        <button
           disabled
           className="
             flex items-center gap-4
@@ -97,7 +88,7 @@ export default function CheckoutPayment() {
 
             <p className="text-sm text-text-secondary">به زودی</p>
           </div>
-        </button> */}
+        </button>
       </div>
 
       {/* Card */}
@@ -210,13 +201,11 @@ export default function CheckoutPayment() {
             </span>
           </div>
         )}
-      </div>
-      <div className="mt-10">
-        <button
-          type="button"
-          onClick={submitOrder}
-          disabled={isSubmitting}
-          className="
+        <div className="mt-10">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="
       flex
       w-full
       items-center
@@ -228,19 +217,19 @@ export default function CheckoutPayment() {
       font-medium
       text-white
       transition
-      disabled:cursor-not-allowed
       disabled:opacity-60
     "
-        >
-          {isSubmitting ? (
-            <div className="flex items-center gap-2">
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span>در حال ثبت سفارش...</span>
-            </div>
-          ) : (
-            "ثبت سفارش"
-          )}
-        </button>
+          >
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>در حال ثبت سفارش...</span>
+              </div>
+            ) : (
+              "ثبت سفارش"
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

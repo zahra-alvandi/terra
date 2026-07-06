@@ -1,5 +1,4 @@
-import { useForm } from "react-hook-form";
-
+import { useFormContext } from "react-hook-form";
 import TextField from "@/components/form/TextField";
 
 type CheckoutFormData = {
@@ -13,18 +12,11 @@ type CheckoutFormData = {
 export default function CheckoutForm() {
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm<CheckoutFormData>();
-  const onSubmit = (data: CheckoutFormData) => {
-    console.log(data);
-  };
+  } = useFormContext<CheckoutFormData>();
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="rounded-3xl border border-border bg-white p-8"
-    >
+    <div className="rounded-3xl border border-border bg-white p-8">
       <h2 className="mb-8 text-2xl font-semibold">اطلاعات گیرنده</h2>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -78,7 +70,9 @@ export default function CheckoutForm() {
         <label className="mb-2 block text-sm text-text-secondary">آدرس</label>
 
         <textarea
-          {...register("address")}
+          {...register("address", {
+            required: "آدرس الزامی است",
+          })}
           rows={5}
           className="
             w-full
@@ -93,26 +87,10 @@ export default function CheckoutForm() {
             focus:border-primary
           "
         />
+        {errors.address && (
+          <p className="mt-2 text-sm text-red-500">{errors.address.message}</p>
+        )}
       </div>
-      <div className="mt-10">
-        <button
-          type="submit"
-          className="
-      w-full
-      rounded-2xl
-      bg-primary
-      py-4
-      text-lg
-      font-medium
-      text-white
-      transition
-      hover:opacity-90
-      active:scale-[0.98]
-    "
-        >
-          ثبت سفارش
-        </button>
-      </div>
-    </form>
+    </div>
   );
 }
