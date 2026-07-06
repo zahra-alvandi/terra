@@ -1,9 +1,22 @@
-import { CheckCircle2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { CheckCircle2, Copy } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import Container from "@/components/layout/Container";
 
 export default function OrderSuccessPage() {
+  const { state } = useLocation();
+
+  const orderId = state?.orderId;
+
+  const copyOrderId = async () => {
+    if (!orderId) return;
+
+    await navigator.clipboard.writeText(orderId);
+
+    toast.success("کد سفارش کپی شد");
+  };
+
   return (
     <section className="py-24">
       <Container>
@@ -18,6 +31,30 @@ export default function OrderSuccessPage() {
             رسید پرداخت شما ثبت شد. سفارش پس از بررسی توسط تیم Terra تأیید و
             آماده ارسال خواهد شد.
           </p>
+
+          {orderId && (
+            <div className="mt-8 rounded-2xl bg-stone-50 p-5">
+              <p className="text-sm text-text-secondary">کد پیگیری سفارش</p>
+
+              <div className="mt-3 flex items-center justify-center gap-3">
+                <span className="font-mono text-lg font-semibold tracking-wider">
+                  {orderId}
+                </span>
+
+                <button
+                  type="button"
+                  onClick={copyOrderId}
+                  className="rounded-lg border border-border p-2 transition hover:border-primary"
+                >
+                  <Copy size={18} />
+                </button>
+              </div>
+
+              <p className="mt-4 text-sm text-text-secondary">
+                این کد را نگه دارید.
+              </p>
+            </div>
+          )}
 
           <div className="mt-10 flex flex-col gap-4 md:flex-row md:justify-center">
             <Link

@@ -2,8 +2,10 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { nanoid } from "nanoid";
+
 import { useCart } from "@/context/CartContext";
-import { orderService } from "@/services/orderService";
+import { saveOrder } from "@/utils/orderStorage";
 import { OrderStatus } from "@/types/order";
 import type { Order } from "@/types/order";
 
@@ -42,7 +44,7 @@ export default function CheckoutPage() {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const order: Order = {
-      id: crypto.randomUUID(),
+      id: nanoid(),
 
       firstName: data.firstName,
       lastName: data.lastName,
@@ -69,19 +71,20 @@ export default function CheckoutPage() {
       createdAt: new Date().toISOString(),
     };
 
-    orderService.save(order);
+    saveOrder(order);
 
     clearCart();
-
     methods.reset();
-
     setReceipt(null);
-
-    toast.success("سفارش با موفقیت ثبت شد.");
-
-    navigate("/order-success");
-
     setIsSubmitting(false);
+
+    localStorage.setItem("terra-last-order-id", order.id);
+    toast.success("سفارش با موفقیت ثبت شد.");
+    navigate("/order-success", {
+      state: {
+        orderId: order.id,
+      },
+    });
   };
 
   return (
