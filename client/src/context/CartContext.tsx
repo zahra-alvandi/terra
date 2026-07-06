@@ -25,6 +25,11 @@ type CartContextType = {
   cartCount: number;
 
   cartTotal: number;
+  isCartOpen: boolean;
+
+  openCart: () => void;
+
+  closeCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -45,6 +50,10 @@ export function CartProvider({ children }: Props) {
       return [];
     }
   });
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const openCart = () => setIsCartOpen(true);
+
+  const closeCart = () => setIsCartOpen(false);
 
   const addToCart = (product: Product, quantity: number) => {
     setCartItems((prev) => {
@@ -69,6 +78,7 @@ export function CartProvider({ children }: Props) {
         },
       ];
     });
+    openCart();
   };
 
   const increaseQuantity = (productId: number) => {
@@ -137,6 +147,12 @@ export function CartProvider({ children }: Props) {
         cartCount,
 
         cartTotal,
+
+        isCartOpen,
+
+        openCart,
+
+        closeCart,
       }}
     >
       {children}

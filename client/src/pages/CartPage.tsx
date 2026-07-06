@@ -3,6 +3,7 @@ import { useCart } from "@/context/CartContext";
 // import { formatPrice } from "@/utils/formatPrice";
 import CartList from "@/components/cart/CartList";
 import CartSummary from "@/components/cart/CartSummery";
+import EmptyCart from "@/components/cart/EmptyCart";
 
 export default function CartPage() {
   const { cartItems, cartTotal } = useCart();
@@ -14,7 +15,7 @@ export default function CartPage() {
 
         <div className="mt-10">
           {cartItems.length === 0 ? (
-            <p className="text-text-secondary">سبد خرید شما خالی است</p>
+            <EmptyCart />
           ) : (
             <div className="grid gap-8 lg:grid-cols-3">
               {/* Items */}

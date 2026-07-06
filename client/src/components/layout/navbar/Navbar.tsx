@@ -7,12 +7,13 @@ import NavLinks from "./NavLinks";
 import NavActions from "./NavActions";
 import MobileMenu from "./MobileMenu";
 import SearchOverlay from "./SearchOverlay";
+import { useCart } from "@/context/CartContext";
 import CartDrawer from "./CartDrawer";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { isCartOpen, closeCart } = useCart();
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
@@ -24,10 +25,7 @@ export default function Navbar() {
               <NavLinks />
             </div>
 
-            <NavActions
-              onOpenSearch={() => setIsSearchOpen(true)}
-              onOpenCart={() => setIsCartOpen(true)}
-            />
+            <NavActions onOpenSearch={() => setIsSearchOpen(true)} />
           </div>
 
           {/* Mobile */}
@@ -41,10 +39,7 @@ export default function Navbar() {
 
             <Logo />
 
-            <NavActions
-              onOpenSearch={() => setIsSearchOpen(true)}
-              onOpenCart={() => setIsCartOpen(true)}
-            />
+            <NavActions onOpenSearch={() => setIsSearchOpen(true)} />
           </div>
         </Container>
       </header>
@@ -58,7 +53,7 @@ export default function Navbar() {
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
       />
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
     </>
   );
 }

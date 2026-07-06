@@ -1,16 +1,16 @@
 import { Search, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 type NavActionsProps = {
   onOpenSearch: () => void;
-  onOpenCart: () => void;
 };
 
 export default function NavActions({
   onOpenSearch,
-  onOpenCart,
 }: NavActionsProps) {
   const { cartCount } = useCart();
+  const navigate = useNavigate();
 
   return (
     <div className="flex items-center gap-6">
@@ -29,7 +29,7 @@ export default function NavActions({
 
       {/* Cart */}
       <button
-        onClick={onOpenCart}
+        onClick={() => navigate("/cart")}
         className="relative cursor-pointer rounded-full p-2 text-text-primary transition-all duration-300 hover:bg-stone-200 hover:text-primary"
       >
         <ShoppingBag size={22} strokeWidth={1.75} />
