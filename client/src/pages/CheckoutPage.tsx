@@ -3,6 +3,9 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
+import { orderService } from "@/services/orderService";
+import { OrderStatus } from "@/types/order";
+import type { Order } from "@/types/order";
 
 import Container from "@/components/layout/Container";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
@@ -21,8 +24,9 @@ export default function CheckoutPage() {
   const methods = useForm<CheckoutFormData>({
     mode: "onSubmit",
   });
+
+  const { cartItems, cartTotal, clearCart } = useCart();
   const navigate = useNavigate();
-  const { clearCart } = useCart();
 
   const [receipt, setReceipt] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,13 +37,39 @@ export default function CheckoutPage() {
       return;
     }
 
-    console.log(data);
-
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    toast.success("سفارش با موفقیت ثبت شد.");
+    const order: Order = {
+      id: crypto.randomUUID(),
+
+      firstName: data.firstName,
+      lastName: data.lastName,
+
+      phone: data.phone,
+      email: data.email,
+
+      address: data.address,
+
+      totalPrice: cartTotal,
+
+      items: cartItems.map((item) => ({
+        id: item.product.id,
+        name: item.product.title,
+        price: item.product.price,
+        quantity: item.quantity,
+        image: item.product.image,
+      })),
+
+      receiptImage: URL.createObjectURL(receipt),
+
+      status: OrderStatus.PendingReview,
+
+      createdAt: new Date().toISOString(),
+    };
+
+    orderService.save(order);
 
     clearCart();
 
@@ -47,9 +77,11 @@ export default function CheckoutPage() {
 
     setReceipt(null);
 
-    setIsSubmitting(false);
+    toast.success("سفارش با موفقیت ثبت شد.");
 
     navigate("/order-success");
+
+    setIsSubmitting(false);
   };
 
   return (
