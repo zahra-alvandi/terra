@@ -52,7 +52,7 @@ export default function OrderSuccessPage() {
               </div>
 
               <p className="mt-4 text-sm text-text-secondary">
-                این شماره را نگه دارید تا بتوانید وضعیت سفارش خود را پیگیری
+                این شماره را نگه دارید تا بتونید وضعیت سفارشتان را پیگیری
                 کنید.
               </p>
 

@@ -9,10 +9,12 @@ import MobileMenu from "./MobileMenu";
 import SearchOverlay from "./SearchOverlay";
 import { useCart } from "@/context/CartContext";
 import CartDrawer from "./CartDrawer";
+import { useSearch } from "@/context/SearchContext";
+import MobileBottomNav from "../MobileBottomNav";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { isSearchOpen, openSearch, closeSearch } = useSearch();
   const { isCartOpen, closeCart } = useCart();
   return (
     <>
@@ -25,7 +27,7 @@ export default function Navbar() {
               <NavLinks />
             </div>
 
-            <NavActions onOpenSearch={() => setIsSearchOpen(true)} />
+            <NavActions onOpenSearch={openSearch} />
           </div>
 
           {/* Mobile */}
@@ -39,21 +41,19 @@ export default function Navbar() {
 
             <Logo />
 
-            <NavActions onOpenSearch={() => setIsSearchOpen(true)} />
+            <NavActions onOpenSearch={openSearch} />
           </div>
         </Container>
       </header>
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
-        onOpenSearch={() => setIsSearchOpen(true)}
+        onOpenSearch={openSearch}
       />
 
-      <SearchOverlay
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-      />
+      <SearchOverlay isOpen={isSearchOpen} onClose={closeSearch} />
       <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
+      <MobileBottomNav />
     </>
   );
 }
