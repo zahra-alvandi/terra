@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, Hourglass } from "lucide-react";
 
 import Container from "@/components/layout/Container";
 import { getOrders } from "@/utils/orderStorage";
 import { OrderStatus, type Order } from "@/types/order";
 import { orderService } from "@/services/orderService";
+import OrderTimeline from "@/components/order/OrderTimeline";
 
 export default function OrderTrackingPage() {
   const [orderNumber, setOrderNumber] = useState(
@@ -194,6 +195,39 @@ export default function OrderTrackingPage() {
                   </span>
                 </div>
               </div>
+              <OrderTimeline status={order.status} />
+              {order && (
+                <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-6">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl text-primary">
+                      <Hourglass />
+                    </span>
+
+                    <h3 className="text-lg font-semibold text-amber-800">
+                      زمان تقریبی تحویل
+                    </h3>
+                  </div>
+
+                  <div className="mt-5 space-y-3 text-sm leading-7 text-amber-700">
+                    <div className="flex items-center justify-between rounded-xl bg-white/70 px-4 py-3">
+                      <span>تهران</span>
+
+                      <span className="font-semibold">۱ تا ۷ روز کاری</span>
+                    </div>
+
+                    <div className="flex items-center justify-between rounded-xl bg-white/70 px-4 py-3">
+                      <span>سایر شهرها</span>
+
+                      <span className="font-semibold">۳ تا ۱۰ روز کاری</span>
+                    </div>
+
+                    <p className="pt-2 text-xs leading-6 text-amber-600">
+                      زمان‌های فوق تقریبی هستند و پس از تأیید سفارش محاسبه
+                      می‌شوند.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
