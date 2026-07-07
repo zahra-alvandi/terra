@@ -1,25 +1,29 @@
 import type { Order } from "@/types/order";
+import { getOrders } from "@/utils/orderStorage";
 
-const STORAGE_KEY = "terra_orders";
+const LAST_ORDER_KEY = "terra-last-order-number";
 
 export const orderService = {
-  getAll(): Order[] {
-    const data = localStorage.getItem(STORAGE_KEY);
-
-    if (!data) return [];
-
-    return JSON.parse(data);
+  generateOrderNumber() {
+    return `TR-${Date.now().toString().slice(-6)}`;
   },
 
-  save(order: Order) {
-    const orders = this.getAll();
-
-    orders.unshift(order);
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+  setLastOrderNumber(orderNumber: string) {
+    localStorage.setItem(LAST_ORDER_KEY, orderNumber);
   },
 
-  clear() {
-    localStorage.removeItem(STORAGE_KEY);
+  getLastOrderNumber() {
+    return localStorage.getItem(LAST_ORDER_KEY) ?? "";
+  },
+
+  findByOrderNumber(orderNumber: string): Order | null {
+    const orders = getOrders();
+
+    return (
+      orders.find(
+        (order) =>
+          order.orderNumber.toLowerCase() === orderNumber.trim().toLowerCase(),
+      ) ?? null
+    );
   },
 };

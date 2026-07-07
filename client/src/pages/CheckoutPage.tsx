@@ -8,6 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { saveOrder } from "@/utils/orderStorage";
 import { OrderStatus } from "@/types/order";
 import type { Order } from "@/types/order";
+import { orderService } from "@/services/orderService";
 
 import Container from "@/components/layout/Container";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
@@ -43,8 +44,11 @@ export default function CheckoutPage() {
 
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
+    const orderNumber = orderService.generateOrderNumber();
+
     const order: Order = {
       id: nanoid(),
+      orderNumber,
 
       firstName: data.firstName,
       lastName: data.lastName,
@@ -73,16 +77,19 @@ export default function CheckoutPage() {
 
     saveOrder(order);
 
+    orderService.setLastOrderNumber(order.orderNumber);
+
     clearCart();
     methods.reset();
+
     setReceipt(null);
     setIsSubmitting(false);
 
-    localStorage.setItem("terra-last-order-id", order.id);
     toast.success("سفارش با موفقیت ثبت شد.");
+
     navigate("/order-success", {
       state: {
-        orderId: order.id,
+        orderNumber: order.orderNumber,
       },
     });
   };

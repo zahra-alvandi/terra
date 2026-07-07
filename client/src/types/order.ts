@@ -10,6 +10,8 @@ export enum OrderStatus {
 export interface Order {
   id: string;
 
+  orderNumber: string;
+
   firstName: string;
   lastName: string;
 

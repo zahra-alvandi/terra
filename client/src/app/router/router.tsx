@@ -7,6 +7,7 @@ import ShopPage from "@/pages/ShopPage";
 import CartPage from "@/pages/CartPage";
 import CheckoutPage from "@/pages/CheckoutPage";
 import OrderSuccessPage from "@/pages/OrderSuccessPage";
+import OrderTrackingPage from "@/pages/OrderTrackingPage";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "/order-success",
         element: <OrderSuccessPage />,
+      },
+      {
+        path: "/track-order",
+        element: <OrderTrackingPage />,
       },
     ],
   },
