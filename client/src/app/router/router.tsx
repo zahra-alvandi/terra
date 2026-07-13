@@ -17,6 +17,7 @@ import AdminCustomersPage from "@/pages/admin/AdminCustomersPage";
 import AdminSettingsPage from "@/pages/admin/AdminSettingsPage";
 import AdminGuardLayout from "@/components/admin/AdminGuardLayout";
 import AdminLoginPage from "@/pages/admin/AdminLoginPage";
+import AdminOrderDetailsPage from "@/pages/admin/AdminOrderDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
           {
             path: "settings",
             element: <AdminSettingsPage />,
+          },
+          {
+            path: "orders/:id",
+            element: <AdminOrderDetailsPage />,
           },
         ],
       },

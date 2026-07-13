@@ -1,5 +1,6 @@
-import type { Order } from "@/types/order";
+import type { Order, OrderStatus } from "@/types/order";
 import { getOrders } from "@/utils/orderStorage";
+
 
 const LAST_ORDER_KEY = "terra-last-order-number";
 
@@ -25,5 +26,25 @@ export const orderService = {
           order.orderNumber.toLowerCase() === orderNumber.trim().toLowerCase(),
       ) ?? null
     );
+  },
+  updateStatus(orderId: string, status: OrderStatus) {
+    const orders = getOrders();
+
+    const updatedOrders = orders.map((order) =>
+      order.id === orderId
+        ? {
+            ...order,
+            status,
+          }
+        : order,
+    );
+
+    localStorage.setItem("terra_orders", JSON.stringify(updatedOrders));
+  },
+
+  getById(orderId: string): Order | null {
+    const orders = getOrders();
+
+    return orders.find((order) => order.id === orderId) ?? null;
   },
 };
