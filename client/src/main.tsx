@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { router } from "@/app/router/router";
 import { CartProvider } from "@/context/CartContext";
 import { SearchProvider } from "./context/SearchContext";
+import { AdminAuthProvider } from "@/context/AdminAuthContext";
 
 import "./index.css";
 
@@ -13,8 +14,10 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <SearchProvider>
       <CartProvider>
+        {/* <RouterProvider router={router} /> */}
+        <AdminAuthProvider>
         <RouterProvider router={router} />
-
+      </AdminAuthProvider>
         <Toaster
           position="top-center"
           toastOptions={{
