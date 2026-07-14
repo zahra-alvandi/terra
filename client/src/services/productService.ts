@@ -27,4 +27,25 @@ export const productService = {
   save(products: Product[]) {
     localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
   },
+  add(product: Product) {
+    const products = loadProducts();
+
+    products.unshift(product);
+
+    this.save(products);
+  },
+
+  update(product: Product) {
+    const products = loadProducts().map((item) =>
+      item.id === product.id ? product : item,
+    );
+
+    this.save(products);
+  },
+
+  delete(id: number) {
+    const products = loadProducts().filter((item) => item.id !== id);
+
+    this.save(products);
+  },
 };

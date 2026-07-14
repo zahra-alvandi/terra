@@ -3,11 +3,25 @@ import { useState } from "react";
 
 import ProductDrawer from "@/components/admin/products/ProductDrawer";
 import ProductForm from "@/components/admin/products/ProductForm";
+import type { Product } from "@/types/product";
+import toast from "react-hot-toast";
 
 export default function AdminProductPage() {
-  const products = productService.getAll();
+  const [products, setProducts] = useState(productService.getAll());
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const refreshProducts = () => {
+    setProducts(productService.getAll());
 
+    setDrawerOpen(false);
+  };
+  const handleCreateProduct = (product: Product) => {
+    productService.add(product);
+
+    refreshProducts();
+
+    toast.success("محصول با موفقیت اضافه شد.");
+  };
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -18,6 +32,7 @@ export default function AdminProductPage() {
         </div>
 
         <button
+          type="button"
           onClick={() => setDrawerOpen(true)}
           className="rounded-2xl bg-primary px-6 py-3 text-white"
         >
@@ -54,9 +69,32 @@ export default function AdminProductPage() {
                 </td>
 
                 <td className="space-x-3 px-6 py-5">
-                  <button className="text-blue-600">ویرایش</button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingProduct(product);
+                      setDrawerOpen(true);
+                    }}
+                    className="text-blue-600 hover:underline"
+                  >
+                    ویرایش
+                  </button>
 
-                  <button className="mr-4 text-red-600">حذف</button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!confirm("این محصول حذف شود؟")) return;
+
+                      productService.delete(product.id);
+
+                      refreshProducts();
+
+                      toast.success("محصول حذف شد.");
+                    }}
+                    className="mr-4 text-red-600 hover:underline"
+                  >
+                    حذف
+                  </button>
                 </td>
               </tr>
             ))}
@@ -64,7 +102,7 @@ export default function AdminProductPage() {
         </table>
       </div>
       <ProductDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <ProductForm />
+        <ProductForm product={editingProduct} onSubmit={handleCreateProduct} />
       </ProductDrawer>
     </div>
   );
