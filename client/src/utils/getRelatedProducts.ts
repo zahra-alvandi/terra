@@ -1,8 +1,9 @@
-import { products } from "@/data/products";
+import { productService } from "@/services/productService";
 import type { Product } from "@/types/product";
 
 export function getRelatedProducts(product: Product, limit = 4) {
-  return products
+  return productService
+    .getAll()
     .filter((p) => {
       if (p.slug === product.slug) return false;
 

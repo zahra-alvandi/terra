@@ -3,12 +3,15 @@ import ShopToolbar from "@/components/shop/ShopToolbar";
 import ProductGrid from "@/components/shop/ProductGrid";
 
 import { useState } from "react";
-import { products } from "@/data/products";
+import { productService } from "@/services/productService";
+import { useEffect } from "react";
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("newest");
+  const [products, setProducts] = useState(productService.getAll());
+
   const filteredProducts = products.filter((product) => {
     const query = search.toLowerCase().trim();
 
@@ -24,6 +27,7 @@ export default function ShopPage() {
 
     return matchesSearch && matchesCategory;
   });
+
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (sort) {
       case "price-low":
@@ -44,6 +48,21 @@ export default function ShopPage() {
         );
     }
   });
+  
+  useEffect(() => {
+    const syncProducts = () => {
+      setProducts(productService.getAll());
+    };
+
+    window.addEventListener("storage", syncProducts);
+
+    window.addEventListener("products-updated", syncProducts);
+
+    return () => {
+      window.removeEventListener("storage", syncProducts);
+      window.removeEventListener("products-updated", syncProducts);
+    };
+  }, []);
   return (
     <>
       <ShopHeader productCount={filteredProducts.length} />

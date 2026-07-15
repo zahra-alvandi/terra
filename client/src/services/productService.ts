@@ -26,7 +26,10 @@ export const productService = {
 
   save(products: Product[]) {
     localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
+
+    window.dispatchEvent(new Event("products-updated"));
   },
+
   add(product: Product) {
     const products = loadProducts();
 

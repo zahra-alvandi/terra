@@ -1,5 +1,7 @@
-import { products } from "@/data/products";
+import { productService } from "@/services/productService";
 
 export function getProductBySlug(slug: string) {
-  return products.find((product) => product.slug === slug);
+  return productService
+    .getAll()
+    .find((product) => product.slug === slug);
 }

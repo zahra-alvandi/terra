@@ -2,11 +2,12 @@ import Container from "@/components/layout/Container";
 import { ArrowLeft } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-import { products } from "@/data/products";
+import { productService } from "@/services/productService";
 
 import ProductCard from "../ui/ProductCard";
 
 export default function FeaturedProducts() {
+  const products = productService.getAll();
   return (
     <section className="py-24">
       <Container>

@@ -13,14 +13,24 @@ export default function AdminProductPage() {
   const refreshProducts = () => {
     setProducts(productService.getAll());
 
+    setEditingProduct(null);
+
     setDrawerOpen(false);
   };
   const handleCreateProduct = (product: Product) => {
-    productService.add(product);
+    if (editingProduct) {
+      productService.update(product);
+
+      toast.success("محصول ویرایش شد.");
+    } else {
+      productService.add(product);
+
+      toast.success("محصول اضافه شد.");
+    }
+
+    setEditingProduct(null);
 
     refreshProducts();
-
-    toast.success("محصول با موفقیت اضافه شد.");
   };
   return (
     <div className="space-y-8">
@@ -33,7 +43,10 @@ export default function AdminProductPage() {
 
         <button
           type="button"
-          onClick={() => setDrawerOpen(true)}
+          onClick={() => {
+            setEditingProduct(null);
+            setDrawerOpen(true);
+          }}
           className="rounded-2xl bg-primary px-6 py-3 text-white"
         >
           افزودن محصول
@@ -75,7 +88,7 @@ export default function AdminProductPage() {
                       setEditingProduct(product);
                       setDrawerOpen(true);
                     }}
-                    className="text-blue-600 hover:underline"
+                    className="rounded-2xl px-6 py-3 text-blue-800"
                   >
                     ویرایش
                   </button>
@@ -83,15 +96,13 @@ export default function AdminProductPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      if (!confirm("این محصول حذف شود؟")) return;
-
                       productService.delete(product.id);
 
                       refreshProducts();
 
                       toast.success("محصول حذف شد.");
                     }}
-                    className="mr-4 text-red-600 hover:underline"
+                    className="mr-4 text-red-600"
                   >
                     حذف
                   </button>
@@ -101,8 +112,18 @@ export default function AdminProductPage() {
           </tbody>
         </table>
       </div>
-      <ProductDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <ProductForm product={editingProduct} onSubmit={handleCreateProduct} />
+      <ProductDrawer
+        open={drawerOpen}
+        onClose={() => {
+          setDrawerOpen(false);
+          setEditingProduct(null);
+        }}
+      >
+        <ProductForm
+          key={editingProduct?.id ?? "new"}
+          product={editingProduct}
+          onSubmit={handleCreateProduct}
+        />
       </ProductDrawer>
     </div>
   );
