@@ -1,10 +1,53 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import { getOrders } from "@/utils/orderStorage";
 import { orderStatusMap } from "@/utils/orderStatus";
+import { orderService } from "@/services/orderService";
+import toast from "react-hot-toast";
+import OrderDrawer from "@/components/admin/orders/OrderDrawer";
+import type { Order } from "@/types/order";
 
 export default function AdminOrdersPage() {
-  const orders = getOrders();
+  const [orders, setOrders] = useState(getOrders());
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("all");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
+  const filteredOrders = orders.filter((order) => {
+    const query = search.toLowerCase();
+
+    const matchesSearch =
+      (order.orderNumber ?? "").toLowerCase().includes(query) ||
+      `${order.firstName ?? ""} ${order.lastName ?? ""}`
+        .toLowerCase()
+        .includes(query) ||
+      (order.phone ?? "").includes(search);
+
+    const matchesStatus = status === "all" || order.status === status;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  const handleStatusChange = (orderId: string, status: string) => {
+    const updatedOrders = orders.map((order) => {
+      if (order.id !== orderId) return order;
+
+      const updatedOrder = {
+        ...order,
+        status: status as typeof order.status,
+      };
+
+      orderService.update(updatedOrder);
+
+      return updatedOrder;
+    });
+
+    setOrders(updatedOrders);
+
+    toast.success("وضعیت سفارش بروزرسانی شد.");
+  };
 
   return (
     <div className="space-y-8">
@@ -12,6 +55,27 @@ export default function AdminOrdersPage() {
         <h1 className="text-3xl font-bold">سفارش‌ها</h1>
 
         <p className="mt-2 text-text-secondary">مدیریت سفارش‌های ثبت شده</p>
+      </div>
+
+      <div className="flex flex-col gap-4 md:flex-row">
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="جستجو بر اساس شماره سفارش، نام یا تلفن..."
+          className="flex-1 rounded-2xl border border-border bg-white p-4 outline-none transition focus:border-primary"
+        />
+
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="rounded-2xl border border-border bg-white px-5 py-4 outline-none transition focus:border-primary"
+        >
+          <option value="all">همه وضعیت‌ها</option>
+          <option value="pending">در انتظار</option>
+          <option value="processing">در حال پردازش</option>
+          <option value="shipped">ارسال شده</option>
+          <option value="delivered">تحویل شده</option>
+        </select>
       </div>
 
       <div className="overflow-hidden rounded-3xl border border-border bg-white">
@@ -28,7 +92,7 @@ export default function AdminOrdersPage() {
           </thead>
 
           <tbody>
-            {orders.map((order) => (
+            {filteredOrders.map((order) => (
               <tr key={order.id} className="border-t border-border">
                 <td className="px-6 py-5 font-mono">{order.orderNumber}</td>
 
@@ -43,11 +107,20 @@ export default function AdminOrdersPage() {
                 </td>
 
                 <td className="px-6 py-5">
-                  <span
-                    className={`rounded-full px-3 py-2 text-xs font-medium ${orderStatusMap[order.status].color}`}
+                  <select
+                    value={order.status}
+                    onChange={(e) =>
+                      handleStatusChange(order.id, e.target.value)
+                    }
+                    className="rounded-xl border border-border px-3 py-2"
                   >
-                    {orderStatusMap[order.status].text}
-                  </span>
+                    <option value="PendingReview">در انتظار بررسی</option>
+                    <option value="Confirmed">تأیید شده</option>
+                    <option value="Preparing">در حال آماده‌سازی</option>
+                    <option value="Shipped">ارسال شده</option>
+                    <option value="Delivered">تحویل شده</option>
+                    <option value="Cancelled">لغو شده</option>
+                  </select>
                 </td>
 
                 <td className="px-6 py-5">
@@ -61,7 +134,7 @@ export default function AdminOrdersPage() {
               </tr>
             ))}
 
-            {orders.length === 0 && (
+            {filteredOrders.length === 0 && (
               <tr>
                 <td
                   colSpan={6}

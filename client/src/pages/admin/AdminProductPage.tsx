@@ -1,7 +1,7 @@
 import { productService } from "@/services/productService";
 import { useState } from "react";
 
-import ProductDrawer from "@/components/admin/products/ProductDrawer";
+import ProductDrawer from "@/components/ui/ProductDrawer";
 import ProductForm from "@/components/admin/products/ProductForm";
 import type { Product } from "@/types/product";
 import toast from "react-hot-toast";

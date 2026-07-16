@@ -1,6 +1,5 @@
 import type { Order, OrderStatus } from "@/types/order";
-import { getOrders } from "@/utils/orderStorage";
-
+import { getOrders, saveOrders } from "@/utils/orderStorage";
 
 const LAST_ORDER_KEY = "terra-last-order-number";
 
@@ -46,5 +45,12 @@ export const orderService = {
     const orders = getOrders();
 
     return orders.find((order) => order.id === orderId) ?? null;
+  },
+  update(order: Order) {
+    const orders = getOrders().map((item) =>
+      item.id === order.id ? order : item,
+    );
+
+    saveOrders(orders);
   },
 };

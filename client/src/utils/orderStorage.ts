@@ -21,6 +21,10 @@ export function saveOrder(order: Order) {
   localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
 }
 
+export function saveOrders(orders: Order[]) {
+  localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
+}
+
 export function clearOrders() {
   localStorage.removeItem(ORDER_STORAGE_KEY);
 }
