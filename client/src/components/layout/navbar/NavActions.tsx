@@ -1,14 +1,12 @@
 import { Search, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type NavActionsProps = {
   onOpenSearch: () => void;
 };
 
-export default function NavActions({
-  onOpenSearch,
-}: NavActionsProps) {
+export default function NavActions({ onOpenSearch }: NavActionsProps) {
   const { cartCount } = useCart();
   const navigate = useNavigate();
 
@@ -23,9 +21,12 @@ export default function NavActions({
       </button>
 
       {/* Login */}
-      <button className="hidden cursor-pointer text-sm font-medium text-text-primary transition-colors duration-300 hover:text-primary md:block">
+      <NavLink
+        to="/login"
+        className="hidden text-sm font-medium text-text-primary transition-colors duration-300 hover:text-primary md:block"
+      >
         ورود | ثبت نام
-      </button>
+      </NavLink>
 
       {/* Cart */}
       <button

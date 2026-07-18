@@ -24,7 +24,7 @@ export default function MobileMenu({
   onOpenSearch,
 }: MobileMenuProps) {
   const location = useLocation();
-    
+
   // Close the menu after changing the page
   useEffect(() => {
     onClose();
@@ -48,12 +48,12 @@ export default function MobileMenu({
   return (
     <>
       {/* Backdrop */}
-  {isOpen && (
-  <div
-    onClick={onClose}
-    className="fixed inset-0 z-40 bg-black/40 lg:hidden"
-  />
-)}
+      {isOpen && (
+        <div
+          onClick={onClose}
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+        />
+      )}
 
       {/* Drawer */}
       <aside
@@ -74,69 +74,45 @@ export default function MobileMenu({
         </div>
 
         <nav className="flex-1 p-6">
-            <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
+            <MobileNavItem to="/" icon={House} onClick={onClose}>
+              خانه
+            </MobileNavItem>
 
-          <MobileNavItem
-  to="/"
-  icon={House}
-  onClick={onClose}
->
-  خانه
-</MobileNavItem>
+            <MobileNavItem to="/shop" icon={ShoppingBag} onClick={onClose}>
+              فروشگاه
+            </MobileNavItem>
 
-          <MobileNavItem
-  to="/shop"
-  icon={ShoppingBag}
-  onClick={onClose}
->
-  فروشگاه
-</MobileNavItem>
+            <MobileNavItem to="/about" icon={CircleHelp} onClick={onClose}>
+              درباره Terra
+            </MobileNavItem>
 
-          <MobileNavItem
-  to="/about"
-  icon={CircleHelp}
-  onClick={onClose}
->
-  درباره Terra
-</MobileNavItem>
-
-         <MobileNavItem
-  to="/contact"
-  icon={Mail}
-  onClick={onClose}
->
-  تماس با ما
-</MobileNavItem>
-            </div>
+            <MobileNavItem to="/contact" icon={Mail} onClick={onClose}>
+              تماس با ما
+            </MobileNavItem>
+            <MobileNavItem to="/login" icon={User} onClick={onClose}>
+              ورود | ثبت نام
+            </MobileNavItem>
+          </div>
         </nav>
-        
+
         <div className="border-t p-4">
+          <button
+            onClick={() => {
+              onClose();
 
-  <button
-    onClick={() => {
-  onClose();
+              setTimeout(() => {
+                onOpenSearch();
+              }, 250);
+            }}
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-stone-100"
+          >
+            <Search size={20} />
+            <span>جستجو</span>
+          </button>
 
-  setTimeout(() => {
-    onOpenSearch();
-  }, 250);
-}}
-    className="flex w-full items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-stone-100"
-  >
-    <Search size={20} />
-    <span>جستجو</span>
-  </button>
-
-  <button
-    onClick={() => {
-      onClose();
-    }}
-    className="mt-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-stone-100"
-  >
-    <User size={20} />
-    <span>ورود | ثبت‌نام</span>
-  </button>
-
-</div>
+          
+        </div>
       </aside>
     </>
   );

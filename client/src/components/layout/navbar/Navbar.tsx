@@ -16,6 +16,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isSearchOpen, openSearch, closeSearch } = useSearch();
   const { isCartOpen, closeCart } = useCart();
+  console.log(isMobileMenuOpen);
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
@@ -53,7 +54,7 @@ export default function Navbar() {
 
       <SearchOverlay isOpen={isSearchOpen} onClose={closeSearch} />
       <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
-      <MobileBottomNav />
+      <MobileBottomNav hidden={isMobileMenuOpen} />
     </>
   );
 }

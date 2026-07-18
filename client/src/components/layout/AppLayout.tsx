@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./navbar/Navbar";
 import Footer from "./Footer";
-import MobileBottomNav from "./MobileBottomNav";
 
 export default function AppLayout() {
   return (
@@ -11,7 +10,7 @@ export default function AppLayout() {
         <Outlet />
       </main>
         <Footer />
-        <MobileBottomNav />
+        
     </>
   );
 }

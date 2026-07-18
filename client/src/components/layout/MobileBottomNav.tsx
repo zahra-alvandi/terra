@@ -3,7 +3,13 @@ import { NavLink } from "react-router-dom";
 
 import { useSearch } from "@/context/SearchContext";
 
-export default function MobileBottomNav() {
+type MobileBottomNavProps = {
+  hidden?: boolean;
+};
+
+export default function MobileBottomNav({
+  hidden = false,
+}: MobileBottomNavProps) {
   const { openSearch } = useSearch();
   const handleNavigate = () => {
     window.scrollTo({
@@ -12,29 +18,38 @@ export default function MobileBottomNav() {
     });
   };
 
+  console.log("MobileBottomNav");
+
   return (
     <nav
-      className="
-        fixed
-        bottom-4
-        left-1/2
-        z-50
-        flex
-        w-[92%]
-        max-w-md
-        -translate-x-1/2
-        items-center
-        justify-between
-        rounded-full
-        border
-        border-border
-        bg-white/95
-        px-6
-        py-4
-       shadow-2xl shadow-primary/20
-        backdrop-blur
-        md:hidden
-      "
+      className={`
+    fixed
+    left-1/2
+    z-50
+    flex
+    w-[92%]
+    max-w-md
+    -translate-x-1/2
+    items-center
+    justify-between
+    rounded-full
+    border
+    border-border
+    bg-white/95
+    px-4
+    py-3
+    shadow-2xl
+    shadow-primary/20
+    backdrop-blur
+    transition-all
+    duration-300
+    md:hidden
+    ${
+      hidden
+        ? "-bottom-32 opacity-0 pointer-events-none"
+        : "bottom-2 opacity-100"
+    }
+  `}
     >
       <NavLink
         to="/shop"
@@ -45,7 +60,7 @@ export default function MobileBottomNav() {
           }`
         }
       >
-        <ShoppingBag size={22} />
+        <ShoppingBag size={20} />
         <span className="text-[10px]">فروشگاه</span>
       </NavLink>
 
@@ -53,7 +68,7 @@ export default function MobileBottomNav() {
         onClick={openSearch}
         className="flex flex-col items-center gap-1 text-text-secondary"
       >
-        <Search size={22} />
+        <Search size={20} />
         <span className="text-[10px]">جستجو</span>
       </button>
 
@@ -65,8 +80,8 @@ export default function MobileBottomNav() {
           `
       -mt-12
       flex
-      h-[72px]
-      w-[72px]
+      h-[60px]
+      w-[60px]
       items-center
       justify-center
       rounded-full
@@ -81,7 +96,7 @@ export default function MobileBottomNav() {
     `
         }
       >
-        <House size={30} strokeWidth={2.4} />
+        <House size={24} strokeWidth={2.4} />
       </NavLink>
 
       <NavLink
@@ -97,10 +112,18 @@ export default function MobileBottomNav() {
         <span className="text-[10px]">سبد خرید</span>
       </NavLink>
 
-      <button className="flex flex-col items-center gap-1 text-text-secondary">
-        <User size={22} />
-        <span className="text-[10px]">پروفایل</span>
-      </button>
+      <NavLink
+        to="/login"
+        onClick={handleNavigate}
+        className={({ isActive }) =>
+          `flex flex-col items-center gap-1 transition-colors duration-200 ${
+            isActive ? "text-primary" : "text-text-secondary"
+          }`
+        }
+      >
+        <User size={20} />
+        <span className="text-[10px]">ورود</span>
+      </NavLink>
     </nav>
   );
 }

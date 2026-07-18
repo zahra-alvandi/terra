@@ -18,7 +18,7 @@ import AdminSettingsPage from "@/pages/admin/AdminSettingsPage";
 import AdminGuardLayout from "@/components/admin/AdminGuardLayout";
 import AdminLoginPage from "@/pages/admin/AdminLoginPage";
 import AdminOrderDetailsPage from "@/pages/admin/AdminOrderDetailsPage";
-
+import LoginPage from "@/pages/LoginPage";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +62,11 @@ export const router = createBrowserRouter([
   {
     path: "/admin/login",
     element: <AdminLoginPage />,
+  },
+
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
 
   {
