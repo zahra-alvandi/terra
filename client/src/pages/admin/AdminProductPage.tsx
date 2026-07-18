@@ -34,7 +34,7 @@ export default function AdminProductPage() {
   };
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">محصولات</h1>
 
@@ -53,8 +53,8 @@ export default function AdminProductPage() {
         </button>
       </div>
 
-      <div className="rounded-3xl border border-border bg-white">
-        <table className="w-full">
+      <div className="overflow-x-auto rounded-3xl border border-border bg-white">
+        <table className="min-w-[900px] w-full">
           <thead className="bg-stone-50">
             <tr>
               <th className="px-6 py-4 text-right">تصویر</th>

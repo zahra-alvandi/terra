@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { getOrders } from "@/utils/orderStorage";
 import { orderStatusMap } from "@/utils/orderStatus";
+import { OrderStatus } from "@/types/order";
 import { orderService } from "@/services/orderService";
 import toast from "react-hot-toast";
 import OrderDrawer from "@/components/admin/orders/OrderDrawer";
@@ -68,18 +69,20 @@ export default function AdminOrdersPage() {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="rounded-2xl border border-border bg-white px-5 py-4 outline-none transition focus:border-primary"
+          className="rounded-2xl border border-border bg-white px-5 py-4"
         >
           <option value="all">همه وضعیت‌ها</option>
-          <option value="pending">در انتظار</option>
-          <option value="processing">در حال پردازش</option>
-          <option value="shipped">ارسال شده</option>
-          <option value="delivered">تحویل شده</option>
+          <option value={OrderStatus.PendingReview}>در انتظار بررسی</option>
+          <option value={OrderStatus.Confirmed}>تأیید شده</option>
+          <option value={OrderStatus.Preparing}>در حال آماده‌سازی</option>
+          <option value={OrderStatus.Shipped}>ارسال شده</option>
+          <option value={OrderStatus.Delivered}>تحویل شده</option>
+          <option value={OrderStatus.Cancelled}>لغو شده</option>
         </select>
       </div>
 
-      <div className="overflow-hidden rounded-3xl border border-border bg-white">
-        <table className="w-full">
+      <div className="overflow-x-auto rounded-3xl border border-border bg-white">
+        <table className="min-w-[900px] w-full">
           <thead className="bg-stone-50">
             <tr>
               <th className="px-6 py-4 text-right">شماره سفارش</th>
@@ -112,7 +115,22 @@ export default function AdminOrdersPage() {
                     onChange={(e) =>
                       handleStatusChange(order.id, e.target.value)
                     }
-                    className="rounded-xl border border-border px-3 py-2"
+                    className="
+    rounded-xl
+    border
+    border-border
+    bg-stone-50
+    px-4
+    py-2.5
+    text-sm
+    font-medium
+    text-text-primary
+    outline-none
+    transition
+    hover:border-primary
+    focus:border-primary
+    focus:bg-white
+  "
                   >
                     <option value="PendingReview">در انتظار بررسی</option>
                     <option value="Confirmed">تأیید شده</option>

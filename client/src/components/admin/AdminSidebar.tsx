@@ -35,34 +35,52 @@ const links = [
   },
 ];
 
-export default function AdminSidebar() {
+type Props = {
+  open: boolean;
+  onClose: () => void;
+};
+
+export default function AdminSidebar({ open, onClose }: Props) {
   return (
-    <aside className="fixed right-0 top-0 h-screen w-72 border-l border-border bg-white p-8">
-      <h2 className="mb-10 text-2xl font-bold">Terra Admin</h2>
+    <>
+      {open && (
+        <div
+          onClick={onClose}
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+        />
+      )}
+      <aside
+        className={`fixed right-0 top-0 z-50 h-screen w-72 border-l border-border bg-white p-8 transition-transform duration-300 ${
+          open ? "translate-x-0" : "translate-x-full"
+        } lg:translate-x-0`}
+      >
+        <h2 className="mb-10 text-2xl font-bold">Terra Admin</h2>
 
-      <nav className="space-y-2">
-        {links.map((item) => {
-          const Icon = item.icon;
+        <nav className="space-y-2">
+          {links.map((item) => {
+            const Icon = item.icon;
 
-          return (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.to === "/admin"}
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-xl px-4 py-3 transition ${
-                  isActive
-                    ? "bg-primary text-white"
-                    : "text-text-secondary hover:bg-stone-100"
-                }`
-              }
-            >
-              <Icon size={20} />
-              {item.title}
-            </NavLink>
-          );
-        })}
-      </nav>
-    </aside>
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === "/admin"}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-xl px-4 py-3 transition ${
+                    isActive
+                      ? "bg-primary text-white"
+                      : "text-text-secondary hover:bg-stone-100"
+                  }`
+                }
+              >
+                <Icon size={20} />
+                {item.title}
+              </NavLink>
+            );
+          })}
+        </nav>
+      </aside>
+    </>
   );
 }
