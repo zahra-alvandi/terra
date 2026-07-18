@@ -2,6 +2,7 @@ import { House, Search, ShoppingBag, User, ShoppingCart } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 import { useSearch } from "@/context/SearchContext";
+import { useAuth } from "@/context/AuthContext";
 
 type MobileBottomNavProps = {
   hidden?: boolean;
@@ -18,7 +19,7 @@ export default function MobileBottomNav({
     });
   };
 
-  console.log("MobileBottomNav");
+  const { isAuthenticated } = useAuth();
 
   return (
     <nav
@@ -113,7 +114,7 @@ export default function MobileBottomNav({
       </NavLink>
 
       <NavLink
-        to="/login"
+        to={isAuthenticated ? "/profile" : "/login"}
         onClick={handleNavigate}
         className={({ isActive }) =>
           `flex flex-col items-center gap-1 transition-colors duration-200 ${

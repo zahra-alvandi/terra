@@ -1,6 +1,7 @@
 import { Search, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 type NavActionsProps = {
   onOpenSearch: () => void;
@@ -9,6 +10,7 @@ type NavActionsProps = {
 export default function NavActions({ onOpenSearch }: NavActionsProps) {
   const { cartCount } = useCart();
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
 
   return (
     <div className="flex items-center gap-6">
@@ -21,12 +23,21 @@ export default function NavActions({ onOpenSearch }: NavActionsProps) {
       </button>
 
       {/* Login */}
-      <NavLink
-        to="/login"
-        className="hidden text-sm font-medium text-text-primary transition-colors duration-300 hover:text-primary md:block"
-      >
-        ورود | ثبت نام
-      </NavLink>
+      {isAuthenticated ? (
+        <NavLink
+          to="/profile"
+          className="hidden text-sm font-medium transition hover:text-primary md:block"
+        >
+          {user?.firstName}
+        </NavLink>
+      ) : (
+        <NavLink
+          to="/login"
+          className="hidden md:block text-sm font-medium hover:text-primary"
+        >
+          ورود | ثبت نام
+        </NavLink>
+      )}
 
       {/* Cart */}
       <button

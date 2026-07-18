@@ -1,11 +1,11 @@
 import Container from "@/components/layout/Container";
-import LoginForm from "@/components/auth/LoginForm";
+import RegisterForm from "@/components/auth/RegosterForm";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <section className="py-24">
       <Container>
-        <LoginForm />
+        <RegisterForm />
       </Container>
     </section>
   );

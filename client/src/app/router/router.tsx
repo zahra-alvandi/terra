@@ -19,6 +19,10 @@ import AdminGuardLayout from "@/components/admin/AdminGuardLayout";
 import AdminLoginPage from "@/pages/admin/AdminLoginPage";
 import AdminOrderDetailsPage from "@/pages/admin/AdminOrderDetailsPage";
 import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import PublicOnlyRoute from "@/routes/PublicOnlyRoute";
+import ProfilePage from "@/pages/ProfilePage";
+import ProtectedRoute from "@/routes/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -60,13 +64,30 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "/admin/login",
-    element: <AdminLoginPage />,
+    path: "/login",
+    element: (
+      <PublicOnlyRoute>
+        <LoginPage />
+      </PublicOnlyRoute>
+    ),
   },
 
   {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/register",
+    element: (
+      <PublicOnlyRoute>
+        <RegisterPage />
+      </PublicOnlyRoute>
+    ),
+  },
+
+  {
+    path: "/profile",
+    element: (
+      <ProtectedRoute>
+        <ProfilePage />
+      </ProtectedRoute>
+    ),
   },
 
   {

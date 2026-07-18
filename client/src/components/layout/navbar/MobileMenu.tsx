@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import MobileNavItem from "./MobileNavItem";
+import { useAuth } from "@/context/AuthContext";
 
 type MobileMenuProps = {
   isOpen: boolean;
@@ -24,6 +25,7 @@ export default function MobileMenu({
   onOpenSearch,
 }: MobileMenuProps) {
   const location = useLocation();
+  const { isAuthenticated, user } = useAuth();
 
   // Close the menu after changing the page
   useEffect(() => {
@@ -90,8 +92,11 @@ export default function MobileMenu({
             <MobileNavItem to="/contact" icon={Mail} onClick={onClose}>
               تماس با ما
             </MobileNavItem>
-            <MobileNavItem to="/login" icon={User} onClick={onClose}>
-              ورود | ثبت نام
+            <MobileNavItem
+              to={isAuthenticated ? "/profile" : "/login"}
+              icon={User}
+            >
+              {isAuthenticated ? `${user?.firstName}` : "ورود | ثبت نام"}
             </MobileNavItem>
           </div>
         </nav>
@@ -110,8 +115,6 @@ export default function MobileMenu({
             <Search size={20} />
             <span>جستجو</span>
           </button>
-
-          
         </div>
       </aside>
     </>
