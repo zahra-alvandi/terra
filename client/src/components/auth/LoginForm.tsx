@@ -20,6 +20,7 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    console.log(data);
     const success = login(data.phone, data.password);
 
     if (!success) {

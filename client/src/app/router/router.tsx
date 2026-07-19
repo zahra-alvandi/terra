@@ -16,7 +16,6 @@ import AdminProductPage from "@/pages/admin/AdminProductPage";
 import AdminCustomersPage from "@/pages/admin/AdminCustomersPage";
 import AdminSettingsPage from "@/pages/admin/AdminSettingsPage";
 import AdminGuardLayout from "@/components/admin/AdminGuardLayout";
-import AdminLoginPage from "@/pages/admin/AdminLoginPage";
 import AdminOrderDetailsPage from "@/pages/admin/AdminOrderDetailsPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
@@ -58,10 +57,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/admin/login",
-    element: <AdminLoginPage />,
-  },
+
 
   {
     path: "/login",

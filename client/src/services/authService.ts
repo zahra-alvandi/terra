@@ -8,6 +8,7 @@ export type User = {
   lastName: string;
   phone: string;
   password: string;
+  role: "customer" | "admin";
   createdAt: string;
 };
 
@@ -30,9 +31,14 @@ export const authService = {
   },
 
   login(phone: string, password: string) {
+    console.log("Users:", this.getUsers());
+    console.log("Input:", phone, password);
+
     const user = this.getUsers().find(
       (u) => u.phone === phone && u.password === password,
     );
+
+    console.log("Found user:", user);
 
     if (!user) return null;
 

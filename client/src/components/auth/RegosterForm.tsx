@@ -36,6 +36,7 @@ export default function RegisterForm() {
       phone: data.phone,
       password: data.password,
       createdAt: new Date().toISOString(),
+      role: "customer",
     });
 
     login(data.phone, data.password);

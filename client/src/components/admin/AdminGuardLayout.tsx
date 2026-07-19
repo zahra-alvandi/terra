@@ -1,11 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAdminAuth } from "@/context/AdminAuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AdminGuardLayout() {
-  const { isAuthenticated } = useAdminAuth();
+  const { user } = useAuth();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/admin/login" replace />;
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user.role !== "admin") {
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;
