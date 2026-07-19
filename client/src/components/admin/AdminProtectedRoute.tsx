@@ -1,16 +1,16 @@
 import { Navigate } from "react-router-dom";
 
-import { useAdminAuth } from "@/context/AdminAuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 type Props = {
   children: React.ReactNode;
 };
 
 export default function AdminProtectedRoute({ children }: Props) {
-  const { isAuthenticated } = useAdminAuth();
+  const { user } = useAuth();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/admin/login" replace />;
+  if (!user || user.role !== "admin") {
+    return <Navigate to="/login" replace />;
   }
 
   return children;

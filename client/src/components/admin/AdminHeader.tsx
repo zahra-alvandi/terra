@@ -1,14 +1,14 @@
 import { LogOut, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { useAdminAuth } from "@/context/AdminAuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 type Props = {
   onMenuClick: () => void;
 };
 
 export default function AdminHeader({ onMenuClick }: Props) {
-  const { logout } = useAdminAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
