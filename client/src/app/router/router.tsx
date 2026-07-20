@@ -57,6 +57,30 @@ export const router = createBrowserRouter([
         path: "/track-order",
         element: <OrderTrackingPage />,
       },
+      {
+        path: "/profile",
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/profile/orders",
+        element: (
+          <ProtectedRoute>
+            <ProfileOrdersPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/profile/orders/:id",
+        element: (
+          <ProtectedRoute>
+            <ProfileOrderDetailsPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 
@@ -75,33 +99,6 @@ export const router = createBrowserRouter([
       <PublicOnlyRoute>
         <RegisterPage />
       </PublicOnlyRoute>
-    ),
-  },
-
-  {
-    path: "/profile",
-    element: (
-      <ProtectedRoute>
-        <ProfilePage />
-      </ProtectedRoute>
-    ),
-  },
-
-  {
-    path: "/profile/orders",
-    element: (
-      <ProtectedRoute>
-        <ProfileOrdersPage />
-      </ProtectedRoute>
-    ),
-  },
-
-  {
-    path: "/profile/orders/:id",
-    element: (
-      <ProtectedRoute>
-        <ProfileOrderDetailsPage />
-      </ProtectedRoute>
     ),
   },
 

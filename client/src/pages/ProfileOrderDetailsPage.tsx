@@ -49,9 +49,9 @@ export default function ProfileOrderDetailsPage() {
           </button>
 
           <div className="text-left">
-            <p className="text-sm text-text-secondary">شماره سفارش</p>
+            {/* <p className="text-sm text-text-secondary">شماره سفارش</p>
 
-            <p className="font-semibold text-primary">{order.id}</p>
+            <p className="font-semibold text-primary">{order.id}</p> */}
           </div>
         </div>
 
@@ -70,11 +70,11 @@ export default function ProfileOrderDetailsPage() {
             </div>
 
             <div className="grid gap-5 md:grid-cols-2">
-              <div>
+              {/* <div>
                 <p className="text-sm text-text-secondary">تاریخ ثبت</p>
 
                 <p className="mt-1">{order.createdAt}</p>
-              </div>
+              </div> */}
 
               <div>
                 <p className="text-sm text-text-secondary">وضعیت</p>

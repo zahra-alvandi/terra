@@ -51,14 +51,16 @@ export default function UserDropdown() {
         >
           <NavLink
             to="/profile"
+            onClick={() => setOpen(false)}
             className="block rounded-xl px-4 py-3 hover:bg-stone-100"
           >
             پروفایل
           </NavLink>
-          
+
           {user.role !== "admin" && (
             <NavLink
               to="/profile/orders"
+              onClick={() => setOpen(false)}
               className="block rounded-xl px-4 py-3 hover:bg-stone-100"
             >
               سفارش‌های من
@@ -68,6 +70,7 @@ export default function UserDropdown() {
           {user.role === "admin" && (
             <NavLink
               to="/admin"
+              onClick={() => setOpen(false)}
               className="block rounded-xl px-4 py-3 hover:bg-stone-100"
             >
               پنل مدیریت
@@ -75,7 +78,10 @@ export default function UserDropdown() {
           )}
 
           <button
-            onClick={logout}
+            onClick={() => {
+              setOpen(false);
+              logout();
+            }}
             className="w-full rounded-xl px-4 py-3 text-right text-red-500 hover:bg-red-50"
           >
             خروج

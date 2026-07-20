@@ -3,6 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { User, Package, LogOut, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Truck } from "lucide-react";
 
 export default function ProfilePage() {
   const { user, logout } = useAuth();
@@ -56,6 +57,39 @@ export default function ProfilePage() {
 
                   <p className="text-sm text-text-secondary">
                     مشاهده تاریخچه سفارش‌ها
+                  </p>
+                </div>
+              </div>
+
+              <ChevronLeft />
+            </Link>
+
+            <Link
+              to="/track-order"
+              className="
+    flex
+    items-center
+    justify-between
+    rounded-3xl
+    border
+    border-border
+    bg-white
+    p-6
+    transition
+    hover:border-primary
+    hover:shadow-md
+  "
+            >
+              <div className="flex items-center gap-4">
+                <div className="rounded-2xl bg-primary/10 p-3">
+                  <Truck className="text-primary" size={24} />
+                </div>
+
+                <div>
+                  <p className="font-semibold">پیگیری سفارش</p>
+
+                  <p className="text-sm text-text-secondary">
+                    پیگیری سفارش با کد سفارش
                   </p>
                 </div>
               </div>

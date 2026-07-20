@@ -19,7 +19,7 @@ export default function MobileBottomNav({
     });
   };
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, isAdmin } = useAuth();
 
   return (
     <nav
@@ -114,7 +114,7 @@ export default function MobileBottomNav({
       </NavLink>
 
       <NavLink
-        to={isAuthenticated ? "/profile" : "/login"}
+        to={isAdmin ? "/admin" : isAuthenticated ? "/profile" : "/login"}
         onClick={handleNavigate}
         className={({ isActive }) =>
           `flex flex-col items-center gap-1 transition-colors duration-200 ${
@@ -123,7 +123,10 @@ export default function MobileBottomNav({
         }
       >
         <User size={20} />
-        <span className="text-[10px]">ورود</span>
+
+        <span className="text-[10px]">
+          {isAdmin ? "پنل" : isAuthenticated ? "پروفایل" : "ورود"}
+        </span>
       </NavLink>
     </nav>
   );

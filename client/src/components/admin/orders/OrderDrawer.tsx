@@ -16,9 +16,9 @@ export default function OrderDrawer({ open, onClose, order }: Props) {
         <h2 className="text-2xl font-bold">جزئیات سفارش</h2>
 
         <div>
-          <p>
+          {/* <p>
             <strong>شماره سفارش:</strong> {order.orderNumber}
-          </p>
+          </p> */}
 
           <p>
             <strong>نام:</strong> {order.firstName} {order.lastName}

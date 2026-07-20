@@ -55,11 +55,11 @@ export default function ProfileOrdersPage() {
               "
               >
                 <div className="flex items-start justify-between">
-                  <div>
+                  {/* <div>
                     <p className="text-sm text-text-secondary">شماره سفارش</p>
 
                     <p className="mt-1 text-lg font-semibold">{order.id}</p>
-                  </div>
+                  </div> */}
 
                   <span
                     className={`rounded-full px-4 py-2 text-sm font-medium ${getStatusStyle(

@@ -5,9 +5,9 @@ import { authService, type AuthUser } from "@/services/authService";
 type AuthContextType = {
   user: AuthUser | null;
   isAuthenticated: boolean;
+  isAdmin: boolean;
 
   login: (phone: string, password: string) => boolean;
-
   logout: () => void;
 };
 
@@ -15,6 +15,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const isAdmin = user?.phone === "09387041259";
 
   useEffect(() => {
     setUser(authService.getCurrentUser());
@@ -41,6 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         isAuthenticated: !!user,
+        isAdmin,
         login,
         logout,
       }}
