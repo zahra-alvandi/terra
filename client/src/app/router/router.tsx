@@ -22,6 +22,8 @@ import RegisterPage from "@/pages/RegisterPage";
 import PublicOnlyRoute from "@/routes/PublicOnlyRoute";
 import ProfilePage from "@/pages/ProfilePage";
 import ProtectedRoute from "@/routes/ProtectedRoute";
+import ProfileOrdersPage from "@/pages/ProfileOrdersPage";
+import ProfileOrderDetailsPage from "@/pages/ProfileOrderDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -58,7 +60,6 @@ export const router = createBrowserRouter([
     ],
   },
 
-
   {
     path: "/login",
     element: (
@@ -82,6 +83,24 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ProfilePage />
+      </ProtectedRoute>
+    ),
+  },
+
+  {
+    path: "/profile/orders",
+    element: (
+      <ProtectedRoute>
+        <ProfileOrdersPage />
+      </ProtectedRoute>
+    ),
+  },
+
+  {
+    path: "/profile/orders/:id",
+    element: (
+      <ProtectedRoute>
+        <ProfileOrderDetailsPage />
       </ProtectedRoute>
     ),
   },

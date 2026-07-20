@@ -55,6 +55,15 @@ export default function UserDropdown() {
           >
             پروفایل
           </NavLink>
+          
+          {user.role !== "admin" && (
+            <NavLink
+              to="/profile/orders"
+              className="block rounded-xl px-4 py-3 hover:bg-stone-100"
+            >
+              سفارش‌های من
+            </NavLink>
+          )}
 
           {user.role === "admin" && (
             <NavLink
