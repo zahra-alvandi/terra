@@ -48,7 +48,7 @@ export default function ShopPage() {
         );
     }
   });
-  
+
   useEffect(() => {
     const syncProducts = () => {
       setProducts(productService.getAll());
@@ -62,6 +62,36 @@ export default function ShopPage() {
       window.removeEventListener("storage", syncProducts);
       window.removeEventListener("products-updated", syncProducts);
     };
+  }, []);
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem("shop-scroll");
+
+    if (saved) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: Number(saved),
+          behavior: "instant" as ScrollBehavior,
+        });
+
+        sessionStorage.removeItem("shop-scroll");
+      }, 50);
+    }
+  }, []);
+  
+  useEffect(() => {
+    const savedScroll = sessionStorage.getItem("shop-scroll");
+
+    if (savedScroll) {
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: Number(savedScroll),
+          behavior: "instant" as ScrollBehavior,
+        });
+
+        sessionStorage.removeItem("shop-scroll");
+      });
+    }
   }, []);
   return (
     <>

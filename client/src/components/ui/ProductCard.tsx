@@ -15,6 +15,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <NavLink
         to={`/shop/${product.slug}`}
+        onClick={() =>
+          sessionStorage.setItem("shop-scroll", String(window.scrollY))
+        }
         className="group/image relative block overflow-hidden"
       >
         <img
@@ -121,24 +124,22 @@ export default function ProductCard({ product }: ProductCardProps) {
           <NavLink
             dir="ltr"
             to={`/shop/${product.slug}`}
+            onClick={() =>
+              sessionStorage.setItem("shop-scroll", String(window.scrollY))
+            }
             className="
-      hidden
-      md:flex
-
-      items-center
-      gap-2
-
-      text-xs
-      uppercase
-      tracking-[0.2em]
-
-      text-primary
-
-      transition-all
-      duration-300
-
-      group-hover:gap-3
-    "
+    hidden
+    md:flex
+    items-center
+    gap-2
+    text-xs
+    uppercase
+    tracking-[0.2em]
+    text-primary
+    transition-all
+    duration-300
+    group-hover:gap-3
+  "
           >
             View
             <ArrowRight size={14} />
