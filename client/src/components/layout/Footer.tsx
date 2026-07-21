@@ -113,7 +113,7 @@ export default function Footer() {
               <h3 className="text-lg font-semibold">Terra</h3>
 
               <ul className="mt-6 space-y-4">
-                <li>
+                {/* <li>
                   <Link
                     to="/about"
                     className="group flex items-center gap-2 text-text-secondary transition hover:text-primary"
@@ -124,7 +124,7 @@ export default function Footer() {
                       className="opacity-0 transition group-hover:opacity-100"
                     />
                   </Link>
-                </li>
+                </li> */}
 
                 <li>
                   <Link

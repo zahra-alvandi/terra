@@ -85,9 +85,9 @@ export default function MobileMenu({
               فروشگاه
             </MobileNavItem>
 
-            <MobileNavItem to="/about" icon={CircleHelp} onClick={onClose}>
+            {/* <MobileNavItem to="/about" icon={CircleHelp} onClick={onClose}>
               درباره Terra
-            </MobileNavItem>
+            </MobileNavItem> */}
 
             <MobileNavItem to="/contact" icon={Mail} onClick={onClose}>
               تماس با ما

@@ -24,6 +24,9 @@ import ProfilePage from "@/pages/ProfilePage";
 import ProtectedRoute from "@/routes/ProtectedRoute";
 import ProfileOrdersPage from "@/pages/ProfileOrdersPage";
 import ProfileOrderDetailsPage from "@/pages/ProfileOrderDetailsPage";
+import ContactPage from "@/pages/ContactPage";
+import AdminMessagesPage from "@/pages/admin/AdminMessagePage";
+import AdminMessageDetailsPage from "@/pages/admin/AdminMessageDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +84,10 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "/contact",
+        element: <ContactPage />,
+      },
     ],
   },
 
@@ -132,6 +139,14 @@ export const router = createBrowserRouter([
           {
             path: "orders/:id",
             element: <AdminOrderDetailsPage />,
+          },
+          {
+            path: "messages",
+            element: <AdminMessagesPage />,
+          },
+          {
+            path: "messages/:id",
+            element: <AdminMessageDetailsPage />,
           },
         ],
       },

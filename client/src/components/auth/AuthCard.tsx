@@ -20,10 +20,10 @@ export default function AuthCard({ title, subtitle, children }: Props) {
               navigate("/");
             }
           }}
-          className="mb-6 flex items-center gap-2 text-sm text-text-secondary transition hover:cursor-pointer "
+          className="mb-6 flex w-fit items-center gap-2 text-sm text-text-secondary transition hover:text-primary hover:cursor-pointer"
         >
-          بازگشت به صفحه اصلی
           <ArrowRight size={18} />
+          <span>بازگشت به صفحه اصلی</span>
         </button>
         <h1 className="text-3xl font-bold text-center">{title}</h1>
 

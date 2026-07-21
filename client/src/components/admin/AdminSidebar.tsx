@@ -5,6 +5,7 @@ import {
   Package,
   Users,
   Settings,
+  Mail,
 } from "lucide-react";
 
 const links = [
@@ -27,6 +28,11 @@ const links = [
     title: "مشتریان",
     to: "/admin/customers",
     icon: Users,
+  },
+  {
+    title: "پیام‌ها",
+    to: "/admin/messages",
+    icon: Mail,
   },
   {
     title: "تنظیمات",
