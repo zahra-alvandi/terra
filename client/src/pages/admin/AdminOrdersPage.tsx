@@ -5,14 +5,14 @@ import { getOrders } from "@/utils/orderStorage";
 import { OrderStatus } from "@/types/order";
 import { orderService } from "@/services/orderService";
 import toast from "react-hot-toast";
-import type { Order } from "@/types/order";
+// import type { Order } from "@/types/order";
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState(getOrders());
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  // const [drawerOpen, setDrawerOpen] = useState(false);
+  // const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const filteredOrders = orders.filter((order) => {
     const query = search.toLowerCase();

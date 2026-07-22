@@ -1,11 +1,5 @@
-import {
-  Instagram,
-  Send,
-  Phone,
-  Mail,
-  MapPin,
-  ArrowUpRight,
-} from "lucide-react";
+import { Send, Phone, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { FaInstagram } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import Container from "./Container";
@@ -48,7 +42,7 @@ export default function Footer() {
                     hover:text-white
                   "
                 >
-                  <Instagram size={18} />
+                  <FaInstagram size={20} />{" "}
                 </a>
 
                 <a

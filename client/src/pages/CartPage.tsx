@@ -6,7 +6,7 @@ import CartSummary from "@/components/cart/CartSummery";
 import EmptyCart from "@/components/cart/EmptyCart";
 
 export default function CartPage() {
-  const { cartItems, cartTotal } = useCart();
+  const { cartItems } = useCart();
 
   return (
     <section className="py-20">

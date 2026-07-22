@@ -1,4 +1,5 @@
-import { Instagram, Phone, Send } from "lucide-react";
+import { Phone, Send } from "lucide-react";
+import { FaInstagram } from "react-icons/fa";
 
 type Props = {
   children: React.ReactNode;
@@ -49,7 +50,7 @@ shadow-sm
 
           <div className="flex gap-3">
             <button className="rounded-2xl border border-border p-3 transition hover:border-primary hover:text-primary">
-              <Instagram size={20} />
+              <FaInstagram size={20} />
             </button>
 
             <button className="rounded-2xl border border-border p-3 transition hover:border-primary hover:text-primary">
