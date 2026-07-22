@@ -2,11 +2,9 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import { getOrders } from "@/utils/orderStorage";
-import { orderStatusMap } from "@/utils/orderStatus";
 import { OrderStatus } from "@/types/order";
 import { orderService } from "@/services/orderService";
 import toast from "react-hot-toast";
-import OrderDrawer from "@/components/admin/orders/OrderDrawer";
 import type { Order } from "@/types/order";
 
 export default function AdminOrdersPage() {

@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Clock3, Instagram, Send } from "lucide-react";
+import { Instagram, Phone, Send } from "lucide-react";
 
 type Props = {
   children: React.ReactNode;

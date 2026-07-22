@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const links = [
   { title: "فروشگاه", href: "/shop" },
-  { title: "درباره Terra", href: "/about" },
+  // { title: "درباره Terra", href: "/about" },
   { title: "تماس با ما", href: "/contact" },
 ];
 

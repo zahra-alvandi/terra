@@ -1,7 +1,5 @@
 import { Navigate, useParams } from "react-router-dom";
 
-import { getOrders } from "@/utils/orderStorage";
-import { orderStatusMap } from "@/utils/orderStatus";
 import { useState } from "react";
 import { orderService } from "@/services/orderService";
 import { OrderStatus } from "@/types/order";

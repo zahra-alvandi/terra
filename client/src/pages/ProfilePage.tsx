@@ -1,6 +1,5 @@
 import Container from "@/components/layout/Container";
 import { useAuth } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import { User, Package, LogOut, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Truck } from "lucide-react";
@@ -8,7 +7,6 @@ import { Truck } from "lucide-react";
 export default function ProfilePage() {
   const { user, logout } = useAuth();
 
-  const navigate = useNavigate();
 
   return (
     <section className="py-24">

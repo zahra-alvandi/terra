@@ -4,7 +4,6 @@ import {
   X,
   House,
   ShoppingBag,
-  CircleHelp,
   Mail,
   Search,
   User,

@@ -1,7 +1,6 @@
 import { Search, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import UserDropdown from "./UserDropdown";
 
 type NavActionsProps = {

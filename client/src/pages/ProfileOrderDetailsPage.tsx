@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 import Container from "@/components/layout/Container";
 import { getOrders } from "@/utils/orderStorage";
-import { ArrowRight, Package, Receipt, Truck } from "lucide-react";
+import { ArrowRight, Package, Receipt } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileOrderDetailsPage() {

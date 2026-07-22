@@ -5,7 +5,6 @@ import { Star } from "lucide-react";
 import QuantitySelector from "./QuantitySelector";
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import toast from "react-hot-toast";
 import { showAddToCartToast } from "@/lib/terraToast";
 
 type Props = {

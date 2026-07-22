@@ -1,8 +1,8 @@
-import { House, Search, ShoppingBag, User, ShoppingCart } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { House, Search, ShoppingBag, ShoppingCart, User } from "lucide-react";
+import * as reactRouterDom from "react-router-dom";
 
-import { useSearch } from "@/context/SearchContext";
 import { useAuth } from "@/context/AuthContext";
+import { useSearch } from "@/context/SearchContext";
 
 type MobileBottomNavProps = {
   hidden?: boolean;
@@ -19,7 +19,7 @@ export default function MobileBottomNav({
     });
   };
 
-  const { isAuthenticated, user, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
 
   return (
     <nav
@@ -52,7 +52,7 @@ export default function MobileBottomNav({
     }
   `}
     >
-      <NavLink
+      <reactRouterDom.NavLink
         to="/shop"
         onClick={handleNavigate}
         className={({ isActive }) =>
@@ -63,7 +63,7 @@ export default function MobileBottomNav({
       >
         <ShoppingBag size={20} />
         <span className="text-[10px]">فروشگاه</span>
-      </NavLink>
+      </reactRouterDom.NavLink>
 
       <button
         onClick={openSearch}
@@ -73,7 +73,7 @@ export default function MobileBottomNav({
         <span className="text-[10px]">جستجو</span>
       </button>
 
-      <NavLink
+      <reactRouterDom.NavLink
         to="/"
         end
         onClick={handleNavigate}
@@ -98,9 +98,9 @@ export default function MobileBottomNav({
         }
       >
         <House size={24} strokeWidth={2.4} />
-      </NavLink>
+      </reactRouterDom.NavLink>
 
-      <NavLink
+      <reactRouterDom.NavLink
         to="/cart"
         className={({ isActive }) =>
           `flex flex-col items-center gap-1 transition-colors duration-200 ${
@@ -111,9 +111,9 @@ export default function MobileBottomNav({
       >
         <ShoppingCart size={22} />
         <span className="text-[10px]">سبد خرید</span>
-      </NavLink>
+      </reactRouterDom.NavLink>
 
-      <NavLink
+      <reactRouterDom.NavLink
         to={isAdmin ? "/admin" : isAuthenticated ? "/profile" : "/login"}
         onClick={handleNavigate}
         className={({ isActive }) =>
@@ -127,7 +127,7 @@ export default function MobileBottomNav({
         <span className="text-[10px]">
           {isAdmin ? "پنل" : isAuthenticated ? "پروفایل" : "ورود"}
         </span>
-      </NavLink>
+      </reactRouterDom.NavLink>
     </nav>
   );
 }

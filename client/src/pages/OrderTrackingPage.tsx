@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Search, Hourglass } from "lucide-react";
 
 import Container from "@/components/layout/Container";
-import { getOrders } from "@/utils/orderStorage";
 import { OrderStatus, type Order } from "@/types/order";
 import { orderService } from "@/services/orderService";
 import OrderTimeline from "@/components/order/OrderTimeline";
