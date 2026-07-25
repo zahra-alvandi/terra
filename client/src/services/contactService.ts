@@ -18,7 +18,7 @@ export const contactService = {
   },
 
   saveMessages(messages: ContactMessage[]) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    // localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
   },
 
   createMessage(data: Omit<ContactMessage, "id" | "createdAt" | "isRead">) {

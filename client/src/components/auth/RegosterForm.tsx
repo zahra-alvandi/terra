@@ -8,7 +8,7 @@ import {
   registerSchema,
   type RegisterFormData,
 } from "@/validations/authSchema";
-import { authService } from "@/services/authService";
+import { register as registerUser } from "@/services/authService";
 import { useAuth } from "@/context/AuthContext";
 
 export default function RegisterForm() {
@@ -23,27 +23,27 @@ export default function RegisterForm() {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = (data: RegisterFormData) => {
-    if (authService.userExists(data.phone)) {
-      toast.error("این شماره قبلاً ثبت شده است.");
-      return;
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      const result = await registerUser({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+        password: data.password,
+      });
+
+      console.log(result);
+
+      toast.success("ثبت نام با موفقیت انجام شد.");
+    } catch (error) {
+      console.error(error);
+
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("ثبت نام انجام نشد.");
+      }
     }
-
-    authService.register({
-      id: crypto.randomUUID(),
-      firstName: data.firstName,
-      lastName: data.lastName,
-      phone: data.phone,
-      password: data.password,
-      createdAt: new Date().toISOString(),
-      role: "customer",
-    });
-
-    login(data.phone, data.password);
-
-    toast.success("ثبت نام با موفقیت انجام شد.");
-
-    navigate("/");
   };
 
   return (

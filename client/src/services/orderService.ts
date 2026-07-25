@@ -9,7 +9,7 @@ export const orderService = {
   },
 
   setLastOrderNumber(orderNumber: string) {
-    localStorage.setItem(LAST_ORDER_KEY, orderNumber);
+    // localStorage.setItem(LAST_ORDER_KEY, orderNumber);
   },
 
   getLastOrderNumber() {
@@ -38,7 +38,7 @@ export const orderService = {
         : order,
     );
 
-    localStorage.setItem("terra_orders", JSON.stringify(updatedOrders));
+    // localStorage.setItem("terra_orders", JSON.stringify(updatedOrders));
   },
 
   getById(orderId: string): Order | null {

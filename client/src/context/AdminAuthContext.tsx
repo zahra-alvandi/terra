@@ -19,7 +19,7 @@ export function AdminAuthProvider({ children }: Props) {
 
   const login = (username: string, password: string) => {
     if (username === "admin" && password === "123456") {
-      localStorage.setItem("terra-admin", "true");
+      // localStorage.setItem("terra-admin", "true");
       setIsAuthenticated(true);
       return true;
     }

@@ -18,11 +18,11 @@ export function saveOrder(order: Order) {
 
   orders.unshift(order);
 
-  localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
+  // localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
 }
 
 export function saveOrders(orders: Order[]) {
-  localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
+  // localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orders));
 }
 
 export function clearOrders() {

@@ -1,64 +1,38 @@
-import { AUTH_STORAGE_KEY, USER_STORAGE_KEY } from "@/constants/storage";
+const API = import.meta.env.VITE_API_URL;
 
-export type AuthUser = Omit<User, "password">;
-
-export type User = {
-  id: string;
+export async function register(data: {
   firstName: string;
   lastName: string;
   phone: string;
   password: string;
-  role: "customer" | "admin";
-  createdAt: string;
-};
+}) {
+  const response = await fetch(`${API}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-export const authService = {
-  getUsers(): User[] {
-    const data = localStorage.getItem(USER_STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  },
+  if (!response.ok) {
+    throw new Error("Register failed");
+  }
 
-  saveUsers(users: User[]) {
-    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
-  },
+  return response.json();
+}
 
-  register(user: User) {
-    const users = this.getUsers();
+export async function login(data: { phone: string; password: string }) {
+  const response = await fetch(`${API}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-    users.push(user);
+  if (!response.ok) {
+    throw new Error("Login failed");
+  }
 
-    this.saveUsers(users);
-  },
-
-  login(phone: string, password: string) {
-    console.log("Users:", this.getUsers());
-    console.log("Input:", phone, password);
-
-    const user = this.getUsers().find(
-      (u) => u.phone === phone && u.password === password,
-    );
-
-    console.log("Found user:", user);
-
-    if (!user) return null;
-
-    const { password: _, ...authUser } = user;
-
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authUser));
-
-    return authUser;
-  },
-
-  logout() {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-  },
-
-  getCurrentUser(): AuthUser | null {
-    const data = localStorage.getItem(AUTH_STORAGE_KEY);
-
-    return data ? JSON.parse(data) : null;
-  },
-  userExists(phone: string) {
-    return this.getUsers().some((u) => u.phone === phone);
-  },
-};
+  return response.json();
+}

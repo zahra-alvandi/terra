@@ -126,7 +126,7 @@ export function CartProvider({ children }: Props) {
     0,
   );
   useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+    // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
   }, [cartItems]);
 
   return (

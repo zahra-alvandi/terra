@@ -10,7 +10,7 @@ function loadProducts(): Product[] {
     return JSON.parse(data);
   }
 
-  localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
+  // localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
 
   return products;
 }
@@ -25,7 +25,7 @@ export const productService = {
   },
 
   save(products: Product[]) {
-    localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
+    // localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
 
     window.dispatchEvent(new Event("products-updated"));
   },

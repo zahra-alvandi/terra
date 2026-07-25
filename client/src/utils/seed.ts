@@ -17,5 +17,5 @@ export function seedUsers() {
     createdAt: new Date().toISOString(),
   });
 
-  localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
+  // localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
 }
