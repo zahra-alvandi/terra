@@ -1,9 +1,15 @@
 import { Request, Response } from "express";
 import * as authService from "../services/auth.service";
+import { generateToken } from "../utils/jwt";
 
 export async function register(req: Request, res: Response) {
   try {
     const user = await authService.register(req.body);
+    const token = generateToken({
+      id: user.id,
+      phone: user.phone,
+      isAdmin: user.isAdmin,
+    });
 
     res.status(201).json({
       success: true,
@@ -36,9 +42,16 @@ export async function login(req: Request, res: Response) {
   try {
     const user = await authService.login(req.body);
 
-    res.status(200).json({
+    const token = generateToken({
+      id: user.id,
+      phone: user.phone,
+      isAdmin: user.isAdmin,
+    });
+
+    return res.status(200).json({
       success: true,
       message: "ورود با موفقیت انجام شد.",
+      token,
       data: {
         id: user.id,
         firstName: user.firstName,
