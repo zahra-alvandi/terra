@@ -15,3 +15,4 @@ export function generateToken(payload: {
 export function verifyToken(token: string) {
   return jwt.verify(token, JWT_SECRET);
 }
+console.log("JWT SECRET:", JWT_SECRET);
