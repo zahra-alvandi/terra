@@ -1,12 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-type AuthUser = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  isAdmin: boolean;
-};
+import {
+  getCurrentUser,
+  logout as authLogout,
+  type AuthUser,
+} from "@/services/authService";
 
 type AuthContextType = {
   user: AuthUser | null;
@@ -22,11 +20,20 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
 
+  useEffect(() => {
+    const currentUser = getCurrentUser();
+
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, []);
+
   const login = (user: AuthUser) => {
     setUser(user);
   };
 
   const logout = () => {
+    authLogout();
     setUser(null);
   };
 

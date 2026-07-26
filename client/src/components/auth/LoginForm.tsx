@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { login as loginUser } from "@/services/authService";
 
 import AuthCard from "./AuthCard";
 import { loginSchema, type LoginFormData } from "@/validations/authSchema";
@@ -20,16 +21,20 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log(data);
-    const success = login(data.phone, data.password);
+    try {
+      const user = await loginUser({
+        phone: data.phone,
+        password: data.password,
+      });
 
-    if (!success) {
+      login(user);
+
+      toast.success("ورود موفق بود.");
+
+      navigate("/");
+    } catch (error) {
       toast.error("شماره موبایل یا رمز عبور اشتباه است.");
-      return;
     }
-
-    toast.success("ورود موفق بود.");
-    navigate("/");
   };
 
   return (
