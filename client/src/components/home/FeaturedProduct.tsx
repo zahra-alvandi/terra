@@ -2,12 +2,16 @@ import Container from "@/components/layout/Container";
 import { ArrowLeft } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-import { productService } from "@/services/productService";
-
+import type { Product } from "@/types/product";
 import ProductCard from "../ui/ProductCard";
+import { useProducts } from "@/context/ProductContext";
 
 export default function FeaturedProducts() {
-  const products = productService.getAll();
+  const { products, loading } = useProducts();
+
+  if (loading) {
+    return null;
+  }
   return (
     <section className="py-24">
       <Container>
@@ -67,7 +71,7 @@ export default function FeaturedProducts() {
 
         <div className="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4">
           {products
-            .filter((product) => product.featured)
+            .filter((product) => product.isFeatured)
             .map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

@@ -1,54 +1,15 @@
-import { products } from "@/data/products";
 import type { Product } from "@/types/product";
 
-const PRODUCT_KEY = "terra-products";
+const API = import.meta.env.VITE_API_URL;
 
-function loadProducts(): Product[] {
-  const data = localStorage.getItem(PRODUCT_KEY);
+export async function getProducts(): Promise<Product[]> {
+  const response = await fetch(`${API}/products`);
 
-  if (data) {
-    return JSON.parse(data);
+  if (!response.ok) {
+    throw new Error("Failed to fetch products");
   }
 
-  // localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
+  const result = await response.json();
 
-  return products;
+  return result.data;
 }
-
-export const productService = {
-  getAll() {
-    return loadProducts();
-  },
-
-  getById(id: number) {
-    return loadProducts().find((item) => item.id === id) ?? null;
-  },
-
-  save(products: Product[]) {
-    // localStorage.setItem(PRODUCT_KEY, JSON.stringify(products));
-
-    window.dispatchEvent(new Event("products-updated"));
-  },
-
-  add(product: Product) {
-    const products = loadProducts();
-
-    products.unshift(product);
-
-    this.save(products);
-  },
-
-  update(product: Product) {
-    const products = loadProducts().map((item) =>
-      item.id === product.id ? product : item,
-    );
-
-    this.save(products);
-  },
-
-  delete(id: number) {
-    const products = loadProducts().filter((item) => item.id !== id);
-
-    this.save(products);
-  },
-};

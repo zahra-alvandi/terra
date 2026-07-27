@@ -18,3 +18,35 @@ model User {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+model Product {
+  id            String   @id @default(cuid())
+
+  title         String
+  englishTitle  String
+
+  slug          String   @unique
+
+  description   String
+
+  image         String
+  gallery       Json
+
+  price         Int
+  discount      Int      @default(0)
+
+  inventory     Int      @default(0)
+
+  category      String
+
+  isFeatured    Boolean  @default(false)
+  isHandmade    Boolean  @default(true)
+  isPublished   Boolean  @default(true)
+
+  keywords      Json
+
+  badge         String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

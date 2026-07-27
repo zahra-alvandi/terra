@@ -3,11 +3,13 @@ import { NavLink } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 
 import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function UserDropdown() {
   const { user, logout } = useAuth();
 
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   if (!user) {
     return (
@@ -57,7 +59,7 @@ export default function UserDropdown() {
             پروفایل
           </NavLink>
 
-          {user.role !== "admin" && (
+          {!user.isAdmin && (
             <NavLink
               to="/profile/orders"
               onClick={() => setOpen(false)}
@@ -67,7 +69,7 @@ export default function UserDropdown() {
             </NavLink>
           )}
 
-          {user.role === "admin" && (
+          {user.isAdmin && (
             <NavLink
               to="/admin"
               onClick={() => setOpen(false)}
@@ -81,6 +83,7 @@ export default function UserDropdown() {
             onClick={() => {
               setOpen(false);
               logout();
+              navigate("/");
             }}
             className="w-full rounded-xl px-4 py-3 text-right text-red-500 hover:bg-red-50"
           >

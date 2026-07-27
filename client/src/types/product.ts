@@ -1,7 +1,7 @@
-export type ProductCategory = "mug" | "vase" | "plate" | "bowl";
+export type ProductCategory = "mug" | "vase" | "plate" | "bowl" | string;
 
 export interface Product {
-  id: number;
+  id: string;
 
   slug: string;
 
@@ -14,14 +14,19 @@ export interface Product {
   gallery: string[];
 
   price: number;
+  discount: number;
+
+  inventory: number;
 
   category: ProductCategory;
 
-  featured: boolean;
+  isFeatured: boolean;
+  isHandmade: boolean;
+  isPublished: boolean;
 
   createdAt: string;
 
   keywords: string[];
 
-  badge?: "NEW" | "BEST SELLER" | "LIMITED";
+  badge?: string;
 }

@@ -1,9 +1,11 @@
-import { productService } from "@/services/productService";
 import type { Product } from "@/types/product";
 
-export function getRelatedProducts(product: Product, limit = 4) {
-  return productService
-    .getAll()
+export function getRelatedProducts(
+  products: Product[],
+  product: Product,
+  limit = 4,
+) {
+  return products
     .filter((p) => {
       if (p.slug === product.slug) return false;
 

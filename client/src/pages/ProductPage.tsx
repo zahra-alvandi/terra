@@ -10,9 +10,11 @@ import ProductBreadcrumb from "@/components/product/ProductBreadcrumb";
 import { useState } from "react";
 import { getRelatedProducts } from "@/utils/getRelatedProducts";
 import RelatedProducts from "@/components/product/RelatedProducts";
+import { useProducts } from "@/context/ProductContext";
 
 export default function ProductPage() {
   const { slug } = useParams();
+  const { products, loading } = useProducts();
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -27,9 +29,13 @@ export default function ProductPage() {
   const decreaseQuantity = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   };
-  const product = slug ? getProductBySlug(slug) : undefined;
-  const relatedProducts = product ? getRelatedProducts(product) : [];
+  const product = slug ? getProductBySlug(products, slug) : undefined;
 
+  const relatedProducts = product ? getRelatedProducts(products, product) : [];
+
+  if (loading) {
+    return null;
+  }
   if (!product) {
     return (
       <div className="py-40 text-center">

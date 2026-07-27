@@ -1,4 +1,4 @@
-import { productService } from "@/services/productService";
+import { useProducts } from "@/context/ProductContext";
 import { useState } from "react";
 
 import ProductDrawer from "@/components/ui/ProductDrawer";
@@ -7,16 +7,10 @@ import type { Product } from "@/types/product";
 import toast from "react-hot-toast";
 
 export default function AdminProductPage() {
-  const [products, setProducts] = useState(productService.getAll());
+  const { products, refreshProducts } = useProducts();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const refreshProducts = () => {
-    setProducts(productService.getAll());
-
-    setEditingProduct(null);
-
-    setDrawerOpen(false);
-  };
+  
   const handleCreateProduct = (product: Product) => {
     if (editingProduct) {
       productService.update(product);
@@ -96,7 +90,7 @@ export default function AdminProductPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      productService.delete(product.id);
+                      // productService.delete(product.id);
 
                       refreshProducts();
 

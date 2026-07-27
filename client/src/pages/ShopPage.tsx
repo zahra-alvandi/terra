@@ -3,15 +3,17 @@ import ShopToolbar from "@/components/shop/ShopToolbar";
 import ProductGrid from "@/components/shop/ProductGrid";
 
 import { useState } from "react";
-import { productService } from "@/services/productService";
 import { useEffect } from "react";
+import { useProducts } from "@/context/ProductContext";
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("newest");
-  const [products, setProducts] = useState(productService.getAll());
-
+  const { products, loading } = useProducts();
+  if (loading) {
+    return null;
+  }
   const filteredProducts = products.filter((product) => {
     const query = search.toLowerCase().trim();
 
@@ -50,21 +52,6 @@ export default function ShopPage() {
   });
 
   useEffect(() => {
-    const syncProducts = () => {
-      setProducts(productService.getAll());
-    };
-
-    window.addEventListener("storage", syncProducts);
-
-    window.addEventListener("products-updated", syncProducts);
-
-    return () => {
-      window.removeEventListener("storage", syncProducts);
-      window.removeEventListener("products-updated", syncProducts);
-    };
-  }, []);
-
-  useEffect(() => {
     const saved = sessionStorage.getItem("shop-scroll");
 
     if (saved) {
@@ -78,7 +65,7 @@ export default function ShopPage() {
       }, 50);
     }
   }, []);
-  
+
   useEffect(() => {
     const savedScroll = sessionStorage.getItem("shop-scroll");
 

@@ -1,11 +1,14 @@
-import { productService } from "@/services/productService";
+import { useProducts } from "@/context/ProductContext";
 import { getOrders } from "@/utils/orderStorage";
 import StatCard from "@/components/admin/dashboard/StatCard";
 
 export default function AdminDashboardPage() {
-  const products = productService.getAll();
+  const { products, loading } = useProducts();
   const orders = getOrders();
 
+  if (loading) {
+    return null;
+  }
   const totalRevenue = orders.reduce((sum, order) => sum + order.totalPrice, 0);
 
   const totalCustomers = new Set(orders.map((order) => order.phone)).size;

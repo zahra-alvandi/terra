@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import profileRoutes from "./routes/profile.routes";
+import productRoutes from "./routes/product.routes";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use(cors());
 app.use("/api/profile", profileRoutes);
+app.use("/api/products", productRoutes);
 
 app.get("/", (_, res) => {
   res.json({
