@@ -11,9 +11,7 @@ export default function ShopPage() {
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("newest");
   const { products, loading } = useProducts();
-  if (loading) {
-    return null;
-  }
+
   const filteredProducts = products.filter((product) => {
     const query = search.toLowerCase().trim();
 
@@ -80,6 +78,11 @@ export default function ShopPage() {
       });
     }
   }, []);
+
+  if (loading) {
+    return null;
+  }
+  
   return (
     <>
       <ShopHeader productCount={filteredProducts.length} />

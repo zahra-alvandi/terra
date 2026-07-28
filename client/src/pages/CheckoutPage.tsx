@@ -2,13 +2,9 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { nanoid } from "nanoid";
 
 import { useCart } from "@/context/CartContext";
-import { saveOrder } from "@/utils/orderStorage";
-import { OrderStatus } from "@/types/order";
-import type { Order } from "@/types/order";
-import { orderService } from "@/services/orderService";
+import { createOrder } from "@/services/orderService";
 
 import Container from "@/components/layout/Container";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
@@ -44,40 +40,27 @@ export default function CheckoutPage() {
 
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    const orderNumber = orderService.generateOrderNumber();
+    const orderNumber = `TR-${Date.now()}`;
 
-    const order: Order = {
-      id: nanoid(),
+    await createOrder({
       orderNumber,
 
       firstName: data.firstName,
       lastName: data.lastName,
 
       phone: data.phone,
-      email: data.email,
-
       address: data.address,
 
       totalPrice: cartTotal,
 
       items: cartItems.map((item) => ({
-        id: item.product.id,
-        name: item.product.title,
+        productId: item.product.id,
+        title: item.product.title,
+        image: item.product.image,
         price: item.product.price,
         quantity: item.quantity,
-        image: item.product.image,
       })),
-
-      receiptImage: URL.createObjectURL(receipt),
-
-      status: OrderStatus.PendingReview,
-
-      createdAt: new Date().toISOString(),
-    };
-
-    saveOrder(order);
-
-    orderService.setLastOrderNumber(order.orderNumber);
+    });
 
     clearCart();
     methods.reset();
@@ -89,7 +72,7 @@ export default function CheckoutPage() {
 
     navigate("/order-success", {
       state: {
-        orderNumber: order.orderNumber,
+        orderNumber,
       },
     });
   };

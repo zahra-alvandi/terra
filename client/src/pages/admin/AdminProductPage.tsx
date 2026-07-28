@@ -61,7 +61,8 @@ export default function AdminProductPage() {
         <button
           type="button"
           onClick={() => {
-            toast("حذف محصول هنوز به API متصل نشده است.");
+            setEditingProduct(null);
+            setDrawerOpen(true);
           }}
           className="rounded-2xl bg-primary px-6 py-3 text-white"
         >

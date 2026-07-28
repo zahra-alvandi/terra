@@ -9,7 +9,7 @@ type Props = {
 export default function AdminProtectedRoute({ children }: Props) {
   const { user } = useAuth();
 
-  if (!user || user.role !== "admin") {
+  if (!user || !user.isAdmin) {
     return <Navigate to="/login" replace />;
   }
 

@@ -1,18 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-import { getOrders } from "@/utils/orderStorage";
 import { OrderStatus } from "@/types/order";
-import { orderService } from "@/services/orderService";
 import toast from "react-hot-toast";
-// import type { Order } from "@/types/order";
+import { getOrders } from "@/services/orderService";
+import { getToken } from "@/services/authService";
+import { useEffect } from "react";
 
 export default function AdminOrdersPage() {
-  const [orders, setOrders] = useState(getOrders());
+  const [orders, setOrders] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
-  // const [drawerOpen, setDrawerOpen] = useState(false);
-  // const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const filteredOrders = orders.filter((order) => {
     const query = search.toLowerCase();
@@ -33,20 +31,30 @@ export default function AdminOrdersPage() {
     const updatedOrders = orders.map((order) => {
       if (order.id !== orderId) return order;
 
-      const updatedOrder = {
+      return {
         ...order,
-        status: status as typeof order.status,
+        status,
       };
-
-      orderService.update(updatedOrder);
-
-      return updatedOrder;
     });
 
     setOrders(updatedOrders);
 
     toast.success("وضعیت سفارش بروزرسانی شد.");
   };
+
+  useEffect(() => {
+    const loadOrders = async () => {
+      const token = getToken();
+
+      if (!token) return;
+
+      const data = await getOrders(token);
+
+      setOrders(data);
+    };
+
+    loadOrders();
+  }, []);
 
   return (
     <div className="space-y-8">

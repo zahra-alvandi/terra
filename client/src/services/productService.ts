@@ -15,7 +15,7 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function createProduct(data: any) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("terra_token");
 
   const response = await fetch(`${API}/products`, {
     method: "POST",
@@ -34,7 +34,7 @@ export async function createProduct(data: any) {
 }
 
 export async function updateProduct(id: string, data: any) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("terra_token");
 
   const response = await fetch(`${API}/products/${id}`, {
     method: "PATCH",
@@ -53,7 +53,7 @@ export async function updateProduct(id: string, data: any) {
 }
 
 export async function deleteProduct(id: string) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("terra_token");
 
   const response = await fetch(`${API}/products/${id}`, {
     method: "DELETE",

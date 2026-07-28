@@ -8,45 +8,84 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  firstName  String
-  lastName   String
-  phone      String   @unique
-  password   String
-  isAdmin    Boolean  @default(false)
+  id        String  @id @default(cuid())
+  firstName String
+  lastName  String
+  phone     String  @unique
+  password  String
+  isAdmin   Boolean @default(false)
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id            String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  title         String
-  englishTitle  String
+  title        String
+  englishTitle String
 
-  slug          String   @unique
+  slug String @unique
 
-  description   String
+  description String
 
-  image         String
-  gallery       Json
+  image   String
+  gallery Json
 
-  price         Int
-  discount      Int      @default(0)
+  price    Int
+  discount Int @default(0)
 
-  inventory     Int      @default(0)
+  inventory Int @default(0)
 
-  category      String
+  category String
 
-  isFeatured    Boolean  @default(false)
-  isHandmade    Boolean  @default(true)
-  isPublished   Boolean  @default(true)
+  isFeatured  Boolean @default(false)
+  isHandmade  Boolean @default(true)
+  isPublished Boolean @default(true)
 
-  keywords      Json
+  keywords Json
 
-  badge         String?
+  badge String?
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderItems OrderItem[]
+}
+
+model Order {
+  id String @id @default(cuid())
+
+  orderNumber String @unique
+
+  firstName String
+  lastName  String
+  phone     String
+  address   String
+
+  totalPrice Int
+
+  status String @default("pending")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items OrderItem[]
+}
+
+model OrderItem {
+  id String @id @default(cuid())
+
+  orderId   String
+  productId String
+
+  title String
+  image String
+
+  price    Int
+  quantity Int
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  product Product @relation(fields: [productId], references: [id])
 }

@@ -3,12 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import Container from "@/components/layout/Container";
-import { orderService } from "@/services/orderService";
 
 export default function OrderSuccessPage() {
   const { state } = useLocation();
 
-  const orderNumber = state?.orderNumber ?? orderService.getLastOrderNumber();
+  const orderNumber = state?.orderNumber;
 
   const copyOrderNumber = async () => {
     if (!orderNumber) return;
@@ -33,13 +32,13 @@ export default function OrderSuccessPage() {
             آماده ارسال خواهد شد.
           </p>
 
-          {orderNumber && (
+          {state?.orderNumber && (
             <div className="mt-8 rounded-2xl bg-stone-50 p-6">
               <p className="text-sm text-text-secondary">شماره پیگیری سفارش</p>
 
               <div className="mt-4 flex items-center justify-center gap-3">
                 <span className="font-mono text-2xl font-bold tracking-wider text-primary">
-                  {orderNumber}
+                  {state.orderNumber}
                 </span>
 
                 <button
@@ -52,8 +51,7 @@ export default function OrderSuccessPage() {
               </div>
 
               <p className="mt-4 text-sm text-text-secondary">
-                این شماره را نگه دارید تا بتونید وضعیت سفارشتان را پیگیری
-                کنید.
+                این شماره را نگه دارید تا بتونید وضعیت سفارشتان را پیگیری کنید.
               </p>
 
               <Link

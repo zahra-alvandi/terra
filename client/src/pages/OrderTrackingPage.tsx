@@ -3,20 +3,27 @@ import { Search, Hourglass } from "lucide-react";
 
 import Container from "@/components/layout/Container";
 import { OrderStatus, type Order } from "@/types/order";
-import { orderService } from "@/services/orderService";
 import OrderTimeline from "@/components/order/OrderTimeline";
+import { getOrders } from "@/services/orderService";
+import { getToken } from "@/services/authService";
 
 export default function OrderTrackingPage() {
-  const [orderNumber, setOrderNumber] = useState(
-    orderService.getLastOrderNumber(),
-  );
+  const [orderNumber, setOrderNumber] = useState("");
 
   const [order, setOrder] = useState<Order | null>(null);
 
   const [searched, setSearched] = useState(false);
 
-  const searchOrder = () => {
-    const foundOrder = orderService.findByOrderNumber(orderNumber);
+  const searchOrder = async () => {
+    const token = getToken();
+
+    if (!token) {
+      return;
+    }
+
+    const orders = await getOrders(token);
+
+    const foundOrder = orders.find((o: any) => o.orderNumber === orderNumber);
 
     setSearched(true);
 
@@ -27,7 +34,6 @@ export default function OrderTrackingPage() {
 
     setOrder(foundOrder);
   };
-
   const statusMap = {
     [OrderStatus.PendingReview]: {
       text: "در انتظار بررسی",

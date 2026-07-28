@@ -1,0 +1,66 @@
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export async function createOrder(data: {
+  orderNumber: string;
+
+  firstName: string;
+  lastName: string;
+  phone: string;
+  address: string;
+
+  totalPrice: number;
+
+  items: {
+    productId: string;
+    title: string;
+    image: string;
+    price: number;
+    quantity: number;
+  }[];
+}) {
+  return prisma.order.create({
+    data: {
+      orderNumber: data.orderNumber,
+
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phone: data.phone,
+      address: data.address,
+
+      totalPrice: data.totalPrice,
+
+      items: {
+        create: data.items,
+      },
+    },
+
+    include: {
+      items: true,
+    },
+  });
+}
+
+export async function getOrders() {
+  return prisma.order.findMany({
+    include: {
+      items: true,
+    },
+
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
+export async function updateOrderStatus(id: string, status: string) {
+  return prisma.order.update({
+    where: {
+      id,
+    },
+    data: {
+      status,
+    },
+  });
+}

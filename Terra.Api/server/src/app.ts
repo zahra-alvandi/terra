@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.routes";
 import profileRoutes from "./routes/profile.routes";
 import productRoutes from "./routes/product.routes";
 import userRoutes from "./routes/user.routes";
+import orderRoutes from "./routes/order.routes";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cors());
 app.use("/api/profile", profileRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.get("/", (_, res) => {
   res.json({

@@ -1,56 +1,52 @@
-import type { Order, OrderStatus } from "@/types/order";
-import { getOrders, saveOrders } from "@/utils/orderStorage";
+const API = import.meta.env.VITE_API_URL;
 
-const LAST_ORDER_KEY = "terra-last-order-number";
+export async function createOrder(data: any) {
+  const response = await fetch(`${API}/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-export const orderService = {
-  generateOrderNumber() {
-    return `TR-${Date.now().toString().slice(-6)}`;
-  },
+  if (!response.ok) {
+    throw new Error("Failed to create order");
+  }
 
-  setLastOrderNumber(orderNumber: string) {
-    // localStorage.setItem(LAST_ORDER_KEY, orderNumber);
-  },
+  const result = await response.json();
 
-  getLastOrderNumber() {
-    return localStorage.getItem(LAST_ORDER_KEY) ?? "";
-  },
+  return result.data;
+}
 
-  findByOrderNumber(orderNumber: string): Order | null {
-    const orders = getOrders();
+export async function getOrders(token: string) {
+  const response = await fetch(`${API}/orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-    return (
-      orders.find(
-        (order) =>
-          order.orderNumber.toLowerCase() === orderNumber.trim().toLowerCase(),
-      ) ?? null
-    );
-  },
-  updateStatus(orderId: string, status: OrderStatus) {
-    const orders = getOrders();
+  if (!response.ok) {
+    throw new Error("Failed to fetch orders");
+  }
 
-    const updatedOrders = orders.map((order) =>
-      order.id === orderId
-        ? {
-            ...order,
-            status,
-          }
-        : order,
-    );
+  const result = await response.json();
 
-    // localStorage.setItem("terra_orders", JSON.stringify(updatedOrders));
-  },
+  return result.data;
+}
 
-  getById(orderId: string): Order | null {
-    const orders = getOrders();
+import { authFetch } from "./authService";
 
-    return orders.find((order) => order.id === orderId) ?? null;
-  },
-  update(order: Order) {
-    const orders = getOrders().map((item) =>
-      item.id === order.id ? order : item,
-    );
+export async function updateOrderStatus(id: string, status: string) {
+  const response = await authFetch(`${API}/orders/${id}/status`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+  });
 
-    saveOrders(orders);
-  },
-};
+  if (!response.ok) {
+    throw new Error("Failed to update order status");
+  }
+
+  const result = await response.json();
+
+  return result.data;
+}

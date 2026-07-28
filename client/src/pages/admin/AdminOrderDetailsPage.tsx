@@ -1,16 +1,17 @@
 import { Navigate, useParams } from "react-router-dom";
 
 import { useState } from "react";
-import { orderService } from "@/services/orderService";
 import { OrderStatus } from "@/types/order";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
+import { getOrders } from "@/services/orderService";
+import { getToken } from "@/services/authService";
+import { updateOrderStatus } from "@/services/orderService";
 
 export default function AdminOrderDetailsPage() {
   const { id } = useParams();
 
-  const initialOrder = orderService.getById(id ?? "");
-
-  const [order, setOrder] = useState(initialOrder);
+  const [order, setOrder] = useState<any>(null);
 
   if (!order) {
     return <Navigate to="/admin/orders" replace />;
@@ -19,16 +20,40 @@ export default function AdminOrderDetailsPage() {
   if (!order) {
     return <Navigate to="/admin/orders" replace />;
   }
-  const handleStatusChange = (status: OrderStatus) => {
-    orderService.updateStatus(order.id, status);
+  const handleStatusChange = async (status: OrderStatus) => {
+    try {
+      await updateOrderStatus(order.id, status);
 
-    setOrder({
-      ...order,
-      status,
-    });
+      setOrder({
+        ...order,
+        status,
+      });
 
-    toast.success("وضعیت سفارش بروزرسانی شد.");
+      toast.success("وضعیت سفارش بروزرسانی شد.");
+    } catch (error) {
+      console.error(error);
+
+      toast.error("خطا در بروزرسانی وضعیت سفارش");
+    }
   };
+
+  useEffect(() => {
+    const loadOrder = async () => {
+      const token = getToken();
+
+      if (!token || !id) return;
+
+      const orders = await getOrders(token);
+
+      const found = orders.find((o: any) => o.id === id);
+
+      if (found) {
+        setOrder(found);
+      }
+    };
+
+    loadOrder();
+  }, [id]);
 
   return (
     <div className="space-y-8">
@@ -109,7 +134,7 @@ export default function AdminOrderDetailsPage() {
         <h2 className="text-xl font-semibold">محصولات سفارش</h2>
 
         <div className="mt-8 space-y-5">
-          {order.items.map((item) => (
+          {order.items.map((item: any) => (
             <div
               key={item.id}
               className="flex items-center justify-between border-b border-border pb-5 last:border-none"

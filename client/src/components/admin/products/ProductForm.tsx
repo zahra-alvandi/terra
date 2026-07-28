@@ -60,7 +60,11 @@ export default function ProductForm({ product, onSubmit }: Props) {
     await onSubmit({
       ...data,
 
-      image: preview || product?.image || "",
+      price: Number(data.price),
+      discount: Number(data.discount),
+      inventory: Number(data.inventory),
+
+      image: preview || product?.image || null,
 
       gallery: preview ? [preview] : product?.gallery || [],
 
@@ -96,7 +100,7 @@ export default function ProductForm({ product, onSubmit }: Props) {
       />
       <input
         type="number"
-        {...register("price")}
+        {...register("price", { valueAsNumber: true })}
         placeholder="قیمت"
         className="w-full rounded-xl border border-border p-4"
       />
