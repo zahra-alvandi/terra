@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import type { Product } from "@/types/product";
+
 type Props = {
   product?: Product | null;
 
-  onSubmit: (product: Product) => void;
+  onSubmit: (data: any) => Promise<void>;
 };
+
 export default function ProductForm({ product, onSubmit }: Props) {
   const { register, handleSubmit, reset } = useForm<Product>({
     defaultValues: {
@@ -17,8 +19,12 @@ export default function ProductForm({ product, onSubmit }: Props) {
       image: "",
       gallery: [],
       price: 0,
+      discount: 0,
+      inventory: 0,
       category: "mug",
-      featured: false,
+      isFeatured: false,
+      isHandmade: true,
+      isPublished: true,
       createdAt: "",
       keywords: [],
       badge: undefined,
@@ -36,9 +42,13 @@ export default function ProductForm({ product, onSubmit }: Props) {
       slug: product.slug,
       description: product.description,
       price: product.price,
+      discount: product.discount,
+      inventory: product.inventory,
       category: product.category,
-      featured: product.featured,
-      badge: product.badge,
+      isFeatured: product.isFeatured,
+      isHandmade: product.isHandmade,
+      isPublished: product.isPublished,
+      badge: product.badge ?? "",
     });
 
     setPreview(product.image);
@@ -46,46 +56,27 @@ export default function ProductForm({ product, onSubmit }: Props) {
     setKeywordsInput(product.keywords.join(", "));
   }, [product, reset]);
 
-  const submitForm = (data: any) => {
-    console.log(data);
-    const newProduct: Product = {
-      id: product?.id ?? Date.now(),
+  const submitForm = async (data: any) => {
+    await onSubmit({
+      ...data,
 
-      slug: data.slug,
+      image: preview || product?.image || "",
 
-      title: data.title,
-
-      englishTitle: data.englishTitle,
-
-      description: data.description,
-
-      image: preview,
-
-      gallery: preview ? [preview] : (product?.gallery ?? []),
-
-      price: Number(data.price),
-
-      category: data.category,
-
-      featured: data.featured,
-
-      createdAt: product?.createdAt ?? new Date().toISOString(),
+      gallery: preview ? [preview] : product?.gallery || [],
 
       keywords: keywordsInput
         .split(",")
         .map((item) => item.trim())
         .filter(Boolean),
+    });
 
-      badge: data.badge || undefined,
-    };
-
-    onSubmit(newProduct);
     reset();
 
     setPreview("");
 
     setKeywordsInput("");
   };
+
   return (
     <form onSubmit={handleSubmit(submitForm)} className="space-y-6">
       <input
@@ -109,6 +100,19 @@ export default function ProductForm({ product, onSubmit }: Props) {
         placeholder="قیمت"
         className="w-full rounded-xl border border-border p-4"
       />
+      <input
+        type="number"
+        {...register("discount", { valueAsNumber: true })}
+        placeholder="درصد تخفیف"
+        className="w-full rounded-xl border border-border p-4"
+      />
+
+      <input
+        type="number"
+        {...register("inventory", { valueAsNumber: true })}
+        placeholder="موجودی"
+        className="w-full rounded-xl border border-border p-4"
+      />
       <select
         {...register("category")}
         className="w-full rounded-xl border border-border p-4"
@@ -128,9 +132,18 @@ export default function ProductForm({ product, onSubmit }: Props) {
         <option value="LIMITED">محدود</option>
       </select>
       <label className="flex items-center gap-3 rounded-xl border border-border p-4">
-        <input type="checkbox" {...register("featured")} />
+        <input type="checkbox" {...register("isFeatured")} />
 
         <span>نمایش در محصولات ویژه</span>
+      </label>
+      <label className="flex items-center gap-3 rounded-xl border border-border p-4">
+        <input type="checkbox" {...register("isHandmade")} />
+        <span>محصول دست‌ساز</span>
+      </label>
+
+      <label className="flex items-center gap-3 rounded-xl border border-border p-4">
+        <input type="checkbox" {...register("isPublished")} />
+        <span>نمایش در سایت</span>
       </label>
       <textarea
         rows={5}

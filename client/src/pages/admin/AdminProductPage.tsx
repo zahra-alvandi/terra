@@ -1,31 +1,54 @@
-import { useProducts } from "@/context/ProductContext";
 import { useState } from "react";
+import { useEffect } from "react";
 
 import ProductDrawer from "@/components/ui/ProductDrawer";
 import ProductForm from "@/components/admin/products/ProductForm";
 import type { Product } from "@/types/product";
 import toast from "react-hot-toast";
+import {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getProducts,
+} from "@/services/productService";
 
 export default function AdminProductPage() {
-  const { products, refreshProducts } = useProducts();
+  const [products, setProducts] = useState<Product[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  
-  const handleCreateProduct = (product: Product) => {
-    if (editingProduct) {
-      productService.update(product);
 
-      toast.success("محصول ویرایش شد.");
-    } else {
-      productService.add(product);
+  const refreshProducts = async () => {
+    const data = await getProducts();
 
-      toast.success("محصول اضافه شد.");
-    }
+    setProducts(data);
 
     setEditingProduct(null);
 
-    refreshProducts();
+    setDrawerOpen(false);
   };
+
+  const handleCreateProduct = async (data: any) => {
+    try {
+      if (editingProduct) {
+        await updateProduct(editingProduct.id, data);
+
+        toast.success("محصول ویرایش شد.");
+      } else {
+        await createProduct(data);
+
+        toast.success("محصول اضافه شد.");
+      }
+
+      await refreshProducts();
+    } catch {
+      toast.error("خطا در ذخیره محصول");
+    }
+  };
+
+  useEffect(() => {
+    refreshProducts();
+  }, []);
+
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -38,8 +61,7 @@ export default function AdminProductPage() {
         <button
           type="button"
           onClick={() => {
-            setEditingProduct(null);
-            setDrawerOpen(true);
+            toast("حذف محصول هنوز به API متصل نشده است.");
           }}
           className="rounded-2xl bg-primary px-6 py-3 text-white"
         >
@@ -89,10 +111,10 @@ export default function AdminProductPage() {
 
                   <button
                     type="button"
-                    onClick={() => {
-                      // productService.delete(product.id);
+                    onClick={async () => {
+                      await deleteProduct(product.id);
 
-                      refreshProducts();
+                      await refreshProducts();
 
                       toast.success("محصول حذف شد.");
                     }}

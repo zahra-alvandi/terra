@@ -5,10 +5,22 @@ import { requireAdmin } from "../middleware/admin.middleware";
 
 const router = Router();
 
-// نمایش همه محصولات
 router.get("/", productController.getProducts);
 
-// ساخت محصول (فقط کاربر لاگین‌شده)
 router.post("/", authenticate, requireAdmin, productController.createProduct);
+
+router.delete(
+  "/:id",
+  authenticate,
+  requireAdmin,
+  productController.deleteProduct,
+);
+
+router.patch(
+  "/:id",
+  authenticate,
+  requireAdmin,
+  productController.updateProduct,
+);
 
 export default router;

@@ -1,17 +1,34 @@
 import { useProducts } from "@/context/ProductContext";
 import { getOrders } from "@/utils/orderStorage";
 import StatCard from "@/components/admin/dashboard/StatCard";
+import { getUsers } from "@/services/userService";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function AdminDashboardPage() {
   const { products, loading } = useProducts();
   const orders = getOrders();
+  const [users, setUsers] = useState<any[]>([]);
 
   if (loading) {
     return null;
   }
   const totalRevenue = orders.reduce((sum, order) => sum + order.totalPrice, 0);
 
-  const totalCustomers = new Set(orders.map((order) => order.phone)).size;
+  const totalCustomers = users.length;
+
+  useEffect(() => {
+    async function loadUsers() {
+      try {
+        const data = await getUsers();
+        setUsers(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    loadUsers();
+  }, []);
 
   return (
     <>

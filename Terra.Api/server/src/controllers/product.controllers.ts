@@ -36,3 +36,43 @@ export async function getProducts(req: Request, res: Response) {
     });
   }
 }
+
+export async function deleteProduct(req: Request, res: Response) {
+  try {
+    const id = String(req.params.id);
+
+    await productService.deleteProduct(id);
+
+    return res.json({
+      success: true,
+      message: "محصول حذف شد.",
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "خطا در حذف محصول",
+    });
+  }
+}
+
+export async function updateProduct(req: Request, res: Response) {
+  try {
+    const id = String(req.params.id);
+
+    const product = await productService.updateProduct(id, req.body);
+
+    return res.json({
+      success: true,
+      data: product,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "خطا در ویرایش محصول",
+    });
+  }
+}
