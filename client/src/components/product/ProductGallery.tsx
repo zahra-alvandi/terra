@@ -1,4 +1,5 @@
 import type { Product } from "@/types/product";
+import { getImageUrl } from "@/utils/image";
 
 type Props = {
   product: Product;
@@ -9,7 +10,7 @@ export default function ProductGallery({ product }: Props) {
     <div className="space-y-4">
       <div className="overflow-hidden rounded-3xl border border-border">
         <img
-          src={product.image}
+          src={getImageUrl(product.image)}
           alt={product.title}
           className="
   aspect-[4/5]
@@ -27,7 +28,7 @@ export default function ProductGallery({ product }: Props) {
             className="overflow-hidden rounded-xl border border-border"
           >
             <img
-              src={image}
+              src={getImageUrl(image)}
               alt={`${product.title}-${index}`}
               className="
   h-24

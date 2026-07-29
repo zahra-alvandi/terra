@@ -5,6 +5,7 @@ import { formatPrice } from "@/utils/formatPrice";
 import type { CartItem as CartItemType } from "@/types/cart";
 
 import { useCart } from "@/context/CartContext";
+import { getImageUrl } from "@/utils/image";
 
 type Props = {
   item: CartItemType;
@@ -18,7 +19,7 @@ export default function CartItem({ item }: Props) {
       {/* image */}
 
       <img
-        src={item.product.image}
+        src={getImageUrl(item.product.image)}
         alt={item.product.title}
         className="h-24 w-24 rounded-2xl object-cover"
       />

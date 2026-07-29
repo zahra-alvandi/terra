@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/utils/formatPrice";
+import { getImageUrl } from "@/utils/image";
 
 type Props = {
   item: CartItem;
@@ -19,7 +20,7 @@ export default function CartItemCard({ item }: Props) {
 
         <div className="h-28 w-28 flex-shrink-0 overflow-hidden rounded-2xl bg-stone-100">
           <img
-            src={item.product.image}
+            src={getImageUrl(item.product.image)}
             alt={item.product.title}
             className="h-full w-full object-cover"
           />

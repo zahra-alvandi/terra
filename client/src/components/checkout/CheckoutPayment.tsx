@@ -9,6 +9,7 @@ import { formatPrice } from "@/utils/formatPrice";
 import { Loader2 } from "lucide-react";
 import { CheckCircle2 } from "lucide-react";
 
+
 type Props = {
   receipt: File | null;
   setReceipt: React.Dispatch<React.SetStateAction<File | null>>;

@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 import type { Category } from "@/types/category";
+import { getImageUrl } from "@/utils/image";
 
 type CategoryCardProps = {
   category: Category;

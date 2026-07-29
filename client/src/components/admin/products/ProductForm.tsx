@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import type { Product } from "@/types/product";
+import { uploadImage } from "@/services/uploadService";
+import { getImageUrl } from "@/utils/image";
 
 type Props = {
   product?: Product | null;
@@ -30,7 +32,9 @@ export default function ProductForm({ product, onSubmit }: Props) {
       badge: undefined,
     },
   });
+
   const [preview, setPreview] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const [keywordsInput, setKeywordsInput] = useState("");
   useEffect(() => {
@@ -57,16 +61,17 @@ export default function ProductForm({ product, onSubmit }: Props) {
   }, [product, reset]);
 
   const submitForm = async (data: any) => {
+    let imagePath = product?.image || "";
+
+    if (selectedFile) {
+      imagePath = await uploadImage(selectedFile);
+    }
+
     await onSubmit({
       ...data,
 
-      price: Number(data.price),
-      discount: Number(data.discount),
-      inventory: Number(data.inventory),
-
-      image: preview || product?.image || null,
-
-      gallery: preview ? [preview] : product?.gallery || [],
+      image: imagePath,
+      gallery: imagePath ? [imagePath] : [],
 
       keywords: keywordsInput
         .split(",")
@@ -77,7 +82,7 @@ export default function ProductForm({ product, onSubmit }: Props) {
     reset();
 
     setPreview("");
-
+    setSelectedFile(null);
     setKeywordsInput("");
   };
 
@@ -172,6 +177,7 @@ export default function ProductForm({ product, onSubmit }: Props) {
 
             if (!file) return;
 
+            setSelectedFile(file);
             setPreview(URL.createObjectURL(file));
           }}
         />

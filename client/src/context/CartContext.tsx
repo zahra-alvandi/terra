@@ -14,11 +14,9 @@ type CartContextType = {
 
   addToCart: (product: Product, quantity: number) => void;
 
-  increaseQuantity: (productId: number) => void;
-
-  decreaseQuantity: (productId: number) => void;
-
-  removeFromCart: (productId: number) => void;
+  increaseQuantity: (productId: string) => void;
+  decreaseQuantity: (productId: string) => void;
+  removeFromCart: (productId: string) => void;
 
   clearCart: () => void;
 
@@ -81,7 +79,7 @@ export function CartProvider({ children }: Props) {
     openCart();
   };
 
-  const increaseQuantity = (productId: number) => {
+  const increaseQuantity = (productId: string) => {
     setCartItems((prev) =>
       prev.map((item) =>
         item.product.id === productId
@@ -94,7 +92,7 @@ export function CartProvider({ children }: Props) {
     );
   };
 
-  const decreaseQuantity = (productId: number) => {
+  const decreaseQuantity = (productId: string) => {
     setCartItems((prev) =>
       prev
         .map((item) =>
@@ -109,7 +107,7 @@ export function CartProvider({ children }: Props) {
     );
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: string) => {
     setCartItems((prev) =>
       prev.filter((item) => item.product.id !== productId),
     );

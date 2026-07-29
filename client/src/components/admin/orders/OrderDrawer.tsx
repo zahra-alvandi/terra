@@ -1,5 +1,6 @@
 import ProductDrawer from "@/components/ui/ProductDrawer";
 import type { Order } from "@/types/order";
+import { getImageUrl } from "@/utils/image";
 
 type Props = {
   open: boolean;
@@ -43,7 +44,7 @@ export default function OrderDrawer({ open, onClose, order }: Props) {
             >
               <div className="flex items-center gap-3">
                 <img
-                  src={item.image}
+                  src={getImageUrl(item.image)}
                   alt={item.name}
                   className="h-14 w-14 rounded-xl object-cover"
                 />

@@ -6,6 +6,7 @@ import { OrderStatus, type Order } from "@/types/order";
 import OrderTimeline from "@/components/order/OrderTimeline";
 import { getOrders } from "@/services/orderService";
 import { getToken } from "@/services/authService";
+import { getImageUrl } from "@/utils/image";
 
 export default function OrderTrackingPage() {
   const [orderNumber, setOrderNumber] = useState("");
@@ -171,7 +172,7 @@ export default function OrderTrackingPage() {
                     >
                       <div className="flex items-center gap-4">
                         <img
-                          src={item.image}
+                          src={getImageUrl(item.image)}
                           alt={item.name}
                           className="h-16 w-16 rounded-xl object-cover"
                         />
