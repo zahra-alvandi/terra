@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { getOrders } from "@/services/orderService";
 import { getToken } from "@/services/authService";
 import { useEffect } from "react";
+import { updateOrderStatus } from "@/services/orderService";
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -27,19 +28,20 @@ export default function AdminOrdersPage() {
     return matchesSearch && matchesStatus;
   });
 
-  const handleStatusChange = (orderId: string, status: string) => {
-    const updatedOrders = orders.map((order) => {
-      if (order.id !== orderId) return order;
+  const handleStatusChange = async (orderId: string, status: string) => {
+    try {
+      await updateOrderStatus(orderId, status);
 
-      return {
-        ...order,
-        status,
-      };
-    });
+      setOrders((prev) =>
+        prev.map((order) =>
+          order.id === orderId ? { ...order, status } : order,
+        ),
+      );
 
-    setOrders(updatedOrders);
-
-    toast.success("وضعیت سفارش بروزرسانی شد.");
+      toast.success("وضعیت سفارش بروزرسانی شد.");
+    } catch {
+      toast.error("خطا در بروزرسانی وضعیت سفارش");
+    }
   };
 
   useEffect(() => {

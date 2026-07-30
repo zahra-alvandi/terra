@@ -42,25 +42,28 @@ export default function CheckoutPage() {
 
     const orderNumber = `TR-${Date.now()}`;
 
-    await createOrder({
-      orderNumber,
+    await createOrder(
+      {
+        orderNumber,
 
-      firstName: data.firstName,
-      lastName: data.lastName,
+        firstName: data.firstName,
+        lastName: data.lastName,
 
-      phone: data.phone,
-      address: data.address,
+        phone: data.phone,
+        address: data.address,
 
-      totalPrice: cartTotal,
+        totalPrice: cartTotal,
 
-      items: cartItems.map((item) => ({
-        productId: item.product.id,
-        title: item.product.title,
-        image: item.product.image,
-        price: item.product.price,
-        quantity: item.quantity,
-      })),
-    });
+        items: cartItems.map((item) => ({
+          productId: item.product.id,
+          title: item.product.title,
+          image: item.product.image,
+          price: item.product.price,
+          quantity: item.quantity,
+        })),
+      },
+      receipt,
+    );
 
     clearCart();
     methods.reset();

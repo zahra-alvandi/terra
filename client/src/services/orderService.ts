@@ -1,12 +1,22 @@
 const API = import.meta.env.VITE_API_URL;
 
-export async function createOrder(data: any) {
+export async function createOrder(data: any, receipt: File) {
+  const formData = new FormData();
+
+  formData.append("receipt", receipt);
+
+  formData.append("orderNumber", data.orderNumber);
+  formData.append("firstName", data.firstName);
+  formData.append("lastName", data.lastName);
+  formData.append("phone", data.phone);
+  formData.append("address", data.address);
+  formData.append("totalPrice", String(data.totalPrice));
+
+  formData.append("items", JSON.stringify(data.items));
+
   const response = await fetch(`${API}/orders`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+    body: formData,
   });
 
   if (!response.ok) {
