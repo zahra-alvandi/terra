@@ -12,6 +12,8 @@ export async function createOrder(data: {
 
   totalPrice: number;
 
+  receiptImage?: string;
+
   items: {
     productId: string;
     title: string;
@@ -30,6 +32,8 @@ export async function createOrder(data: {
       address: data.address,
 
       totalPrice: data.totalPrice,
+
+      receiptImage: data.receiptImage,
 
       items: {
         create: data.items,

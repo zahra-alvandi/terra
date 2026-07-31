@@ -7,19 +7,41 @@ import { useEffect } from "react";
 import { getOrders } from "@/services/orderService";
 import { getToken } from "@/services/authService";
 import { updateOrderStatus } from "@/services/orderService";
+import { getImageUrl } from "@/utils/image";
 
 export default function AdminOrderDetailsPage() {
   const { id } = useParams();
 
   const [order, setOrder] = useState<any>(null);
 
-  if (!order) {
-    return <Navigate to="/admin/orders" replace />;
-  }
+  useEffect(() => {
+    const loadOrder = async () => {
+      const token = getToken();
+
+      if (!token || !id) return;
+
+      const orders = await getOrders(token);
+
+      console.log("ALL ORDERS:", orders);
+      console.log("PARAM ID:", id);
+
+      const found = orders.find((o: any) => o.id === id);
+
+      console.log("FOUND:", found);
+      console.log(JSON.stringify(found, null, 2));
+
+      if (found) {
+        setOrder(found);
+      }
+    };
+
+    loadOrder();
+  }, [id]);
 
   if (!order) {
-    return <Navigate to="/admin/orders" replace />;
+    return <div className="p-10">در حال دریافت اطلاعات سفارش...</div>;
   }
+
   const handleStatusChange = async (status: OrderStatus) => {
     try {
       await updateOrderStatus(order.id, status);
@@ -37,23 +59,8 @@ export default function AdminOrderDetailsPage() {
     }
   };
 
-  useEffect(() => {
-    const loadOrder = async () => {
-      const token = getToken();
-
-      if (!token || !id) return;
-
-      const orders = await getOrders(token);
-
-      const found = orders.find((o: any) => o.id === id);
-
-      if (found) {
-        setOrder(found);
-      }
-    };
-
-    loadOrder();
-  }, [id]);
+  console.log(order.items[0].image);
+  console.log("Receipt:", order.receiptImage);
 
   return (
     <div className="space-y-8">
@@ -134,20 +141,20 @@ export default function AdminOrderDetailsPage() {
         <h2 className="text-xl font-semibold">محصولات سفارش</h2>
 
         <div className="mt-8 space-y-5">
-          {order.items.map((item: any) => (
+          {order.items?.map((item: any) => (
             <div
               key={item.id}
               className="flex items-center justify-between border-b border-border pb-5 last:border-none"
             >
               <div className="flex items-center gap-4">
                 <img
-                  src={item.image}
-                  alt={item.name}
+                  src={getImageUrl(item.image)}
+                  alt={item.title}
                   className="h-16 w-16 rounded-xl object-cover"
                 />
 
                 <div>
-                  <p className="font-medium">{item.name}</p>
+                  <p className="font-medium">{item.title}</p>
 
                   <p className="text-sm text-text-secondary">
                     تعداد: {item.quantity}
@@ -167,9 +174,9 @@ export default function AdminOrderDetailsPage() {
         <h2 className="text-xl font-semibold">رسید پرداخت</h2>
 
         <img
-          src={order.receiptImage}
+          src={getImageUrl(order.receiptImage)}
           alt="Receipt"
-          className="mt-8 w-full rounded-2xl border border-border"
+          className="mt-8 w-full rounded-2xl border border-border object-contain"
         />
       </div>
     </div>

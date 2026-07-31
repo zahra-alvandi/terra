@@ -3,7 +3,17 @@ import * as orderService from "../services/order.service";
 
 export async function createOrder(req: Request, res: Response) {
   try {
-    const order = await orderService.createOrder(req.body);
+    const receipt = req.file;
+
+    const order = await orderService.createOrder({
+      ...req.body,
+
+      totalPrice: Number(req.body.totalPrice),
+
+      items: JSON.parse(req.body.items),
+
+      receiptImage: receipt ? `/uploads/receipts/${receipt.filename}` : null,
+    });
 
     return res.status(201).json({
       success: true,

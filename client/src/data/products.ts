@@ -7,7 +7,7 @@ import bowlImage from "@/app/assets/images/products/bowl.jpg";
 
 export const products: Product[] = [
   {
-    id: 1,
+    id: "1",
     slug: "ceramic-mug",
 
     title: "ماگ سرامیکی",
@@ -33,7 +33,7 @@ export const products: Product[] = [
   },
 
   {
-    id: 2,
+    id: "2",
     slug: "handmade-vase",
 
     title: "گلدان دست‌ساز",
@@ -59,7 +59,7 @@ export const products: Product[] = [
   },
 
   {
-    id: 3,
+    id: "3",
     slug: "dinner-plate",
 
     title: "بشقاب سفالی",
@@ -83,7 +83,7 @@ export const products: Product[] = [
   },
 
   {
-    id: 4,
+    id: "4",
     slug: "ceramic-bowl",
 
     title: "کاسه سرامیکی",

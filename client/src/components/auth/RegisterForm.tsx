@@ -35,7 +35,7 @@ export default function RegisterForm() {
       console.log(result);
 
       toast.success("ثبت نام با موفقیت انجام شد.");
-    } catch (error) {
+    } catch (error:any) {
       console.error(error);
 
       if (error instanceof Error) {

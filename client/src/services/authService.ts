@@ -25,11 +25,13 @@ export async function register(data: {
     body: JSON.stringify(data),
   });
 
-  if (!response.ok) {
-    throw new Error("Register failed");
-  }
+  const result = await response.json();
 
-  return response.json();
+  if (!response.ok) {
+    throw new Error(result.message || "Register failed");
+  } 
+
+  return result;
 }
 
 export async function login(data: { phone: string; password: string }) {
