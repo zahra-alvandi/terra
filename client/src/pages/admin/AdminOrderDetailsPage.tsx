@@ -22,13 +22,7 @@ export default function AdminOrderDetailsPage() {
 
       const orders = await getOrders(token);
 
-      console.log("ALL ORDERS:", orders);
-      console.log("PARAM ID:", id);
-
       const found = orders.find((o: any) => o.id === id);
-
-      console.log("FOUND:", found);
-      console.log(JSON.stringify(found, null, 2));
 
       if (found) {
         setOrder(found);
@@ -58,9 +52,6 @@ export default function AdminOrderDetailsPage() {
       toast.error("خطا در بروزرسانی وضعیت سفارش");
     }
   };
-
-  console.log(order.items[0].image);
-  console.log("Receipt:", order.receiptImage);
 
   return (
     <div className="space-y-8">

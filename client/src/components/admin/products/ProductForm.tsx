@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function ProductForm({ product, onSubmit }: Props) {
-  const { register, handleSubmit, reset } = useForm<Product>({
+  const { register, handleSubmit, reset, watch } = useForm<Product>({
     defaultValues: {
       title: "",
       englishTitle: "",
@@ -40,6 +40,8 @@ export default function ProductForm({ product, onSubmit }: Props) {
   useEffect(() => {
     if (!product) return;
 
+    console.log("RESET CALLED with price:", product.price);
+
     reset({
       title: product.title,
       englishTitle: product.englishTitle,
@@ -61,6 +63,7 @@ export default function ProductForm({ product, onSubmit }: Props) {
   }, [product, reset]);
 
   const submitForm = async (data: any) => {
+    console.log("PRICE AT SUBMIT:", data.price);
     let imagePath = product?.image || "";
 
     if (selectedFile) {
@@ -85,6 +88,13 @@ export default function ProductForm({ product, onSubmit }: Props) {
     setSelectedFile(null);
     setKeywordsInput("");
   };
+
+  useEffect(() => {
+  const sub = watch((value) => {
+    console.log("LIVE PRICE:", value.price);
+  });
+  return () => sub.unsubscribe();
+}, [watch]);
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="space-y-6">

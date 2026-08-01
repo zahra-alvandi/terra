@@ -11,9 +11,6 @@ type ProductCardProps = {
 export default function ProductCard({ product }: ProductCardProps) {
   const API = import.meta.env.VITE_API_URL.replace("/api", "");
 
-  console.log(product.image);
-  console.log(import.meta.env.VITE_API_URL);
-  console.log(`${import.meta.env.VITE_API_URL}${product.image}`);
   return (
     <article className="group overflow-hidden rounded-3xl border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
       {/* Image */}

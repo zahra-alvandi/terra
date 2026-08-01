@@ -1,3 +1,5 @@
+import { getToken } from "./authService";
+
 const API = import.meta.env.VITE_API_URL;
 
 export async function createOrder(data: any, receipt: File) {
@@ -14,8 +16,13 @@ export async function createOrder(data: any, receipt: File) {
 
   formData.append("items", JSON.stringify(data.items));
 
+  const token = getToken();
+
   const response = await fetch(`${API}/orders`, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     body: formData,
   });
 

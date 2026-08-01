@@ -32,7 +32,6 @@ export default function RegisterForm() {
         password: data.password,
       });
 
-      console.log(result);
 
       toast.success("ثبت نام با موفقیت انجام شد.");
     } catch (error:any) {
