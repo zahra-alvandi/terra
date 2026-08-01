@@ -6,7 +6,12 @@ import { upload } from "../middleware/upload.middleware";
 
 const router = Router();
 
-router.post("/", upload.single("receipt"), orderController.createOrder);
+router.post(
+  "/",
+  authenticate,
+  upload.single("receipt"),
+  orderController.createOrder,
+);
 
 router.get("/", authenticate, requireAdmin, orderController.getOrders);
 

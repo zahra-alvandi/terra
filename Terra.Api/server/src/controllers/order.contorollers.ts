@@ -5,8 +5,13 @@ export async function createOrder(req: Request, res: Response) {
   try {
     const receipt = req.file;
 
+    console.log("REQ.USER =", req.user);
+    console.log("USER ID =", req.user?.id);
+
     const order = await orderService.createOrder({
       ...req.body,
+
+      userId: req.user?.id,
 
       totalPrice: Number(req.body.totalPrice),
 

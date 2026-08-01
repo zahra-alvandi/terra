@@ -5,6 +5,13 @@ import { requireAdmin } from "../middleware/admin.middleware";
 
 const router = Router();
 
+router.get(
+  "/admin",
+  authenticate,
+  requireAdmin,
+  productController.getAdminProducts,
+);
+
 router.get("/", productController.getProducts);
 
 router.post("/", authenticate, requireAdmin, productController.createProduct);

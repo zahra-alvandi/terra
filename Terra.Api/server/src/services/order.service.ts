@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function createOrder(data: {
+  userId: string;
   orderNumber: string;
 
   firstName: string;
@@ -24,6 +25,7 @@ export async function createOrder(data: {
 }) {
   return prisma.order.create({
     data: {
+      userId: data.userId,
       orderNumber: data.orderNumber,
 
       firstName: data.firstName,

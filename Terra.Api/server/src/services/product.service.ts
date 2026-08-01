@@ -56,6 +56,12 @@ export async function getProducts() {
   });
 }
 
+export async function getAllProductsAdmin() {
+  return prisma.product.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+}
+
 export async function deleteProduct(id: string) {
   return prisma.product.delete({
     where: {
@@ -64,25 +70,34 @@ export async function deleteProduct(id: string) {
   });
 }
 
-export async function updateProduct(
-  id: string,
-  data: {
-    title: string;
-    englishTitle: string;
-    slug: string;
-    description: string;
-    image: string;
-    gallery: string[];
-    price: number;
-    discount?: number;
-    inventory: number;
-    category: string;
-    keywords: string[];
-    badge?: string;
-    isFeatured?: boolean;
-    isHandmade?: boolean;
-  },
-) {
+// export async function updateProduct(
+//   id: string,
+//   data: {
+//     title: string;
+//     englishTitle: string;
+//     slug: string;
+//     description: string;
+//     image: string;
+//     gallery: string[];
+//     price: number;
+//     discount?: number;
+//     inventory: number;
+//     category: string;
+//     keywords: string[];
+//     badge?: string;
+//     isFeatured?: boolean;
+//     isHandmade?: boolean;
+//   },
+// ) 
+// {
+//   return prisma.product.update({
+//     where: { id },
+//     data,
+//   });
+// }
+
+export async function updateProduct(id: string, data: any) {
+  console.log("UPDATING", id, data);   // <-- add this line
   return prisma.product.update({
     where: { id },
     data,
