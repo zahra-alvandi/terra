@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function getUsers() {
-  return prisma.user.findMany({
+  const users = await prisma.user.findMany({
     where: {
       isAdmin: false,
     },
@@ -19,4 +19,8 @@ export async function getUsers() {
       },
     },
   });
+
+  console.log(JSON.stringify(users, null, 2));
+
+  return users;
 }

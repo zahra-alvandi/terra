@@ -1,5 +1,6 @@
 import { useProducts } from "@/context/ProductContext";
-import { getOrders } from "@/utils/orderStorage";
+import { getOrders } from "@/services/orderService";
+import { getToken } from "@/services/authService";
 import StatCard from "@/components/admin/dashboard/StatCard";
 import { getUsers } from "@/services/userService";
 import { useState } from "react";
@@ -7,7 +8,7 @@ import { useEffect } from "react";
 
 export default function AdminDashboardPage() {
   const { products, loading } = useProducts();
-  const orders = getOrders();
+  const [orders, setOrders] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
 
   if (loading) {
@@ -18,16 +19,23 @@ export default function AdminDashboardPage() {
   const totalCustomers = users.length;
 
   useEffect(() => {
-    async function loadUsers() {
+    async function loadData() {
       try {
-        const data = await getUsers();
-        setUsers(data);
+        const usersData = await getUsers();
+        setUsers(usersData);
+
+        const token = getToken();
+
+        if (token) {
+          const orderData = await getOrders(token);
+          setOrders(orderData);
+        }
       } catch (error) {
         console.error(error);
       }
     }
 
-    loadUsers();
+    loadData();
   }, []);
 
   return (

@@ -17,7 +17,7 @@ export default function AdminCustomersPage() {
         console.error(err);
       }
     };
-    
+
     loadUsers();
   }, []);
 
@@ -69,7 +69,7 @@ export default function AdminCustomersPage() {
 
                 <td className="px-6 py-5">{customer.phone}</td>
 
-                <td className="px-6 py-5">{customer.totalOrders}</td>
+                <td className="px-6 py-5">{customer.ordersCount}</td>
 
                 <td className="px-6 py-5">
                   {customer.totalSpent.toLocaleString()} تومان
