@@ -3,20 +3,20 @@ import * as orderService from "../services/order.service";
 
 export async function createOrder(req: Request, res: Response) {
   try {
-    const receipt = req.file;
+    if (!req.user?.id) {
+      return res.status(401).json({
+        success: false,
+        message: "برای ثبت سفارش ابتدا وارد حساب کاربری خود شوید",
+      });
+    }
 
-    console.log("REQ.USER =", req.user);
-    console.log("USER ID =", req.user?.id);
+    const receipt = req.file;
 
     const order = await orderService.createOrder({
       ...req.body,
-
-      userId: req.user?.id,
-
+      userId: req.user.id,
       totalPrice: Number(req.body.totalPrice),
-
       items: JSON.parse(req.body.items),
-
       receiptImage: receipt ? `/uploads/receipts/${receipt.filename}` : null,
     });
 
@@ -26,7 +26,6 @@ export async function createOrder(req: Request, res: Response) {
     });
   } catch (error) {
     console.error(error);
-
     return res.status(500).json({
       success: false,
       message: "خطا در ایجاد سفارش",

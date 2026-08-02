@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { login as loginUser } from "@/services/authService";
 
@@ -10,6 +10,9 @@ import AuthCard from "./AuthCard";
 import { loginSchema, type LoginFormData } from "@/validations/authSchema";
 
 export default function LoginForm() {
+  const location = useLocation();
+  const from = (location.state as { from?: string })?.from || "/";
+
   const { login } = useAuth();
   const navigate = useNavigate();
   const {
@@ -31,7 +34,7 @@ export default function LoginForm() {
 
       toast.success("ورود موفق بود.");
 
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       toast.error("شماره موبایل یا رمز عبور اشتباه است.");
     }

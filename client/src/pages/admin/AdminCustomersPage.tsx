@@ -1,41 +1,36 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-import { getOrders } from "@/utils/orderStorage";
+import { useEffect } from "react";
+import { getUsers } from "@/services/userService";
 
 export default function AdminCustomersPage() {
   const [search, setSearch] = useState("");
 
-  const customers = useMemo(() => {
-    const orders = getOrders();
+  const [customers, setCustomers] = useState<any[]>([]);
 
-    const map = new Map();
-
-    orders.forEach((order) => {
-      if (!map.has(order.phone)) {
-        map.set(order.phone, {
-          phone: order.phone,
-          firstName: order.firstName,
-          lastName: order.lastName,
-          totalOrders: 0,
-          totalSpent: 0,
-        });
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const data = await getUsers();
+        setCustomers(data);
+      } catch (err) {
+        console.error(err);
       }
-
-      const customer = map.get(order.phone);
-
-      customer.totalOrders += 1;
-      customer.totalSpent += order.totalPrice;
-    });
-
-    return [...map.values()];
+    };
+    
+    loadUsers();
   }, []);
 
   const filteredCustomers = customers.filter((customer) => {
-    const query = search.toLowerCase();
+    const query = search.trim().toLowerCase();
+
+    const fullName = `${customer.firstName} ${customer.lastName}`.toLowerCase();
 
     return (
-      customer.phone.includes(search) ||
-      `${customer.firstName} ${customer.lastName}`.toLowerCase().includes(query)
+      customer.phone.includes(query) ||
+      customer.firstName.toLowerCase().includes(query) ||
+      customer.lastName.toLowerCase().includes(query) ||
+      fullName.includes(query)
     );
   });
 

@@ -10,12 +10,13 @@ export async function getUsers() {
     orderBy: {
       createdAt: "desc",
     },
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      phone: true,
-      createdAt: true,
+    include: {
+      orders: {
+        select: {
+          orderNumber: true,
+          totalPrice: true,
+        },
+      },
     },
   });
 }
