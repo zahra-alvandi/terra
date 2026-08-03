@@ -70,3 +70,10 @@ export async function updateOrderStatus(id: string, status: string) {
     },
   });
 }
+
+export async function getOrderByNumber(orderNumber: string) {
+  return prisma.order.findUnique({
+    where: { orderNumber },
+    include: { items: true },
+  });
+}

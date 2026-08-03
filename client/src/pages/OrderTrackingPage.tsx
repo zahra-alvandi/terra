@@ -4,8 +4,7 @@ import { Search, Hourglass } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { OrderStatus, type Order } from "@/types/order";
 import OrderTimeline from "@/components/order/OrderTimeline";
-import { getOrders } from "@/services/orderService";
-import { getToken } from "@/services/authService";
+import { trackOrder } from "@/services/orderService";
 import { getImageUrl } from "@/utils/image";
 
 export default function OrderTrackingPage() {
@@ -16,25 +15,18 @@ export default function OrderTrackingPage() {
   const [searched, setSearched] = useState(false);
 
   const searchOrder = async () => {
-    const token = getToken();
+    if (!orderNumber.trim()) return;
 
-    if (!token) {
-      return;
-    }
-
-    const orders = await getOrders(token);
-
-    const foundOrder = orders.find((o: any) => o.orderNumber === orderNumber);
-
-    setSearched(true);
-
-    if (!foundOrder) {
+    try {
+      const foundOrder = await trackOrder(orderNumber.trim());
+      setSearched(true);
+      setOrder(foundOrder);
+    } catch {
+      setSearched(true);
       setOrder(null);
-      return;
     }
-
-    setOrder(foundOrder);
   };
+
   const statusMap = {
     [OrderStatus.PendingReview]: {
       text: "در انتظار بررسی",
@@ -66,6 +58,13 @@ export default function OrderTrackingPage() {
       color: "bg-red-100 text-red-700",
     },
   };
+
+  const currentStatus = order
+    ? (statusMap[order.status] ?? {
+        text: order.status,
+        color: "bg-stone-100 text-stone-700",
+      })
+    : null;
 
   return (
     <section className="py-20">
@@ -132,9 +131,9 @@ export default function OrderTrackingPage() {
                   </div>
 
                   <span
-                    className={`rounded-full px-4 py-2 text-sm font-medium ${statusMap[order.status].color}`}
+                    className={`rounded-full px-4 py-2 text-sm font-medium ${currentStatus?.color}`}
                   >
-                    {statusMap[order.status].text}
+                    {currentStatus?.text}
                   </span>
                 </div>
 

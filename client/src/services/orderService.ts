@@ -67,3 +67,20 @@ export async function updateOrderStatus(id: string, status: string) {
 
   return result.data;
 }
+
+export async function trackOrder(orderNumber: string) {
+  const response = await fetch(`${API}/orders/track/${orderNumber}`, {
+    cache: "no-store",
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error("Failed to track order");
+  }
+
+  const result = await response.json();
+  return result.data;
+}

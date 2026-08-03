@@ -13,6 +13,8 @@ router.post(
   orderController.createOrder,
 );
 
+router.get("/track/:orderNumber", orderController.getOrderByNumber);
+
 router.get("/", authenticate, requireAdmin, orderController.getOrders);
 
 router.patch(

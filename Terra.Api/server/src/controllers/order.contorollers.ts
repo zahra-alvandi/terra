@@ -71,3 +71,29 @@ export async function updateOrderStatus(req: Request, res: Response) {
     });
   }
 }
+
+export async function getOrderByNumber(req: Request, res: Response) {
+  try {
+    const orderNumber = String(req.params.orderNumber);
+
+    const order = await orderService.getOrderByNumber(orderNumber);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "سفارشی با این کد پیدا نشد.",
+      });
+    }
+
+    return res.json({
+      success: true,
+      data: order,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "خطا در دریافت سفارش",
+    });
+  }
+}
