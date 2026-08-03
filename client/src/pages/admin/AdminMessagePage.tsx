@@ -1,32 +1,33 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { contactService, type ContactMessage } from "@/services/contactService";
+import { getMessages, type ContactMessage } from "@/services/contactService";
 
 export default function AdminMessagesPage() {
   const navigate = useNavigate();
-
-  const [messages, setMessages] = useState<ContactMessage[]>(
-    contactService.getMessages(),
-  );
+  const [messages, setMessages] = useState<ContactMessage[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const syncMessages = () => {
-      setMessages(contactService.getMessages());
-    };
-
-    window.addEventListener("messages-updated", syncMessages);
-
-    return () => {
-      window.removeEventListener("messages-updated", syncMessages);
-    };
+    (async () => {
+      try {
+        const data = await getMessages();
+        setMessages(data);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
+
+  if (loading) {
+    return (
+      <p className="p-16 text-center text-text-secondary">در حال بارگذاری...</p>
+    );
+  }
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">پیام‌های تماس</h1>
-
         <p className="mt-2 text-text-secondary">
           پیام‌های ارسال شده توسط کاربران
         </p>
@@ -42,7 +43,6 @@ export default function AdminMessagesPage() {
               <th className="p-5 text-right">وضعیت</th>
             </tr>
           </thead>
-
           <tbody>
             {messages.map((message) => (
               <tr
@@ -51,11 +51,10 @@ export default function AdminMessagesPage() {
                 className="cursor-pointer border-t transition hover:bg-stone-50"
               >
                 <td className="p-5 font-medium">{message.name}</td>
-
                 <td className="p-5">{message.phone}</td>
-
-                <td className="p-5">{message.createdAt}</td>
-
+                <td className="p-5">
+                  {new Date(message.createdAt).toLocaleDateString("fa-IR")}
+                </td>
                 <td className="p-5">
                   {message.isRead ? (
                     <span className="rounded-full bg-stone-100 px-3 py-1 text-sm">

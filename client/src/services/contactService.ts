@@ -1,68 +1,98 @@
-export type ContactMessage = {
+import { getToken } from "./authService";
+
+const API = import.meta.env.VITE_API_URL;
+
+export interface ContactMessage {
   id: string;
   name: string;
   phone: string;
-  email: string;
+  email?: string | null;
   message: string;
-  createdAt: string;
   isRead: boolean;
-};
+  createdAt: string;
+}
 
-const STORAGE_KEY = "terra_contact_messages";
+export interface ContactFormPayload {
+  name: string;
+  phone: string;
+  email?: string;
+  message: string;
+}
 
-export const contactService = {
-  getMessages(): ContactMessage[] {
-    const data = localStorage.getItem(STORAGE_KEY);
+export async function createMessage(data: ContactFormPayload) {
+  const response = await fetch(`${API}/contact`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+    body: JSON.stringify(data),
+  });
 
-    return data ? JSON.parse(data) : [];
-  },
+  if (!response.ok) {
+    throw new Error("Failed to send message");
+  }
 
-  saveMessages(messages: ContactMessage[]) {
-    // localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-  },
+  const result = await response.json();
+  return result.data as ContactMessage;
+}
 
-  createMessage(data: Omit<ContactMessage, "id" | "createdAt" | "isRead">) {
-    const messages = this.getMessages();
+export async function getMessages(): Promise<ContactMessage[]> {
+  const token = getToken();
 
-    const newMessage: ContactMessage = {
-      id: crypto.randomUUID(),
-      createdAt: new Date().toLocaleDateString("fa-IR"),
-      isRead: false,
-      ...data,
-    };
+  const response = await fetch(`${API}/contact`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
 
-    messages.unshift(newMessage);
+  if (!response.ok) {
+    throw new Error("Failed to fetch messages");
+  }
 
-    this.saveMessages(messages);
+  const result = await response.json();
+  return result.data as ContactMessage[];
+}
 
-    window.dispatchEvent(new Event("messages-updated"));
+export async function getMessageById(
+  id: string,
+): Promise<ContactMessage | undefined> {
+  const messages = await getMessages();
+  return messages.find((m) => m.id === id);
+}
 
-    return newMessage;
-  },
+export async function markAsRead(id: string) {
+  const token = getToken();
 
-  getMessageById(id: string) {
-    return this.getMessages().find((m) => m.id === id);
-  },
+  const response = await fetch(`${API}/contact/${id}/read`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
 
-  markAsRead(id: string) {
-    const messages = this.getMessages();
+  if (!response.ok) {
+    throw new Error("Failed to mark message as read");
+  }
 
-    const message = messages.find((m) => m.id === id);
+  const result = await response.json();
+  return result.data as ContactMessage;
+}
 
-    if (!message) return;
+export async function deleteMessage(id: string) {
+  const token = getToken();
 
-    message.isRead = true;
+  const response = await fetch(`${API}/contact/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
 
-    this.saveMessages(messages);
-
-    window.dispatchEvent(new Event("messages-updated"));
-  },
-
-  deleteMessage(id: string) {
-    const messages = this.getMessages().filter((m) => m.id !== id);
-
-    this.saveMessages(messages);
-
-    window.dispatchEvent(new Event("messages-updated"));
-  },
-};
+  if (!response.ok) {
+    throw new Error("Failed to delete message");
+  }
+}

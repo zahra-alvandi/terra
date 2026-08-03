@@ -1,20 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-
-import { contactService } from "@/services/contactService";
+import {
+  getMessageById,
+  markAsRead,
+  type ContactMessage,
+} from "@/services/contactService";
 
 export default function AdminMessageDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const message = id ? contactService.getMessageById(id) : undefined;
+  const [message, setMessage] = useState<ContactMessage | undefined>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      contactService.markAsRead(id);
-    }
+    if (!id) return;
+
+    (async () => {
+      try {
+        const found = await getMessageById(id);
+        setMessage(found);
+
+        if (found && !found.isRead) {
+          await markAsRead(id);
+        }
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [id]);
+
+  if (loading) {
+    return (
+      <p className="p-16 text-center text-text-secondary">در حال بارگذاری...</p>
+    );
+  }
 
   if (!message) {
     return <p>پیام پیدا نشد.</p>;
@@ -38,26 +58,24 @@ export default function AdminMessageDetailsPage() {
             <p className="text-sm text-text-secondary">نام</p>
             <p className="mt-2">{message.name}</p>
           </div>
-
           <div>
             <p className="text-sm text-text-secondary">موبایل</p>
             <p className="mt-2">{message.phone}</p>
           </div>
-
           <div>
             <p className="text-sm text-text-secondary">ایمیل</p>
             <p className="mt-2">{message.email || "-"}</p>
           </div>
-
           <div>
             <p className="text-sm text-text-secondary">تاریخ</p>
-            <p className="mt-2">{message.createdAt}</p>
+            <p className="mt-2">
+              {new Date(message.createdAt).toLocaleDateString("fa-IR")}
+            </p>
           </div>
         </div>
 
         <div className="mt-10">
           <p className="mb-3 text-sm text-text-secondary">متن پیام</p>
-
           <div className="rounded-2xl bg-stone-50 p-6 leading-8">
             {message.message}
           </div>

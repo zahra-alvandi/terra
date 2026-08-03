@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { contactService } from "@/services/contactService";
+import { createMessage } from "@/services/contactService";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -25,20 +25,17 @@ export default function ContactForm() {
   const onSubmit = async (data: ContactFormData) => {
     if (!isAuthenticated) {
       toast.error("ابتدا وارد حساب کاربری خود شوید.");
-
-      navigate("/login", {
-        state: {
-          from: "/contact",
-        },
-      });
-
+      navigate("/login", { state: { from: "/contact" } });
       return;
     }
-    contactService.createMessage(data);
 
-    toast.success("پیام شما با موفقیت ثبت شد.");
-
-    reset();
+    try {
+      await createMessage(data);
+      toast.success("پیام شما با موفقیت ثبت شد.");
+      reset();
+    } catch {
+      toast.error("خطا در ارسال پیام. لطفاً دوباره تلاش کنید.");
+    }
   };
 
   return (
