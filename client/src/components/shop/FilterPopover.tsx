@@ -56,7 +56,7 @@ export default function FilterPopover({
         <div
           className="
             absolute
-            left-0
+            right-0
             top-full
             z-50
             mt-3

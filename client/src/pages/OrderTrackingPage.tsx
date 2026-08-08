@@ -76,7 +76,7 @@ export default function OrderTrackingPage() {
             کد سفارش خود را وارد کنید.
           </p>
 
-          <div className="mt-8 flex gap-3">
+          <div className="mt-8 flex md:gap-3 flex-col md:flex-row gap-4">
             <input
               value={orderNumber}
               onChange={(e) => setOrderNumber(e.target.value)}
@@ -104,6 +104,7 @@ export default function OrderTrackingPage() {
                 bg-primary
                 px-4
                 md:px-6
+                py-5
                 text-white
               "
             >
