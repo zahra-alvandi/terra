@@ -9,8 +9,16 @@ export async function createProduct(req: Request, res: Response) {
       success: true,
       data: product,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+
+    if (error.code === "P2002") {
+      return res.status(409).json({
+        success: false,
+        message:
+          "این نامک (slug) قبلاً استفاده شده است. لطفاً نامک دیگری انتخاب کنید.",
+      });
+    }
 
     return res.status(500).json({
       success: false,

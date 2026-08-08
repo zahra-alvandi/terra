@@ -1,15 +1,18 @@
 import ShopHeader from "@/components/shop/ShopHeader";
 import ShopToolbar from "@/components/shop/ShopToolbar";
 import ProductGrid from "@/components/shop/ProductGrid";
+import Pagination from "@/components/shop/Pagination";
 
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useProducts } from "@/context/ProductContext";
+
+const PRODUCTS_PER_PAGE = 12;
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("newest");
+  const [page, setPage] = useState(1);
   const { products, loading } = useProducts();
 
   const filteredProducts = products.filter((product) => {
@@ -32,15 +35,12 @@ export default function ShopPage() {
     switch (sort) {
       case "price-low":
         return a.price - b.price;
-
       case "price-high":
         return b.price - a.price;
-
       case "oldest":
         return (
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
-
       case "newest":
       default:
         return (
@@ -48,6 +48,29 @@ export default function ShopPage() {
         );
     }
   });
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(sortedProducts.length / PRODUCTS_PER_PAGE),
+  );
+
+  const paginatedProducts = useMemo(() => {
+    const start = (page - 1) * PRODUCTS_PER_PAGE;
+    return sortedProducts.slice(start, start + PRODUCTS_PER_PAGE);
+  }, [sortedProducts, page]);
+
+  // Reset to page 1 whenever the filters/sort change, so users don't
+  // land on an empty page 4 after narrowing results down to 2 products.
+  useEffect(() => {
+    setPage(1);
+  }, [search, category, sort]);
+
+  // Clamp page if it's now out of range (e.g. products list shrank)
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [totalPages, page]);
 
   useEffect(() => {
     const saved = sessionStorage.getItem("shop-scroll");
@@ -64,25 +87,15 @@ export default function ShopPage() {
     }
   }, []);
 
-  useEffect(() => {
-    const savedScroll = sessionStorage.getItem("shop-scroll");
-
-    if (savedScroll) {
-      requestAnimationFrame(() => {
-        window.scrollTo({
-          top: Number(savedScroll),
-          behavior: "instant" as ScrollBehavior,
-        });
-
-        sessionStorage.removeItem("shop-scroll");
-      });
-    }
-  }, []);
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   if (loading) {
     return null;
   }
-  
+
   return (
     <>
       <ShopHeader productCount={filteredProducts.length} />
@@ -96,7 +109,13 @@ export default function ShopPage() {
         onSortChange={setSort}
       />
 
-      <ProductGrid products={sortedProducts} />
+      <ProductGrid products={paginatedProducts} />
+
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }

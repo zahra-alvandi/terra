@@ -15,6 +15,8 @@ router.post(
 
 router.get("/track/:orderNumber", orderController.getOrderByNumber);
 
+router.get("/my-orders", authenticate, orderController.getMyOrders);
+
 router.get("/", authenticate, requireAdmin, orderController.getOrders);
 
 router.patch(

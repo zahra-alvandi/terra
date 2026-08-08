@@ -10,11 +10,10 @@ type ProductCardProps = {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const API = import.meta.env.VITE_API_URL.replace("/api", "");
+  const isOutOfStock = product.inventory <= 0;
 
   return (
     <article className="group overflow-hidden rounded-3xl border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      {/* Image */}
-
       <NavLink
         to={`/shop/${product.slug}`}
         onClick={() =>
@@ -25,23 +24,21 @@ export default function ProductCard({ product }: ProductCardProps) {
         <img
           src={`${API}${product.image}`}
           alt={product.title}
-          className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className={`aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+            isOutOfStock ? "opacity-60 grayscale" : ""
+          }`}
         />
 
         <div
           className="
     absolute bottom-5 left-5 right-5
     flex justify-between
-
     opacity-100
     translate-y-0
-
     md:opacity-0
     md:translate-y-3
-
     transition-all
     duration-300
-
     md:group-hover/image:translate-y-0
     md:group-hover/image:opacity-100
   "
@@ -62,6 +59,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </button>
 
           <button
+            disabled={isOutOfStock}
             className="
       flex h-9 w-9 md:h-11 md:w-11 items-center justify-center
       rounded-full
@@ -70,19 +68,22 @@ export default function ProductCard({ product }: ProductCardProps) {
       shadow-lg
       transition
       hover:scale-105
+      disabled:cursor-not-allowed
+      disabled:opacity-50
+      disabled:hover:scale-100
     "
           >
             <ShoppingBag className="h-4 w-4 md:h-5 md:w-5" />
           </button>
         </div>
 
-        {product.badge && (
+        {isOutOfStock ? (
           <span
             className="
               absolute left-5 top-5
               rounded-full
               border border-white/30
-              bg-white/20
+              bg-red-500/80
               px-4 py-2
               text-xs
               font-medium
@@ -90,38 +91,51 @@ export default function ProductCard({ product }: ProductCardProps) {
               backdrop-blur-md
             "
           >
-            ✦ {product.badge}
+            ناموجود
           </span>
+        ) : (
+          product.badge && (
+            <span
+              className="
+                absolute left-5 top-5
+                rounded-full
+                border border-white/30
+                bg-white/20
+                px-4 py-2
+                text-xs
+                font-medium
+                text-white
+                backdrop-blur-md
+              "
+            >
+              ✦ {product.badge}
+            </span>
+          )
         )}
       </NavLink>
 
-      {/* Content */}
-
       <div className="flex flex-col gap-3 p-4 md:p-6">
-        {/* English */}
-
         <p className="[font-family:var(--font-display)] text-lg md:text-2xl leading-none text-text-primary">
           {product.englishTitle}
         </p>
-
-        {/* Persian */}
 
         <h3 className="text-sm md:text-base text-text-secondary">
           {product.title}
         </h3>
 
-        {/* Bottom */}
-
         <div className="mt-2 flex items-end justify-between">
-          <div className="flex items-end gap-1">
-            <span className="text-base font-semibold text-text-primary md:text-xl">
-              {formatPrice(product.price)}
-            </span>
-
-            <span className="text-xs text-text-secondary md:text-sm">
-              تومان
-            </span>
-          </div>
+          {isOutOfStock ? (
+            <span className="text-sm font-medium text-red-500">ناموجود</span>
+          ) : (
+            <div className="flex items-end gap-1">
+              <span className="text-base font-semibold text-text-primary md:text-xl">
+                {formatPrice(product.price)}
+              </span>
+              <span className="text-xs text-text-secondary md:text-sm">
+                تومان
+              </span>
+            </div>
+          )}
 
           <NavLink
             dir="ltr"

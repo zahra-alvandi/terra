@@ -14,9 +14,10 @@ export default function AdminDashboardPage() {
   if (loading) {
     return null;
   }
-  const totalRevenue = orders.reduce((sum, order) => sum + order.totalPrice, 0);
 
+  const totalRevenue = orders.reduce((sum, order) => sum + order.totalPrice, 0);
   const totalCustomers = users.length;
+  const outOfStockCount = products.filter((p) => p.inventory <= 0).length;
 
   useEffect(() => {
     async function loadData() {
@@ -40,30 +41,16 @@ export default function AdminDashboardPage() {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <StatCard title="محصولات" value={products.length} />
-
         <StatCard title="سفارش‌ها" value={orders.length} />
-
         <StatCard
           title="درآمد"
           value={`${totalRevenue.toLocaleString()} تومان`}
         />
-
         <StatCard title="مشتریان" value={totalCustomers} />
+        <StatCard title="ناموجود" value={outOfStockCount} />
       </div>
-      {/* <div className="grid grid-cols-4 gap-6">
-        <StatCard title="محصولات" value={products.length} />
-
-        <StatCard title="سفارش‌ها" value={orders.length} />
-
-        <StatCard
-          title="درآمد"
-          value={`${totalRevenue.toLocaleString()} تومان`}
-        />
-
-        <StatCard title="مشتریان" value={totalCustomers} />
-      </div> */}
 
       <div className="mt-8 grid gap-6 xl:grid-cols-2">
         <div className="rounded-3xl border border-border bg-white p-6">

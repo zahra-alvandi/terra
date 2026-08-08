@@ -77,6 +77,7 @@ export default function AdminProductPage() {
               <th className="px-6 py-4 text-right">تصویر</th>
               <th className="px-6 py-4 text-right">نام</th>
               <th className="px-6 py-4 text-right">قیمت</th>
+              <th className="px-6 py-4 text-right">موجودی</th>
               <th className="px-6 py-4 text-right">عملیات</th>
             </tr>
           </thead>
@@ -96,6 +97,18 @@ export default function AdminProductPage() {
 
                 <td className="px-6 py-5">
                   {product.price.toLocaleString()} تومان
+                </td>
+
+                <td className="px-6 py-5">
+                  {product.inventory > 0 ? (
+                    <span className="rounded-full bg-stone-100 px-3 py-1 text-sm">
+                      {product.inventory} عدد
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-red-50 px-3 py-1 text-sm text-red-600">
+                      ناموجود
+                    </span>
+                  )}
                 </td>
 
                 <td className="space-x-3 px-6 py-5">

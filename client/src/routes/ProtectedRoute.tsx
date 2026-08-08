@@ -8,7 +8,7 @@ export default function ProtectedRoute({
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
   const hasShownToast = useRef(false);
 
@@ -19,6 +19,10 @@ export default function ProtectedRoute({
     }
   }, [isAuthenticated]);
 
+  if (loading) {
+    return null;
+  }
+  
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }

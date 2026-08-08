@@ -51,6 +51,18 @@ export async function getOrders(token: string) {
   return result.data;
 }
 
+export async function getMyOrders() {
+  const response = await authFetch(`${API}/orders/my-orders`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch my orders");
+  }
+
+  const result = await response.json();
+
+  return result.data;
+}
+
 import { authFetch } from "./authService";
 
 export async function updateOrderStatus(id: string, status: string) {

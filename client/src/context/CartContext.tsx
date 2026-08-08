@@ -56,25 +56,21 @@ export function CartProvider({ children }: Props) {
   const addToCart = (product: Product, quantity: number) => {
     setCartItems((prev) => {
       const existingItem = prev.find((item) => item.product.id === product.id);
+      const currentQty = existingItem?.quantity ?? 0;
+      const maxAddable = Math.max(0, product.inventory - currentQty);
+      const qtyToAdd = Math.min(quantity, maxAddable);
+
+      if (qtyToAdd <= 0) return prev;
 
       if (existingItem) {
         return prev.map((item) =>
           item.product.id === product.id
-            ? {
-                ...item,
-                quantity: item.quantity + quantity,
-              }
+            ? { ...item, quantity: item.quantity + qtyToAdd }
             : item,
         );
       }
 
-      return [
-        ...prev,
-        {
-          product,
-          quantity,
-        },
-      ];
+      return [...prev, { product, quantity: qtyToAdd }];
     });
     openCart();
   };
@@ -82,11 +78,8 @@ export function CartProvider({ children }: Props) {
   const increaseQuantity = (productId: string) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item.product.id === productId
-          ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
+        item.product.id === productId && item.quantity < item.product.inventory
+          ? { ...item, quantity: item.quantity + 1 }
           : item,
       ),
     );
@@ -123,9 +116,7 @@ export function CartProvider({ children }: Props) {
     (total, item) => total + item.product.price * item.quantity,
     0,
   );
-  useEffect(() => {
-    // localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
-  }, [cartItems]);
+  useEffect(() => {}, [cartItems]);
 
   return (
     <CartContext.Provider

@@ -24,8 +24,23 @@ export async function createOrder(req: Request, res: Response) {
       success: true,
       data: order,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+
+    if (error.message?.includes("موجودی محصول کافی نیست")) {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
+    if (error.message?.includes("یافت نشد")) {
+      return res.status(404).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
     return res.status(500).json({
       success: false,
       message: "خطا در ایجاد سفارش",
@@ -47,6 +62,31 @@ export async function getOrders(req: Request, res: Response) {
     return res.status(500).json({
       success: false,
       message: "خطا در دریافت سفارش‌ها",
+    });
+  }
+}
+
+export async function getMyOrders(req: Request, res: Response) {
+  try {
+    if (!req.user?.id) {
+      return res.status(401).json({
+        success: false,
+        message: "ابتدا وارد حساب کاربری خود شوید",
+      });
+    }
+
+    const orders = await orderService.getOrdersByUserId(req.user.id);
+
+    return res.json({
+      success: true,
+      data: orders,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "خطا در دریافت سفارش‌های شما",
     });
   }
 }

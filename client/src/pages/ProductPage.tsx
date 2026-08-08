@@ -15,6 +15,7 @@ import { useProducts } from "@/context/ProductContext";
 export default function ProductPage() {
   const { slug } = useParams();
   const { products, loading } = useProducts();
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -23,7 +24,9 @@ export default function ProductPage() {
   }, [slug]);
   const [quantity, setQuantity] = useState(1);
   const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
+    setQuantity((prev) =>
+      product && prev < product.inventory ? prev + 1 : prev,
+    );
   };
 
   const decreaseQuantity = () => {
