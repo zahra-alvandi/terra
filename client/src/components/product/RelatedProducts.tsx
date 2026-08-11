@@ -16,9 +16,11 @@ export default function RelatedProducts({ products }: Props) {
           محصولات مشابه
         </h2>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+        <div className="flex gap-4 overflow-x-auto pb-4">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <div key={product.id} className="w-[260px] flex-shrink-0">
+              <ProductCard product={product} />
+            </div>
           ))}
         </div>
       </Container>

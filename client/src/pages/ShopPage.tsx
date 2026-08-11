@@ -6,7 +6,7 @@ import Pagination from "@/components/shop/Pagination";
 import { useState, useEffect, useMemo } from "react";
 import { useProducts } from "@/context/ProductContext";
 
-const PRODUCTS_PER_PAGE = 12;
+const PRODUCTS_PER_PAGE = 8;
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");

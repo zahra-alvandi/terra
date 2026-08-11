@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Pagination from "@/components/shop/Pagination";
 
 import ProductDrawer from "@/components/ui/ProductDrawer";
 import ProductForm from "@/components/admin/products/ProductForm";
@@ -17,6 +17,9 @@ export default function AdminProductPage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
+  const PRODUCTS_PER_PAGE = 8;
+  const [page, setPage] = useState(1);
+
   const refreshProducts = async () => {
     const data = await getProducts();
 
@@ -26,6 +29,23 @@ export default function AdminProductPage() {
 
     setDrawerOpen(false);
   };
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(products.length / PRODUCTS_PER_PAGE),
+  );
+
+  const paginatedProducts = useMemo(() => {
+    const start = (page - 1) * PRODUCTS_PER_PAGE;
+
+    return products.slice(start, start + PRODUCTS_PER_PAGE);
+  }, [products, page]);
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
 
   const handleCreateProduct = async (data: any) => {
     try {
@@ -83,7 +103,7 @@ export default function AdminProductPage() {
           </thead>
 
           <tbody>
-            {products.map((product) => (
+            {paginatedProducts.map((product) => (
               <tr key={product.id} className="border-t border-border">
                 <td className="px-6 py-5">
                   <img
@@ -141,6 +161,19 @@ export default function AdminProductPage() {
             ))}
           </tbody>
         </table>
+
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(newPage) => {
+            setPage(newPage);
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          }}
+        />
       </div>
       <ProductDrawer
         open={drawerOpen}
