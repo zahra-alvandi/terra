@@ -19,4 +19,8 @@ export const categories = [
     value: "bowl",
     label: "کاسه",
   },
+  {
+    value: "decoration",
+    label: "دکوراسیون",
+  },
 ] as const;

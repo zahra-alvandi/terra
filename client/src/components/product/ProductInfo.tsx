@@ -5,6 +5,9 @@ import QuantitySelector from "./QuantitySelector";
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { showAddToCartToast } from "@/lib/terraToast";
+import { createProductInterest } from "@/services/productInterestService";
+import { useAuth } from "@/context/AuthContext";
+import toast from "react-hot-toast";
 
 type Props = {
   product: Product;
@@ -20,6 +23,7 @@ export default function ProductInfo({
   onDecrease,
 }: Props) {
   const { addToCart } = useCart();
+  const { user, isAuthenticated } = useAuth();
   const isOutOfStock = product.inventory <= 0;
 
   return (
@@ -71,45 +75,86 @@ export default function ProductInfo({
       </p>
 
       <div className="mt-10">
-        <QuantitySelector
-          quantity={quantity}
-          onIncrease={onIncrease}
-          onDecrease={onDecrease}
-        />
+        {isOutOfStock ? (
+          <button
+            onClick={async () => {
+              if (!isAuthenticated || !user) {
+                toast.error("ابتدا وارد حساب کاربری خود شوید.");
+                return;
+              }
 
-        <button
-          disabled={isOutOfStock}
-          onClick={() => {
-            addToCart(product, quantity);
-            showAddToCartToast(product.title);
-          }}
-          className="
-            mt-6
-            flex
-            w-full
-            items-center
-            justify-center
-            gap-3
-            rounded-2xl
-            bg-primary
-            px-6
-            py-4
-            text-lg
-            font-medium
-            text-white
-            transition
-            hover:opacity-90
-            active:scale-[0.98]
-            disabled:cursor-not-allowed
-            disabled:bg-stone-300
-            disabled:opacity-70
-            disabled:hover:opacity-70
-            disabled:active:scale-100
-          "
-        >
-          <ShoppingBag size={20} />
-          {isOutOfStock ? "ناموجود" : "افزودن به سبد خرید"}
-        </button>
+              try {
+                await createProductInterest(product.id);
+
+                toast.success(
+                  "این محصول به لیست درخواست‌های خرید شما اضافه شد.",
+                );
+              } catch (error) {
+                console.error(error);
+                toast.error("ثبت درخواست انجام نشد.");
+              }
+            }}
+            className="
+        flex
+        w-full
+        items-center
+        justify-center
+        gap-3
+        rounded-2xl
+        border
+        border-primary
+        bg-white
+        px-6
+        py-4
+        text-lg
+        font-medium
+        text-primary
+        transition
+        hover:bg-primary
+        hover:text-white
+        active:scale-[0.98]
+      "
+          >
+            <ShoppingBag size={20} />
+           موجود شد، سفارش میدم
+          </button>
+        ) : (
+          <>
+            <QuantitySelector
+              quantity={quantity}
+              onIncrease={onIncrease}
+              onDecrease={onDecrease}
+            />
+
+            <button
+              onClick={() => {
+                addToCart(product, quantity);
+                showAddToCartToast(product.title);
+              }}
+              className="
+          mt-6
+          flex
+          w-full
+          items-center
+          justify-center
+          gap-3
+          rounded-2xl
+          bg-primary
+          px-6
+          py-4
+          text-lg
+          font-medium
+          text-white
+          transition
+          hover:opacity-90
+          active:scale-[0.98]
+        "
+            >
+              <ShoppingBag size={20} />
+              افزودن به سبد خرید
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

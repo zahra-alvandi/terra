@@ -3,12 +3,17 @@ import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getMyOrders } from "@/services/orderService";
+import {
+  getMyProductInterests,
+  type ProductInterest,
+} from "@/services/productInterestService";
 
 export default function ProfileOrdersPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const [orders, setOrders] = useState<any[]>([]);
+  const [interests, setInterests] = useState<ProductInterest[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,11 +24,15 @@ export default function ProfileOrdersPage() {
       }
 
       try {
-        const data = await getMyOrders();
+        const [ordersData, interestsData] = await Promise.all([
+          getMyOrders(),
+          getMyProductInterests(),
+        ]);
 
-        setOrders(data);
+        setOrders(ordersData);
+        setInterests(interestsData);
       } catch (error) {
-        console.error("خطا در دریافت سفارش‌های کاربر:", error);
+        console.error("خطا در دریافت سفارش‌ها و درخواست‌های موجودی:", error);
       } finally {
         setLoading(false);
       }

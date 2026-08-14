@@ -8,6 +8,7 @@ import orderRoutes from "./routes/order.routes";
 import path from "path";
 import uploadRoutes from "./routes/upload.routes";
 import contactRoutes from "./routes/contact.route";
+import productInterestRoutes from "./routes/productInterest.routes";
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/product-interests", productInterestRoutes);
 
 app.get("/", (_, res) => {
   res.json({

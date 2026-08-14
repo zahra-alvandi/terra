@@ -27,6 +27,7 @@ import ProfileOrderDetailsPage from "@/pages/ProfileOrderDetailsPage";
 import ContactPage from "@/pages/ContactPage";
 import AdminMessagesPage from "@/pages/admin/AdminMessagePage";
 import AdminMessageDetailsPage from "@/pages/admin/AdminMessageDetailsPage";
+import ProfileInterestsPage from "@/pages/ProfileInterestPage";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +86,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ProfileOrderDetailsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/profile/interests",
+        element: (
+          <ProtectedRoute>
+            <ProfileInterestsPage />
           </ProtectedRoute>
         ),
       },

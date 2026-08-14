@@ -15,6 +15,7 @@ model User {
   password  String
   isAdmin   Boolean @default(false)
   orders    Order[]
+  productInterests ProductInterest[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -47,11 +48,12 @@ model Product {
   keywords Json
 
   badge String?
-
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   orderItems OrderItem[]
+  productInterests ProductInterest[]
 }
 
 model Order {
@@ -94,6 +96,20 @@ model OrderItem {
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   product Product @relation(fields: [productId], references: [id])
+}
+
+model ProductInterest {
+  id        String   @id @default(cuid())
+
+  userId    String
+  productId String
+
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
 }
 
 model ContactMessage {
