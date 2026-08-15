@@ -64,11 +64,13 @@ model Order {
   firstName String
   lastName  String
   phone     String
-  address   String
+  city       String
+  address    String
 
   totalPrice Int
 
-status String @default("PendingReview")
+  shippingMethod String @default("Tipax")
+  status String @default("PendingReview")
 
   receiptImage String?
 

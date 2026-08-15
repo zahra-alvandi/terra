@@ -11,6 +11,10 @@ export async function createOrder(data: any, receipt: File) {
   formData.append("firstName", data.firstName);
   formData.append("lastName", data.lastName);
   formData.append("phone", data.phone);
+
+  formData.append("city", data.city);
+  formData.append("shippingMethod", data.shippingMethod);
+
   formData.append("address", data.address);
   formData.append("totalPrice", String(data.totalPrice));
 

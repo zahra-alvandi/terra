@@ -16,7 +16,9 @@ type CheckoutFormData = {
   lastName: string;
   phone: string;
   email: string;
+  city: "تهران" | "سایر" | "";
   address: string;
+  shippingMethod: "courier" | "tipax" | "";
 };
 
 export default function CheckoutPage() {
@@ -50,7 +52,10 @@ export default function CheckoutPage() {
         lastName: data.lastName,
 
         phone: data.phone,
+        city: data.city,
         address: data.address,
+
+        shippingMethod: data.shippingMethod,
 
         totalPrice: cartTotal,
 

@@ -1,10 +1,10 @@
 export enum OrderStatus {
-  PendingReview = "PendingReview",
-  Confirmed = "Confirmed",
-  Preparing = "Preparing",
-  Shipped = "Shipped",
-  Delivered = "Delivered",
-  Cancelled = "Cancelled",
+  PendingReview = "درانتظار بررسی",
+  Confirmed = "تائید شده",
+  Preparing = "درحال آماده سازی",
+  Shipped = "ارسال شده",
+  Delivered = "تحویل داده شد",
+  Cancelled = "لغو شد",
 }
 
 export interface Order {

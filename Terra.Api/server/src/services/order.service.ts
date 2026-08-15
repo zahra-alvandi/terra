@@ -8,7 +8,9 @@ export async function createOrder(data: {
   firstName: string;
   lastName: string;
   phone: string;
+  city: string;
   address: string;
+  shippingMethod: string;
   totalPrice: number;
   receiptImage?: string;
   items: {
@@ -43,9 +45,12 @@ export async function createOrder(data: {
         firstName: data.firstName,
         lastName: data.lastName,
         phone: data.phone,
+        city: data.city,
+        shippingMethod: data.shippingMethod,
         address: data.address,
         totalPrice: data.totalPrice,
         receiptImage: data.receiptImage,
+
         items: {
           create: data.items,
         },

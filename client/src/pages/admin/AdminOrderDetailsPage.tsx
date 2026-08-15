@@ -119,6 +119,28 @@ export default function AdminOrderDetailsPage() {
 
             <p className="mt-2">{order.phone}</p>
           </div>
+
+          <div>
+            <p className="text-sm text-text-secondary">شهر</p>
+
+            <p className="mt-2">{order.city}</p>
+          </div>
+
+          <div>
+            <p className="text-sm text-text-secondary">روش ارسال</p>
+
+            <p className="mt-2 font-medium">
+              {order.shippingMethod === "courier"
+                ? "ارسال با پیک"
+                : "ارسال با تیپاکس"}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-sm text-text-secondary">هزینه ارسال</p>
+
+            <p className="mt-2 font-medium text-primary">پس‌کرایه</p>
+          </div>
         </div>
 
         <div className="mt-8">

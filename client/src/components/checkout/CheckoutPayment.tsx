@@ -70,7 +70,7 @@ export default function CheckoutPayment({
         </button>
 
         {/* online payment */}
-        <button
+        {/* <button
           disabled
           className="
             flex items-center gap-4
@@ -89,7 +89,7 @@ export default function CheckoutPayment({
 
             <p className="text-sm text-text-secondary">به زودی</p>
           </div>
-        </button>
+        </button> */}
       </div>
 
       {/* Card */}
