@@ -116,31 +116,24 @@ export function CartProvider({ children }: Props) {
     (total, item) => total + item.product.price * item.quantity,
     0,
   );
-  useEffect(() => {}, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return (
     <CartContext.Provider
       value={{
         cartItems,
-
         addToCart,
-
         increaseQuantity,
-
         decreaseQuantity,
-
         removeFromCart,
-
         clearCart,
-
         cartCount,
-
         cartTotal,
-
         isCartOpen,
-
         openCart,
-
         closeCart,
       }}
     >

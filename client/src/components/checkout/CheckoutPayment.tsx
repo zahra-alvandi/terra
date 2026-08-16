@@ -99,7 +99,7 @@ export default function CheckoutPayment({
           <div>
             <p className="text-sm text-text-secondary">شماره کارت</p>
 
-            <p className="mt-2 text-xl font-semibold tracking-widest">
+            <p className="mt-2 text-md md:text-xl font-semibold tracking-widest">
               {PAYMENT_CONFIG.cardNumber}
             </p>
           </div>

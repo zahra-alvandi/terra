@@ -32,7 +32,7 @@ export default function CheckoutForm() {
           label="نام"
           name="firstName"
           register={register}
-          placeholder="زهرا"
+          placeholder="نام"
           rules={{
             required: "وارد کردن نام الزامی است",
           }}
@@ -43,7 +43,7 @@ export default function CheckoutForm() {
           label="نام خانوادگی"
           name="lastName"
           register={register}
-          placeholder="الوندی"
+          placeholder="نام خانوادگی"
           rules={{
             required: "وارد کردن نام خانوادگی الزامی است",
           }}

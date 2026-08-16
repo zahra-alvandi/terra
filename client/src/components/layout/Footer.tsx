@@ -26,7 +26,7 @@ export default function Footer() {
 
               <div className="mt-8 flex gap-3">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/terra.by.mellisa/"
                   className="
                     flex
                     h-11
@@ -144,7 +144,7 @@ export default function Footer() {
                 <div className="flex items-start gap-3">
                   <Phone size={18} className="mt-1 text-primary" />
 
-                  <span className="text-text-secondary">021-12345678</span>
+                  <span className="text-text-secondary">0912320456</span>
                 </div>
 
                 <div className="flex items-start gap-3">
@@ -157,7 +157,7 @@ export default function Footer() {
                   <MapPin size={18} className="mt-1 text-primary" />
 
                   <span className="leading-7 text-text-secondary">
-                    تهران، ایران
+                    ایران، تهران
                   </span>
                 </div>
               </div>

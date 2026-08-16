@@ -1,29 +1,28 @@
 import { CheckCircle2, Circle } from "lucide-react";
-import { OrderStatus } from "@/types/order";
 
 type Props = {
-  status: OrderStatus;
+  status: string;
 };
 
 const steps = [
   {
-    status: OrderStatus.PendingReview,
+    status: "PendingReview",
     title: "ثبت سفارش",
   },
   {
-    status: OrderStatus.Confirmed,
+    status: "Confirmed",
     title: "تأیید سفارش",
   },
   {
-    status: OrderStatus.Preparing,
+    status: "Preparing",
     title: "آماده‌سازی",
   },
   {
-    status: OrderStatus.Shipped,
+    status: "Shipped",
     title: "ارسال",
   },
   {
-    status: OrderStatus.Delivered,
+    status: "Delivered",
     title: "تحویل",
   },
 ];
