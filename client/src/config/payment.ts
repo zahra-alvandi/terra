@@ -1,4 +1,4 @@
 export const PAYMENT_CONFIG = {
-  cardNumber: "6037502210114080",
-  accountHolder: "زهرا الوندی",
+  cardNumber: "6274881120013650",
+  accountHolder: "ملیسا اسمعیلی",
 };
